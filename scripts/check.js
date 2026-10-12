@@ -16,7 +16,7 @@ for(const artist of data.artists){
 assert.deepStrictEqual(Object.keys(locales.en).sort(),Object.keys(locales.zh).sort(),'UI translations differ');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 for(const key of [...html.matchAll(/data-i18n(?:-aria|-html)?="([^"]+)"/g)].map(m=>m[1]))assert(locales.en[key],key);
-assert(!html.includes('菊菊霸也爱玩游戏'),'Old credit must not ship');
+assert(html.includes('juju-w')&&locales.en.creator.includes('juju-w')&&locales.zh.creator.includes('juju-w'),'Public credit must use the repository author');
 (async function(){
  const calls=[];
  const ctx={window:{xhs:{miniTool:{writeTempFile:async o=>{calls.push(o);return {filePath:'/temp/test.png'};},saveImageToPhotosAlbum:async o=>calls.push(o)}}},FileReader:class{readAsDataURL(){this.result='data:image/png;base64,YQ==';this.onload();}}};

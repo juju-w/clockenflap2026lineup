@@ -1,0 +1,128 @@
+:root{--forest:#002c24;--mint:#00d9b4;--coral:#ffa3ad;--paper:#faead4;--ink:#002c24;--body-font:Arial,"PingFang SC","Microsoft YaHei",sans-serif;--display-font:"Arial Black",Arial,"PingFang SC",sans-serif;color-scheme:dark;font-family:var(--body-font);background:var(--forest);color:var(--paper)}
+*{box-sizing:border-box} [hidden]{display:none!important} body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:var(--forest)}body.has-modal{overflow:hidden}button,a,input{-webkit-tap-highlight-color:transparent}button{font:inherit;color:inherit;cursor:pointer}button{border:0;background:none}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid currentColor;outline-offset:5px}svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.top-rail,.bottom-rail{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;font-size:14px;font-weight:700;letter-spacing:.025em}.top-rail{min-height:66px}.wordmark{text-decoration:none;letter-spacing:0;font-size:16px}.festival-date{font-size:15px;letter-spacing:.055em}.day-nav{display:flex;align-items:center;gap:20px}.day-nav button{position:relative;padding:3px 0;font-size:13px;font-weight:700;letter-spacing:.08em}.day-nav button:after{content:"";height:2px;position:absolute;bottom:-4px;left:0;right:0;transform:scaleX(0);background:var(--mint);transition:transform .18s}.day-nav button[aria-pressed=true]:after{transform:scaleX(1)}
+.poster{width:100%;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:25px 32px 18px}.poster-heading{margin:0 0 28px;font-family:var(--display-font);font-weight:900;font-size:34px;line-height:1.1;letter-spacing:-.035em;text-align:center}.poster-heading sup{font-size:.52em;vertical-align:super}.poster-heading span{margin-left:6px;font-family:var(--body-font);font-weight:900;letter-spacing:-.045em}.lineup{width:100%;max-width:1480px;display:flex;flex-direction:column;align-items:center;gap:2px}.lineup-row{display:flex;align-items:baseline;justify-content:center;gap:.13em;width:100%;font-family:var(--display-font);font-weight:900;line-height:1.065;letter-spacing:-.052em}.artist-name{position:relative;display:inline-block;flex-shrink:0;padding:0;max-width:100%;font:inherit;font-weight:900;letter-spacing:inherit;line-height:inherit;white-space:nowrap;transition:opacity .3s,transform .2s,color .2s;transform-origin:center}.artist-name.mint,.separator.mint{color:var(--mint)}.artist-name.coral,.separator.coral{color:var(--coral)}.artist-name.cream,.separator.cream{color:var(--paper)}.artist-name.is-dimmed{opacity:.17}.artist-name.is-hovered{transform:translateY(-3px)}.artist-name.is-hovered:after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:3px;background:currentColor}.artist-name.is-wanted:before{content:"♥";position:absolute;top:-.3em;right:-.35em;font:700 13px/1 Arial,sans-serif;color:var(--paper);letter-spacing:0}.separator{flex-shrink:0;font-family:Arial,sans-serif;font-size:.8em;line-height:1;transform:translateY(-.06em);transition:opacity .3s}.poster-ending{margin-top:38px;text-align:center}.poster-ending p{margin:0;font-family:var(--display-font);font-size:36px;font-weight:900;letter-spacing:-.04em;line-height:1.1}.poster-ending>span{display:block;margin-top:8px;font-size:23px;font-weight:700;letter-spacing:.03em}.bottom-rail{padding-top:16px;padding-bottom:24px;font-size:12px}.bottom-rail>button{display:flex;align-items:center;gap:7px;padding:0;font-size:13px;font-weight:700}.bottom-rail svg{width:20px;height:20px}
+.hover-card{position:fixed;z-index:10;width:280px;padding:10px 10px 13px;color:var(--ink);background:var(--paper);box-shadow:6px 10px 0 rgba(0,0,0,.13);pointer-events:none;transform:rotate(3deg);transform-origin:50% 20%;animation:card-in .16s ease-out}.hover-card>img{display:block;width:100%;height:auto;max-height:172px;object-fit:contain}.hover-card>strong{display:block;margin-top:8px;font-family:var(--display-font);font-size:23px;font-weight:900;line-height:1.04;letter-spacing:-.04em}.hover-card>span{display:block;font-size:12px;line-height:1.45}.hover-card .hover-day{font-size:16px;font-weight:800;margin:4px 0}.hover-card>p{margin:8px 0 0;font-size:12px;line-height:1.55}.hover-card .hover-open{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:13px;font-weight:700}.hover-open svg{width:19px;height:19px}
+.modal-layer{position:fixed;z-index:30;top:0;right:0;bottom:0;left:0;display:flex;align-items:center;justify-content:center;padding:32px}.scrim{position:absolute;top:0;right:0;bottom:0;left:0;width:100%;height:100%;background:rgba(0,28,23,.72);cursor:default}.artist-dialog{position:relative;width:1280px;max-width:100%;max-height:calc(100vh - 64px);max-height:calc(100svh - 64px);overflow:auto;padding:27px 32px 28px;border-radius:3px;background:var(--paper);color:var(--ink);color-scheme:light;box-shadow:0 24px 70px rgba(0,0,0,.3);animation:sleeve-in .3s cubic-bezier(.2,.8,.2,1);scrollbar-color:var(--ink) transparent}.dialog-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;font-size:21px;font-weight:900;letter-spacing:-.025em}.close-button{display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:2px;flex-shrink:0}.close-button svg{width:31px;height:31px}.artist-content{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:32px}.artist-profile{min-width:0;padding-right:28px;border-right:1px solid rgba(0,44,36,.45)}.portrait-button{display:block;width:100%;padding:0;cursor:zoom-in}.portrait-button img{display:block;width:100%;height:auto;max-height:310px;object-fit:contain;object-position:left top}.artist-profile h2{margin:12px 0 4px;font-family:var(--display-font);font-size:72px;line-height:.98;letter-spacing:-.052em;font-weight:900;overflow-wrap:break-word;overflow-wrap:anywhere}.artist-day{margin:10px 0;color:#f47788;font-family:var(--display-font);font-size:39px;line-height:1.06;font-weight:900;letter-spacing:-.04em}.artist-genres{margin:14px 0 26px;font-size:22px;font-weight:700;line-height:1.35}.want-button{display:flex;align-items:center;gap:10px;color:#f47788;padding:0;font-size:30px;line-height:1.2;font-weight:900}.want-button svg{width:31px;height:31px}.want-button[aria-pressed=true] svg{fill:currentColor}.schedule-note{margin:18px 0 0;font-size:15px;line-height:1.6}.artist-story{display:flex;flex-direction:column;min-width:0}.artist-story h3{margin:0 0 16px;font-size:32px;font-weight:900;letter-spacing:-.03em;line-height:1.2}.biography>p{margin:0;font-size:17px;line-height:1.8;letter-spacing:.008em}.listening{margin-top:28px;padding-top:22px;border-top:1px solid var(--ink)}.album-list{display:flex;align-items:flex-start;gap:18px}.album-sleeve{flex:1;min-width:0;max-width:calc((100% - 36px)/3);padding:0;text-align:left}.album-cover{display:block;aspect-ratio:1/1;width:100%;height:auto;object-fit:cover;transition:transform .2s,box-shadow .2s}.album-sleeve:hover .album-cover{transform:translateY(-5px) rotate(-2deg);box-shadow:3px 5px 0 rgba(0,44,36,.15)}.album-sleeve>strong{display:block;margin-top:10px;font-size:13px;font-weight:600;line-height:1.45;overflow-wrap:break-word;overflow-wrap:anywhere}.album-sleeve>small{display:block;margin-top:3px;font-size:11px;opacity:.65}.album-hint{margin:19px 0 0;font-size:11px;text-align:center}.artist-pager{display:flex;align-items:center;justify-content:flex-end;gap:25px;margin-top:auto;padding-top:27px}.artist-pager button{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:800}.artist-pager button+button{border-left:1px solid rgba(0,44,36,.5);padding-left:24px}.artist-pager svg{width:18px;height:18px}
+.media-layer{z-index:50}.media-scrim{background:rgba(0,18,15,.94)}.media-dialog{position:relative;display:flex;flex-direction:column;align-items:center;width:600px;max-width:100%;max-height:calc(100vh - 64px);max-height:calc(100svh - 64px);overflow:auto;color:var(--paper);padding-top:38px}.media-dialog>.close-button{position:absolute;top:0;right:0}.media-dialog>img{display:block;width:auto;max-width:100%;max-height:54vh;max-height:54svh;object-fit:contain}.media-dialog.is-album>img{width:100%;max-width:400px;aspect-ratio:1/1;object-fit:contain}.media-dialog>h2{margin:18px 0 12px;max-width:100%;font-size:20px;line-height:1.35;text-align:center;overflow-wrap:break-word;overflow-wrap:anywhere}.copy-controls{width:100%;max-width:480px;text-align:center}.copy-controls>input{display:block;width:100%;padding:10px;color:var(--paper);font:13px var(--body-font);border:1px solid rgba(250,234,212,.35);background:transparent;text-align:center}.copy-controls>button{margin-top:14px;padding:12px 24px;color:var(--ink);background:var(--paper);font-size:13px;font-weight:700}.copy-controls>p{min-height:20px;margin:10px 0 0;font-size:12px}
+.wishlist-dialog{position:relative;width:540px;max-width:100%;max-height:calc(100vh - 64px);max-height:calc(100svh - 64px);overflow:auto;padding:28px 30px;color:var(--ink);color-scheme:light;background:var(--paper)}.wishlist-dialog>header{display:flex;justify-content:space-between;align-items:center}.wishlist-dialog h2{margin:0;font-size:34px;font-weight:900;letter-spacing:-.03em}.wish-day{margin-top:24px}.wish-day>h3{margin:0 0 6px;color:#bc4e67;font-size:13px;font-weight:800}.wish-row{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,44,36,.2)}.wish-row>.wish-artist{flex:1;padding:12px 0;text-align:left;font-size:18px;font-weight:800}.remove-wish{padding:10px;margin-left:8px}.remove-wish svg{width:18px;height:18px}.wishlist-empty{margin:30px 0;font-size:16px;line-height:1.7}.wishlist-note{margin:24px 0 0;font-size:11px;opacity:.7}.wishlist-layer svg{width:18px;height:18px}
+#toast{position:fixed;z-index:70;bottom:24px;left:50%;transform:translate(-50%,10px);padding:10px 18px;max-width:calc(100vw - 32px);background:var(--paper);color:var(--ink);font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:.2s}#toast.show{opacity:1;transform:translate(-50%,0)}
+@keyframes card-in{from{opacity:0;transform:translateY(5px) rotate(0)}to{opacity:1;transform:translateY(0) rotate(3deg)}}@keyframes sleeve-in{from{opacity:0;transform:translateY(20px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:1050px){.top-rail,.bottom-rail{padding-left:24px;padding-right:24px}.wordmark{font-size:13px}.festival-date{font-size:12px}.day-nav{gap:14px}.poster{padding-left:24px;padding-right:24px}.poster-heading{font-size:28px;margin-bottom:22px}.poster-ending{margin-top:28px}.poster-ending p{font-size:29px}.poster-ending>span{font-size:19px}.artist-dialog{padding:22px 24px}.artist-content{gap:24px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}.artist-profile{padding-right:20px}.artist-profile h2{font-size:52px}.artist-day{font-size:29px}.artist-genres{font-size:18px}.artist-story h3{font-size:26px}.biography>p{font-size:15px}.album-list{gap:12px}.album-sleeve{max-width:calc((100% - 24px)/3)}.want-button{font-size:25px}.dialog-top{font-size:18px}}
+@media(max-width:600px){.top-rail{display:grid;grid-template-columns:1fr auto;gap:14px 10px;padding:18px 18px 12px}.wordmark{font-size:12px}.festival-date{font-size:10px;letter-spacing:0;text-align:right}.day-nav{grid-column:1/-1;justify-content:center;gap:32px}.day-nav button{font-size:11px}.poster{padding:16px 17px 14px;justify-content:flex-start}.poster-heading{font-size:16px;margin-bottom:21px;letter-spacing:-.04em}.poster-heading span{margin-left:3px}.lineup{gap:7px}.lineup-row{flex-wrap:wrap;gap:3px 16px;line-height:1.12;letter-spacing:-.045em}.separator{display:none}.artist-name.is-wanted:before{font-size:10px}.poster-ending{margin-top:29px}.poster-ending p{font-size:21px}.poster-ending>span{margin-top:6px;font-size:15px}.bottom-rail{padding:17px 18px 22px;font-size:9px;gap:15px}.bottom-rail>button{font-size:10px;gap:5px}.bottom-rail svg{width:16px;height:16px}.modal-layer{padding:14px}.artist-dialog{max-height:calc(100vh - 28px);max-height:calc(100svh - 28px);padding:19px 21px}.dialog-top{font-size:16px;margin-bottom:15px}.close-button{width:30px;height:30px}.close-button svg{width:25px;height:25px}.artist-content{display:block}.artist-profile{padding:0;border:0}.portrait-button img{max-height:260px;object-position:center}.artist-profile h2{margin-top:17px;font-size:48px;letter-spacing:-.05em}.artist-day{font-size:29px;margin-top:10px}.artist-genres{font-size:16px;margin:12px 0 16px}.want-button{font-size:23px}.want-button svg{width:26px;height:26px}.schedule-note{font-size:12px;margin-top:12px}.artist-story{margin-top:24px;padding-top:20px;border-top:1px solid rgba(0,44,36,.4)}.artist-story h3{font-size:25px;margin-bottom:11px}.biography>p{font-size:15px;line-height:1.85}.listening{margin-top:22px;padding-top:20px}.album-list{gap:10px}.album-sleeve{max-width:calc((100% - 20px)/3)}.album-sleeve>strong{font-size:11px;margin-top:8px}.album-sleeve>small{font-size:10px}.album-hint{font-size:10px;margin-top:16px}.artist-pager{justify-content:space-between;padding-top:28px}.artist-pager button{font-size:12px}.media-dialog{max-height:calc(100svh - 28px)}.media-dialog>img{max-height:51svh}.media-dialog>h2{font-size:17px}.wishlist-dialog{padding:22px}.wishlist-dialog h2{font-size:29px}.wish-row>.wish-artist{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.hover-card{transform:none}.artist-name.is-hovered{transform:none}}
+.artist-profile h2.long-name{font-size:48px}
+@media(max-width:1050px){.artist-profile h2.long-name{font-size:39px}}
+@media(max-width:600px){.artist-profile h2.long-name{font-size:34px}}
+@media(min-width:1051px){
+ .artist-dialog{width:1368px;padding:28px 36px 30px}
+ .dialog-top{font-size:25px}
+ .artist-profile h2{font-size:90px}
+ .artist-day{font-size:47px}
+ .artist-genres{font-size:25px}
+ .want-button{font-size:35px}
+ .schedule-note{font-size:17px}
+ .artist-story h3{font-size:38px}
+ .biography>p{font-size:19px;line-height:1.8}
+ .album-sleeve>strong{font-size:14px}
+}
+.dialog-top,.wishlist-dialog>header{position:sticky;top:0;z-index:2;background:var(--paper)}
+@media(max-width:600px){.bottom-rail{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))}}
+.poster{-webkit-user-select:none;user-select:none}
+.artist-name.is-hovered{transform:none}
+/* Language controls sit in the rail; the poster keeps its original hierarchy. */
+.language-nav{display:flex;align-items:center;gap:7px;font-size:12px;white-space:nowrap}
+.language-nav button{padding:4px 0;opacity:.5;font-weight:700;transition:opacity .2s}
+.language-nav button[aria-pressed=true]{opacity:1}
+.language-nav button:hover{opacity:1}
+.language-nav>span{opacity:.35}
+.hover-card{left:0;top:0;animation:none;transform:translate3d(0,0,0);will-change:transform,opacity;contain:layout style}
+.hover-card>p{max-height:4.65em;overflow:hidden}
+.artist-dialog{animation:none}
+.album-cover{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.artist-name{transition:opacity .4s ease,color .2s ease}
+@media(max-width:1050px) and (min-width:601px){.top-rail{flex-wrap:wrap;gap:12px}.festival-date{margin-left:auto}.day-nav{margin-left:auto}}
+@media(max-width:600px){.day-nav{grid-column:1;grid-row:2;justify-content:flex-start;gap:23px}.language-nav{grid-column:2;grid-row:2;justify-content:flex-end;font-size:11px}.top-rail{row-gap:16px}.artist-pager{gap:10px}.artist-pager button+button{padding-left:14px}}
+
+.dialog-actions{display:flex;align-items:center;gap:22px}.dialog-actions .language-nav{font-size:13px;letter-spacing:0}
+@media(max-width:600px){.dialog-actions{gap:14px}.dialog-actions .language-nav{font-size:11px}.schedule-note{font-size:12px}}
+/* A personal lineup, with the same paper-and-ink palette as the artist sleeve. */
+#artist-layer{z-index:40}
+.wishlist-dialog{width:800px;height:calc(100vh - 64px);height:calc(100svh - 64px);max-height:830px;display:flex;flex-direction:column;padding:30px 34px;overflow:hidden;border-radius:3px;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.wishlist-dialog>header{position:static;flex-shrink:0;gap:20px;align-items:flex-start}
+.wish-eyebrow{display:block;margin-bottom:9px;font-size:12px;font-weight:800;letter-spacing:.07em}
+.wishlist-dialog h2{font-family:var(--display-font);font-size:48px;line-height:1.05;letter-spacing:-.05em}
+.wishlist-dialog .dialog-actions{padding-top:3px;gap:17px}
+.wishlist-summary{margin:14px 0 19px;font-size:13px;opacity:.65;flex-shrink:0}
+.wishlist-days{display:flex;gap:8px;border-bottom:1px solid rgba(0,44,36,.3);padding-bottom:20px;flex-shrink:0}
+.wishlist-days button{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 13px;flex:1;white-space:nowrap;font-size:13px;font-weight:800;transition:background .2s,color .2s;border:1px solid rgba(0,44,36,.25)}
+.wishlist-days button[aria-pressed=true]{background:var(--forest);color:var(--paper);border-color:var(--forest)}
+.wishlist-days small{font-size:11px;opacity:.65}
+#wishlist-content{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding-right:7px;scrollbar-color:var(--forest) transparent;scrollbar-width:thin}
+.wish-day{margin-top:22px}
+.wish-day>h3{display:flex;align-items:center;justify-content:space-between;margin:0 0 7px;padding:7px 10px;border-left:5px solid var(--coral);color:var(--forest);font-size:17px;letter-spacing:-.02em}
+.wish-day-5>h3{border-color:var(--mint)}.wish-day-6>h3{border-color:#b6bc78}
+.wish-day>h3>span{font:400 11px var(--body-font);opacity:.65;letter-spacing:0}
+.wish-row{gap:12px}
+.wish-row>.wish-artist{display:flex;align-items:center;gap:18px;padding:14px 0;font-size:22px;min-width:0;line-height:1.2}
+.wish-artist>img{display:block;width:88px;height:66px;object-fit:contain;background:var(--forest);flex-shrink:0}
+.wish-artist>span{display:flex;flex-direction:column;gap:7px;min-width:0}
+.wish-artist strong{font-weight:800;overflow-wrap:break-word;overflow-wrap:anywhere}
+.wish-artist small{font-size:12px;font-weight:400;opacity:.65;line-height:1.4}
+.wish-artist:hover strong{text-decoration:underline;text-underline-offset:4px}
+.remove-wish{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:0;padding:10px;flex-shrink:0;opacity:.55;transition:opacity .2s,background .2s}
+.remove-wish:hover{opacity:1;background:rgba(0,44,36,.07)}
+.wishlist-empty{height:100%;margin:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px 20px;font-size:17px;line-height:1.65}
+.wishlist-empty svg{width:62px;height:62px;stroke-width:.9;color:#c66e7c;margin-bottom:8px}.wishlist-empty p{max-width:340px}
+.wishlist-footer{flex-shrink:0;border-top:1px solid rgba(0,44,36,.3);padding-top:20px;margin-top:20px}
+.wishlist-actions{display:flex;gap:12px}.wishlist-actions button{flex:1;padding:15px 12px;font-size:14px;font-weight:800;min-height:48px}
+.add-wishlist{border:1px solid var(--forest);color:var(--forest)}.export-wishlist{background:var(--forest);color:var(--paper)}.export-wishlist:disabled{opacity:.3;cursor:default}
+.wishlist-note{margin:13px 0 0;font-size:11px;text-align:center;line-height:1.5}
+.wish-undo{display:flex;align-items:center;gap:15px;justify-content:space-between;margin-top:14px;padding:10px 13px;background:rgba(0,44,36,.07);font-size:12px;flex-shrink:0}
+.wish-undo>span{min-width:0;overflow-wrap:break-word;overflow-wrap:anywhere}.wish-undo button{font-size:12px;font-weight:800;text-decoration:underline;padding:8px;flex-shrink:0}
+.back-to-wishlist{font-size:12px;letter-spacing:0;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.export-controls{text-align:center;font-size:12px;line-height:1.5}.download-wishlist{display:inline-block;padding:12px 22px;background:var(--paper);color:var(--forest);text-decoration:none;font-size:13px;font-weight:800}.export-controls p{opacity:.75}
+@media(max-width:600px){.wishlist-dialog{height:calc(100vh - 28px);height:calc(100svh - 28px);padding:23px 20px}.wish-eyebrow{font-size:10px}.wishlist-dialog h2{font-size:32px}.wishlist-dialog>header{gap:9px}.wishlist-dialog .dialog-actions{gap:10px}.wishlist-summary{margin:12px 0 16px;font-size:12px}.wishlist-days{gap:6px;padding-bottom:16px}.wishlist-days button{padding:10px 7px;font-size:11px;gap:6px}.wishlist-days small{font-size:10px}.wish-day>h3{font-size:15px}.wish-row>.wish-artist{gap:12px;font-size:17px}.wish-artist>img{width:68px;height:54px}.wish-artist small{font-size:10px}.remove-wish{width:34px;height:38px}.wishlist-footer{padding-top:15px;margin-top:15px}.wishlist-actions{gap:10px}.wishlist-actions button{font-size:12px;padding:13px 9px}.wishlist-note{font-size:10px}.wish-undo{font-size:11px}.dialog-actions .back-to-wishlist{font-size:10px}.artist-dialog .dialog-actions{gap:10px}}
+
+@media(min-width:601px){.wish-row>.wish-artist{padding:10px 0}.wish-artist>img{height:58px}.wish-day{margin-top:16px}.wish-day>h3{padding-top:5px;padding-bottom:5px}}
+@media(max-width:600px){#artist-dialog.from-wishlist .dialog-top{flex-wrap:wrap;gap:7px}#artist-dialog.from-wishlist .dialog-actions{width:100%;justify-content:space-between}}
+/* Chrome 61 baseline: modern engines keep the original gap-based layout. */
+button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4px}
+@supports selector(:focus-visible){button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}}
+.modal-layer.is-closing{pointer-events:none}
+.artist-content{grid-gap:32px}
+.no-flex-gap .lineup-row>*+*{margin-left:.13em}
+.no-flex-gap .lineup>.lineup-row+.lineup-row{margin-top:2px}
+.no-flex-gap .day-nav>*+*{margin-left:20px}
+.no-flex-gap .language-nav>*+*{margin-left:7px}
+.no-flex-gap .dialog-actions>*+*{margin-left:22px}
+.no-flex-gap .bottom-rail>button>*+*{margin-left:7px}
+.no-flex-gap .hover-open>*+*{margin-left:6px}
+.no-flex-gap .want-button>*+*{margin-left:10px}
+.no-flex-gap .album-list>*+*{margin-left:18px}
+.no-flex-gap .artist-pager>*+*{margin-left:25px}
+.no-flex-gap .artist-pager button>*+*{margin-left:7px}
+.no-flex-gap .wishlist-days>*+*{margin-left:8px}
+.no-flex-gap .wishlist-days button>*+*{margin-left:10px}
+.no-flex-gap .wish-artist>*+*{margin-left:18px}
+.no-flex-gap .wish-artist small{margin-top:7px}
+.no-flex-gap .wishlist-actions>*+*{margin-left:12px}
+.no-flex-gap .wish-undo>*+*{margin-left:15px}
+.artist-dialog,.media-dialog,.wishlist-dialog,#wishlist-content{-webkit-overflow-scrolling:touch}
+@media(max-width:1050px){.artist-content{grid-gap:24px}.no-flex-gap .day-nav>*+*{margin-left:14px}.no-flex-gap .album-list>*+*{margin-left:12px}}
+@media(max-width:600px){
+ .top-rail{grid-gap:16px 10px}
+ .no-flex-gap .day-nav>*+*{margin-left:23px}
+ .no-flex-gap .lineup-row>*{margin:3px 8px}.no-flex-gap .lineup-row>*+*{margin-left:8px}
+ .no-flex-gap .lineup>.lineup-row+.lineup-row{margin-top:7px}
+ .no-flex-gap .album-list>*+*{margin-left:10px}
+ .no-flex-gap .dialog-actions>*+*{margin-left:10px}
+ .no-flex-gap .wishlist-days>*+*{margin-left:6px}
+ .no-flex-gap .wishlist-days button>*+*{margin-left:6px}
+ .no-flex-gap .wish-artist>*+*{margin-left:12px}
+ .no-flex-gap .wishlist-actions>*+*{margin-left:10px}
+ .bottom-rail{padding-bottom:calc(22px + var(--safe-area-inset-bottom,0px))}
+}
+@supports(padding-bottom:env(safe-area-inset-bottom)){
+ @media(max-width:600px){.bottom-rail{padding-bottom:calc(22px + var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px)))}}
+}

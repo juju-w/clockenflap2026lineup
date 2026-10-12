@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#002c24">
+  <meta name="description" content="Explore the Clockenflap 2026 lineup, discover the artists and their music, and save your favourites. A fan-made guide.">
+  <title>clockenflap2026lineup</title>
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="top-rail">
+    <a class="wordmark" href="./">clockenflap2026lineup</a>
+    <span class="festival-date">4—6 DEC 2026 · HONG KONG</span>
+    <nav class="day-nav" data-i18n-aria="dayNav" aria-label="Filter by day">
+      <button type="button" data-day="all" data-i18n="all" aria-pressed="true">ALL</button>
+      <button type="button" data-day="4" data-i18n="fri" aria-pressed="false">FRI</button>
+      <button type="button" data-day="5" data-i18n="sat" aria-pressed="false">SAT</button>
+      <button type="button" data-day="6" data-i18n="sun" aria-pressed="false">SUN</button>
+    </nav>
+    <nav class="language-nav" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language="zh" aria-pressed="false" lang="zh-CN">中文</button></nav>
+  </header>
+
+  <main class="poster" data-i18n-aria="posterLabel" aria-label="Clockenflap 2026 interactive lineup poster">
+    <h1 class="poster-heading" data-i18n-html="heading">1<sup>ST</sup> ROUND MUSIC LINEUP</h1>
+    <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music"></div>
+    <footer class="poster-ending">
+      <p>AND MANY MORE TO COME</p>
+      <span data-i18n="moreNote">Full lineup still to come</span>
+    </footer>
+  </main>
+
+  <footer class="bottom-rail">
+    <span data-i18n="creator">juju-w · Fan-made</span>
+    <button id="open-wishlist" type="button"><span data-i18n="wishlist">My wishlist</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg><span id="wish-count">0</span></button>
+  </footer>
+
+  <aside id="hover-card" class="hover-card" aria-hidden="true" hidden>
+    <img id="hover-photo" alt="">
+    <strong id="hover-name"></strong>
+    <span id="hover-day" class="hover-day"></span>
+    <span id="hover-genres"></span>
+    <p id="hover-intro"></p>
+    <span class="hover-open"><span data-i18n="hoverOpen">Take a look</span> <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></span>
+  </aside>
+
+  <div id="artist-layer" class="modal-layer" hidden>
+    <button class="scrim" type="button" data-i18n-aria="closeArtist" aria-label="Close artist profile"></button>
+    <section id="artist-dialog" class="artist-dialog" role="dialog" aria-modal="true" aria-labelledby="artist-name" tabindex="-1">
+      <header class="dialog-top"><span>CLOCKENFLAP 2026</span><div class="dialog-actions"><button id="back-to-wishlist" class="back-to-wishlist" type="button" data-i18n="backWishlist" hidden>Back to wishlist</button><nav class="language-nav" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language="zh" aria-pressed="false" lang="zh-CN">中文</button></nav><button id="close-artist" class="close-button" type="button" data-i18n-aria="closeArtist" aria-label="Close artist profile"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button></div></header>
+      <div class="artist-content">
+        <div class="artist-profile">
+          <button id="enlarge-portrait" class="portrait-button" type="button" data-i18n-aria="portrait" aria-label="Enlarge artist photo"><img id="artist-photo" alt=""></button>
+          <h2 id="artist-name"></h2>
+          <p id="artist-day" class="artist-day"></p>
+          <p id="artist-genres" class="artist-genres"></p>
+          <button id="artist-want" class="want-button" type="button" aria-pressed="false"><span>想看</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg></button>
+          <p class="schedule-note" data-i18n="pending">Stages and set times to be announced</p>
+        </div>
+        <div class="artist-story">
+          <section class="biography"><h3 data-i18n="about">ABOUT</h3><p id="artist-intro"></p></section>
+          <section id="album-section" class="listening"><h3 data-i18n="listen">START HERE</h3><div id="album-list" class="album-list"></div><p class="album-hint" data-i18n="albumHint">Click a cover to enlarge it or copy the title</p></section>
+          <nav class="artist-pager" data-i18n-aria="browse" aria-label="Browse artists">
+            <button id="previous-artist" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg><span data-i18n="previous">Previous</span></button>
+            <button id="next-artist" type="button"><span data-i18n="next">Next</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="media-layer" class="modal-layer media-layer" hidden>
+    <button class="scrim media-scrim" type="button" data-i18n-aria="closeMedia" aria-label="Close image"></button>
+    <section id="media-dialog" class="media-dialog" role="dialog" aria-modal="true" aria-labelledby="media-name" tabindex="-1">
+      <button id="close-media" class="close-button" type="button" data-i18n-aria="closeMedia" aria-label="Close image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button>
+      <img id="media-image" alt="">
+      <h2 id="media-name"></h2>
+      <div id="export-controls" class="export-controls" hidden><button id="download-wishlist" type="button" class="download-wishlist" data-i18n="download">Download PNG</button><p data-i18n="saveHint">Hold the image to save it, or download the PNG.</p></div>
+      <div id="copy-controls" class="copy-controls"><input id="copy-text" data-i18n-aria="copyLabel" aria-label="Artist and release title" readonly><button id="copy-album" type="button" data-i18n="copy">Copy title</button><p id="copy-message" aria-live="polite"></p></div>
+    </section>
+  </div>
+
+  <div id="wishlist-layer" class="modal-layer" hidden>
+    <button class="scrim wishlist-scrim" type="button" data-i18n-aria="closeWishlist" aria-label="Close wishlist"></button>
+    <section id="wishlist-dialog" class="wishlist-dialog" role="dialog" aria-modal="true" aria-labelledby="wishlist-title" tabindex="-1">
+      <header><div><span class="wish-eyebrow">CLOCKENFLAP 2026</span><h2 id="wishlist-title" data-i18n="wishlist">My wishlist</h2></div><div class="dialog-actions"><nav class="language-nav" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language="zh" aria-pressed="false" lang="zh-CN">中文</button></nav><button id="close-wishlist" class="close-button" type="button" data-i18n-aria="closeWishlist" aria-label="Close wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button></div></header>
+      <p id="wishlist-summary" class="wishlist-summary"></p>
+      <nav id="wishlist-days" class="wishlist-days" data-i18n-aria="dayNav" aria-label="Filter by day"></nav>
+      <div id="wishlist-content"></div>
+      <div id="wish-undo" class="wish-undo" hidden><span id="wish-undo-message" role="status" aria-live="polite"></span><button id="undo-wish" type="button" data-i18n="undo">Undo</button></div>
+      <footer class="wishlist-footer"><div class="wishlist-actions"><button id="add-wishlist" class="add-wishlist" type="button" data-i18n="addMore">Explore lineup</button><button id="export-wishlist" class="export-wishlist" type="button" data-i18n="saveLineup">Save my lineup</button></div><p class="wishlist-note" data-i18n="saved">Saved on this device. Change your picks anytime.</p></footer>
+    </section>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script src="./data.js"></script><script src="./locales.js"></script><script src="./compat.js"></script><script src="./platform-web.js"></script><script src="./app.js"></script>
+</body>
+</html>

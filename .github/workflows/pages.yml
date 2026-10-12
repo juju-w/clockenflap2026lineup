@@ -1,0 +1,49 @@
+name: Publish website
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check runtime and offline adapter
+        run: |
+          node scripts/check.js
+          for file in app.js compat.js platform-web.js platform-xhs.js data.js locales.js; do node --check "$file"; done
+      - name: Build website and offline package
+        run: |
+          python3 scripts/build.py web
+          python3 scripts/build.py xhs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: xhs-offline-package
+          path: dist/clockenflap2026lineup-xhs.zip
+      - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'pull_request'
+        with:
+          path: dist/web
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,7 +1,8 @@
 """Build a static website or offline Xiaohongshu bundle, with no dependencies."""
 from pathlib import Path
 from html.parser import HTMLParser
-import argparse, shutil, re, zipfile
+import argparse, shutil, re, zipfile, hashlib
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNTIME = ['index.html', 'style.css', 'app.js', 'data.js', 'locales.js', 'compat.js', 'icon.svg']
@@ -20,7 +21,7 @@ class References(HTMLParser):
             if not ref: continue
             if ref.startswith(('http:', 'https:', '/', 'javascript:')):
                 raise ValueError('Non-local runtime reference: ' + ref)
-            if ref.startswith('./') and not (self.folder / ref).exists():
+            if ref.startswith('./') and not (self.folder / urlsplit(ref).path).exists():
                 raise ValueError('Missing runtime reference: ' + ref)
 
 def main():
@@ -36,6 +37,14 @@ def main():
     if args.target == 'xhs':
         entry = output / 'index.html'
         entry.write_text(entry.read_text().replace('platform-web.js', 'platform-xhs.js'))
+    else:
+        # Pages caches scripts independently of HTML. A changed file gets a fresh URL.
+        entry = output / 'index.html'
+        def version(match):
+            ref = match.group(2)
+            digest = hashlib.sha256((output / ref).read_bytes()).hexdigest()[:12]
+            return match.group(1) + ref + '?v=' + digest + match.group(3)
+        entry.write_text(re.sub(r'((?:src|href)=")([.]/[^"?]+\.(?:js|css))(\")', version, entry.read_text()))
     check = References(); check.folder = output; check.feed((output / 'index.html').read_text())
     files = sorted(p for p in output.rglob('*') if p.is_file())
     if len(files) > 200: raise ValueError('More than 200 runtime files')

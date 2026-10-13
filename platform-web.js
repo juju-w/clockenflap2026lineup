@@ -14,3 +14,14 @@ window.CF_PLATFORM = {
     setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
   }
 };
+
+/* Repository navigation belongs to the website, not the offline container. */
+(function(){
+  var actions=document.querySelector('.rail-actions');if(!actions)return;
+  var link=document.createElement('a');link.className='repository-link';
+  link.href='https://github.com/juju-w/clockenflap2026lineup';
+  link.target='_blank';link.rel='noopener noreferrer';
+  link.setAttribute('aria-label','GitHub');
+  link.innerHTML='GitHub <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg>';
+  actions.insertBefore(link,actions.firstChild);
+}());

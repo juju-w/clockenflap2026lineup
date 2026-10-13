@@ -1,0 +1,422 @@
+[
+  {
+    "thumbnail": "assets/images/hayleywilliams-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/a210d53b-15f8-41fb-8ad8-fe94b6aecfd7/CF26+HAYLEY+WILLIAMS.png?format=2000w",
+    "kind": "portrait",
+    "name": "Hayley Williams"
+  },
+  {
+    "thumbnail": "assets/images/hayleywilliams-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/14/2b/0b/142b0bf6-ef87-00f8-2dc1-6f207460b3c2/60016.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Hayley Williams — Ego Death At A Bachelorette Party"
+  },
+  {
+    "thumbnail": "assets/images/hayleywilliams-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9b/4a/0e/9b4a0eaf-fab0-8328-ef41-65b6bffe6556/075679827814.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Hayley Williams — Petals For Armor"
+  },
+  {
+    "thumbnail": "assets/images/hayleywilliams-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e6/00/1c/e6001c90-3148-416e-effa-91f8c41ca37b/075679792235.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Hayley Williams — FLOWERS for VASES / descansos"
+  },
+  {
+    "thumbnail": "assets/images/keshi-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/b8e2a946-3b9d-42a3-bc81-d9e90c06d880/CF26+Keshi.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "keshi"
+  },
+  {
+    "thumbnail": "assets/images/keshi-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/1a/a9/77/1aa97792-9cc5-4f72-7bab-2e7e42ba43f3/22UMGIM07344.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "keshi — GABRIEL"
+  },
+  {
+    "thumbnail": "assets/images/keshi-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a6/a3/20/a6a32054-f43f-12b3-4019-1f201b6c56b2/24UMGIM70300.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "keshi — REQUIEM"
+  },
+  {
+    "thumbnail": "assets/images/keshi-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/83/d7/8a/83d78a91-effe-ea4e-ec91-b40a550e6b87/20UMGIM13994.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "keshi — bandaids"
+  },
+  {
+    "thumbnail": "assets/images/slowdive-avatar.webp",
+    "source": "https://media.redbullmusicacademy.com/assets/601/935/1004/slowdive-interview-title.jpg?auto=format&w=2000",
+    "kind": "portrait",
+    "name": "Slowdive"
+  },
+  {
+    "thumbnail": "assets/images/slowdive-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/c2/a0/a4/c2a0a495-ec33-27f1-c6db-0dff1c3ba15d/dj.pzrqoswp.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Slowdive — Souvlaki"
+  },
+  {
+    "thumbnail": "assets/images/slowdive-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/81/42/f5/8142f595-dc02-1b4f-0cea-b265ac6c85f3/656605143262.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Slowdive — Slowdive"
+  },
+  {
+    "thumbnail": "assets/images/slowdive-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/94/4f/17/944f17a6-f6b9-3761-bbe4-3257346aa718/68374.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Slowdive — everything is alive"
+  },
+  {
+    "thumbnail": "assets/images/malcolmtodd-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/f55b712e-aba3-481e-b03e-4a5952bf8ac9/CF26+Malcolm+Todd.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "Malcolm Todd"
+  },
+  {
+    "thumbnail": "assets/images/malcolmtodd-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/8b/02/13/8b0213f8-bc16-3f1d-ffd7-d9accd49880e/196874337578.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Malcolm Todd — Do That Again"
+  },
+  {
+    "thumbnail": "assets/images/malcolmtodd-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/93/68/85/9368851d-cc58-b883-5c2a-d08e8826b145/196872917871.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Malcolm Todd — Malcolm Todd"
+  },
+  {
+    "thumbnail": "assets/images/malcolmtodd-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d0/06/1f/d0061f04-bcae-f9a1-8126-830c04fa32db/196871971188.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Malcolm Todd — Sweet Boy"
+  },
+  {
+    "thumbnail": "assets/images/qotsa-avatar.webp",
+    "source": "https://dynamicmedia.livenationinternational.com/s/w/o/5c9064c8-c1bf-4096-acab-c88f452b841d.jpg",
+    "kind": "portrait",
+    "name": "Queens of the Stone Age"
+  },
+  {
+    "thumbnail": "assets/images/qotsa-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/77/fc/cb/77fccb6d-96d8-3a6b-a71b-66c76b1fe4d3/00606949343521.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Queens of the Stone Age — Songs for the Deaf"
+  },
+  {
+    "thumbnail": "assets/images/qotsa-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/87/b4/aa/87b4aab6-8d32-5001-546d-71d829af1a12/00602527472270.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Queens of the Stone Age — Rated R"
+  },
+  {
+    "thumbnail": "assets/images/qotsa-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/0c/73/3c/0c733c12-fc9a-bb06-da19-9f25d7c99050/744861104063.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Queens of the Stone Age — ...Like Clockwork"
+  },
+  {
+    "thumbnail": "assets/images/hyukoh-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/7b4cfaf6-0d02-4616-9dce-5dafa3e5fe34/CF26+HYUKOH.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "HYUKOH"
+  },
+  {
+    "thumbnail": "assets/images/hyukoh-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/20/de/43/20de43fe-733e-3734-cab9-7bd787411260/Cover_HYUKOH_23.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "HYUKOH — 23"
+  },
+  {
+    "thumbnail": "assets/images/hyukoh-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/00/5f/d2/005fd283-065a-2e34-7836-4657f78d1b48/HYUKOH_24_3000.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "HYUKOH — 24 : How to find true love and happiness"
+  },
+  {
+    "thumbnail": "assets/images/hyukoh-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/1f/67/22/1f67223f-4a65-13fd-0959-b7016465d458/4711232884561_cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "HYUKOH — AAA"
+  },
+  {
+    "thumbnail": "assets/images/jamc-avatar.webp",
+    "source": "https://happymag.tv/wp-content/uploads/2019/08/1JAMC.jpg",
+    "kind": "portrait",
+    "name": "The Jesus and Mary Chain"
+  },
+  {
+    "thumbnail": "assets/images/jamc-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music/f6/76/86/mzi.yobhspgv.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "The Jesus and Mary Chain — Psychocandy"
+  },
+  {
+    "thumbnail": "assets/images/jamc-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music/f8/ee/f9/mzi.iswuhnsm.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "The Jesus and Mary Chain — Darklands"
+  },
+  {
+    "thumbnail": "assets/images/jamc-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/84/73/4b/84734ba5-e4ab-1e7b-ea87-1e8f4aa2c319/119251.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "The Jesus and Mary Chain — Glasgow Eyes"
+  },
+  {
+    "thumbnail": "assets/images/kimgordon-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/b4def439-2eb4-472d-9e44-8a38bed9cb6a/CF26+Kim+Gordon.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "Kim Gordon"
+  },
+  {
+    "thumbnail": "assets/images/kimgordon-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/0a/3d/56/0a3d5627-c6e4-cc2a-e64f-0058a0791454/191401219877.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Kim Gordon — PLAY ME"
+  },
+  {
+    "thumbnail": "assets/images/kimgordon-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/09/66/4a/09664ac6-1382-2c23-7d4d-6cc37ae7ecea/191401202978.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Kim Gordon — The Collective"
+  },
+  {
+    "thumbnail": "assets/images/kimgordon-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/7f/5c/30/7f5c3087-03ba-2a9f-c428-0daaeaa66351/744861137955.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Kim Gordon — No Home Record"
+  },
+  {
+    "thumbnail": "assets/images/digableplanets-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/2def7e50-57c1-4a74-9552-1e0f8f8bca4c/CF26+Digable+Planets.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "Digable Planets"
+  },
+  {
+    "thumbnail": "assets/images/digableplanets-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/3c/d5/2a/3cd52ad4-e011-49df-5981-2a05ee1543cb/13UABIM59289.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Digable Planets — Reachin' (A New Refutation Of Time And Space)"
+  },
+  {
+    "thumbnail": "assets/images/digableplanets-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9b/51/d6/9b51d651-b814-5d3e-684f-6e456f498aaf/13ULAIM49390.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Digable Planets — Blowout Comb"
+  },
+  {
+    "thumbnail": "assets/images/domi-avatar.webp",
+    "source": "https://www.bluenote.com/wp-content/uploads/sites/956/2026/06/DOMi-JD-BECK_WHO-ASKED_wide.jpg",
+    "kind": "portrait",
+    "name": "DOMi & JD BECK"
+  },
+  {
+    "thumbnail": "assets/images/domi-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/fa/f7/3e/faf73e42-68e9-ee53-ef7e-145989e89a3f/22UMGIM45496.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "DOMi & JD BECK — NOT TiGHT"
+  },
+  {
+    "thumbnail": "assets/images/domi-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/01/fc/e1/01fce13b-51f9-1384-52ad-18b0fae2319d/26UMGIM30915.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "DOMi & JD BECK — WHO ASKED?"
+  },
+  {
+    "thumbnail": "assets/images/sleafordmods-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/41a1245c-7fb6-4ec9-94bf-47b78e20ae11/CF26+Sleaford+Mods.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "Sleaford Mods"
+  },
+  {
+    "thumbnail": "assets/images/sleafordmods-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/48/65/ca/4865ca8c-67fb-7fa2-63c0-924881e84d2f/191402057454.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Sleaford Mods — The Demise of Planet X"
+  },
+  {
+    "thumbnail": "assets/images/sleafordmods-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/a8/c0/92/a8c092f1-7752-5b7f-8517-c3293fae1eff/191402039177.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Sleaford Mods — UK GRIM"
+  },
+  {
+    "thumbnail": "assets/images/sleafordmods-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/8f/06/45/8f06450d-d2a7-d606-2733-e81656b89097/883870092562.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Sleaford Mods — English Tapas"
+  },
+  {
+    "thumbnail": "assets/images/marceldettmann-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/f897cd24-3345-41a5-b229-00a7e75b00c3/CF26+Marcel+Dettman.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "Marcel Dettmann"
+  },
+  {
+    "thumbnail": "assets/images/marceldettmann-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music/2f/af/17/mzi.vrkwuagd.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Marcel Dettmann — Dettmann"
+  },
+  {
+    "thumbnail": "assets/images/marceldettmann-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music4/v4/13/c0/e2/13c0e23f-7036-3636-5ffe-4e94803162d3/cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Marcel Dettmann — Dettmann II"
+  },
+  {
+    "thumbnail": "assets/images/marceldettmann-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/0b/be/02/0bbe02f1-8545-1e75-b05a-e6c2c91ae45d/8720246792966.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Marcel Dettmann — Fear of Programming"
+  },
+  {
+    "thumbnail": "assets/images/hersoundsystem-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/18c4778a-aa59-4eff-9d95-99001acd1b1a/CF26+HE.R+Soundsystem.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "HE.R Soundsystem"
+  },
+  {
+    "thumbnail": "assets/images/danielaandrade-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/e37f0d9b-f3cd-44d3-9d23-9e576670691b/CF26+Daniela+Andrade.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "Daniela Andrade"
+  },
+  {
+    "thumbnail": "assets/images/danielaandrade-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/85/10/b6/8510b669-116f-0d68-12d6-9e12053e436b/859729191144_cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Daniela Andrade — Oda"
+  },
+  {
+    "thumbnail": "assets/images/danielaandrade-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/48/9f/f0/489ff0c9-4083-38a9-2bbb-67edf211620e/859735107016_cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Daniela Andrade — Tamale"
+  },
+  {
+    "thumbnail": "assets/images/danielaandrade-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music60/v4/d7/30/3f/d7303f35-d1ac-3dc8-97e0-0f0741f699d8/859717544730_cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Daniela Andrade — Shore"
+  },
+  {
+    "thumbnail": "assets/images/six60-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/703efa5f-3505-4c9d-8a69-6ca7854dca70/CF26+Six60.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "SIX60"
+  },
+  {
+    "thumbnail": "assets/images/six60-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/e4/56/8f/e4568fd5-4dc0-2583-bb36-c029cbcff2a4/25UM2IM07680.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "SIX60 — Right Here Right Now"
+  },
+  {
+    "thumbnail": "assets/images/six60-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/51/45/7a/51457a69-ab04-f976-db81-56a096026c41/22UMGIM91919.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "SIX60 — Castle St"
+  },
+  {
+    "thumbnail": "assets/images/six60-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/40/f0/b3/40f0b35d-1a64-fd6f-2c61-b34ed42df6d3/886448071020.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "SIX60 — SIX60"
+  },
+  {
+    "thumbnail": "assets/images/pami-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/735210c1-9c70-484f-90c5-a1054b1f2093/CF26+Pami.jpg?format=2000w",
+    "kind": "portrait",
+    "name": "pami"
+  },
+  {
+    "thumbnail": "assets/images/pami-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a9/7d/7a/a97d7a07-dda8-96b4-0e16-641052ce6d67/cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "pami — puffette"
+  },
+  {
+    "thumbnail": "assets/images/pami-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1a/1c/e8/1a1ce870-2378-e7ce-9ccc-80ba7cd90860/cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "pami — out of nowhere"
+  },
+  {
+    "thumbnail": "assets/images/pami-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/cd/3d/14/cd3d141c-b2c0-ecae-b7fc-fa31763c82ef/cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "pami — cry jar"
+  },
+  {
+    "thumbnail": "assets/images/fazer-avatar.webp",
+    "source": "https://static.thehoneycombers.com/wp-content/uploads/sites/6/2017/10/Fazerdaze-Amelia-Murray-New-Zealand-indie-band-hong-kong-concert-live-music-main-image-e1508037261445.jpg",
+    "kind": "portrait",
+    "name": "Fazerdaze"
+  },
+  {
+    "thumbnail": "assets/images/fazer-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/6d/fb/a0/6dfba09e-c518-8c1a-8645-a7528f411541/191018814069.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Fazerdaze — Morningside"
+  },
+  {
+    "thumbnail": "assets/images/fazer-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/15/87/81/158781f2-f09e-669a-cd75-f5e6a016e3de/0720841361404_Cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Fazerdaze — Soft Power"
+  },
+  {
+    "thumbnail": "assets/images/fazer-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3a/cd/86/3acd8682-b6be-7d6c-6b67-4d3aa52e7efa/0720841360629_Cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Fazerdaze — Break!"
+  },
+  {
+    "thumbnail": "assets/images/chanpan-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/6d28f716-ca14-443d-a1f0-01c77ee4b229/CF26+Chanpan.png?format=2000w",
+    "kind": "portrait",
+    "name": "Chanpan"
+  },
+  {
+    "thumbnail": "assets/images/chanpan-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/ec/44/bc/ec44bc1b-1c4e-f73a-3f6d-1cd00d95f306/820200983541.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Chanpan — autogratis"
+  },
+  {
+    "thumbnail": "assets/images/chanpan-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/aa/73/23/aa7323ed-20a5-fbef-3e71-7bbad9b2bb79/199350824982.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Chanpan — endlessly"
+  },
+  {
+    "thumbnail": "assets/images/brekkyboy-avatar.webp",
+    "source": "https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/eb495c42-7b2f-41d8-9161-18f95f922f0c/CF26+Brekky+Boy.png?format=2000w",
+    "kind": "portrait",
+    "name": "Brekky Boy"
+  },
+  {
+    "thumbnail": "assets/images/brekkyboy-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/f9/95/2c/f9952cf3-f9bb-87ae-a240-77fc9baab49a/136870.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Brekky Boy — Seita - EP"
+  },
+  {
+    "thumbnail": "assets/images/brekkyboy-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/e1/c5/d0/e1c5d0cc-a6b7-6d78-15a5-77fcf4c9afd9/artwork.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Brekky Boy — Setsuko - EP"
+  },
+  {
+    "thumbnail": "assets/images/brekkyboy-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music123/v4/67/31/74/6731743e-f056-96ef-eadf-2539d2dc16ee/artwork.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Brekky Boy — Sagarmatha - EP"
+  }
+]

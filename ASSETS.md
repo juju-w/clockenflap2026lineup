@@ -4,6 +4,8 @@ Original code and documentation are MIT licensed. Artist photographs and album a
 
 Official lineup/day source: [Clockenflap 2026 lineup](https://www.clockenflap.com/2026-lineup).
 
+The website's enlarged images use the same photograph/artwork sources at higher resolution and lighter compression. Exact source URLs and native/output dimensions are recorded in [web-assets/manifest.json](web-assets/manifest.json). Large files are packaged locally for the website only and loaded when an image is enlarged; they are excluded from the offline mini-tool. Sources smaller than the target size are not upscaled.
+
 | Artist | Photograph source record | Release artwork/source pages |
 | --- | --- | --- |
 | Hayley Williams | Local project source record; photographer/license not established | [Ego Death At A Bachelorette Party](https://music.apple.com/us/album/ego-death-at-a-bachelorette-party/1850011909?uo=4)<br>[Petals For Armor](https://music.apple.com/us/album/petals-for-armor/1511028064?uo=4)<br>[FLOWERS for VASES / descansos](https://music.apple.com/us/album/flowers-for-vases-descansos/1551664124?uo=4) |

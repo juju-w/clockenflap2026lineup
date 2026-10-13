@@ -273,7 +273,7 @@
       var frame=document.createElement('span');frame.className='album-art';
       var image=document.createElement('img');image.className='album-cover';image.width=480;image.height=480;image.style.setProperty('--artwork-delay',(index*65)+'ms');frame.appendChild(image);
       var title=document.createElement('strong');title.textContent=album.title;var year=document.createElement('small');year.textContent=album.year;
-      button.appendChild(frame);button.appendChild(title);button.appendChild(year);button.addEventListener('click',function(){openMedia(album.cover,a.name+' — '+album.title,true,button);});$('album-list').appendChild(button);revealArtwork(image,album.cover,frame);
+      button.appendChild(frame);button.appendChild(title);button.appendChild(year);button.addEventListener('click',function(){openMedia(album.coverLarge||album.cover,a.name+' — '+album.title,true,button);});$('album-list').appendChild(button);revealArtwork(image,album.cover,frame);
     });
     localizeArtist(a);refreshWant();$('artist-dialog').scrollTop=0;
     // Warm neighbouring portraits and covers ahead of arrow navigation.
@@ -425,7 +425,7 @@
   document.querySelectorAll('[data-day]').forEach(function(button){button.addEventListener('click',function(){hideHover();selectedDay=button.dataset.day;document.querySelectorAll('[data-day]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});updatePoster();});});
   $('close-artist').addEventListener('click',function(){closeArtist();});document.querySelector('#artist-layer>.scrim').addEventListener('click',function(){closeArtist();});
   $('artist-want').addEventListener('click',function(){if(activeId)toggleWant(activeId);});$('previous-artist').addEventListener('click',function(){stepArtist(-1);});$('next-artist').addEventListener('click',function(){stepArtist(1);});
-  $('enlarge-portrait').addEventListener('click',function(){if(activeId)openMedia(byId[activeId].avatar,byId[activeId].name,false,this);});
+  $('enlarge-portrait').addEventListener('click',function(){if(activeId)openMedia(byId[activeId].avatarLarge||byId[activeId].avatar,byId[activeId].name,false,this);});
   $('close-media').addEventListener('click',closeMedia);document.querySelector('.media-scrim').addEventListener('click',closeMedia);$('copy-album').addEventListener('click',copyAlbum);
   $('download-wishlist').addEventListener('click',saveExportImage);$('back-to-wishlist').addEventListener('click',function(){closeArtist();});$('undo-wish').addEventListener('click',undoWish);$('add-wishlist').addEventListener('click',exploreLineup);$('export-wishlist').addEventListener('click',exportWishlist);
   $('open-wishlist').addEventListener('click',openWishlist);$('close-wishlist').addEventListener('click',closeWishlist);document.querySelector('.wishlist-scrim').addEventListener('click',closeWishlist);

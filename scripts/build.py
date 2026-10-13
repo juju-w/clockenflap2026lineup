@@ -1,7 +1,7 @@
 """Build a static website or offline Xiaohongshu bundle, with no dependencies."""
 from pathlib import Path
 from html.parser import HTMLParser
-import argparse, shutil, re, zipfile, hashlib
+import argparse, shutil, re, zipfile, hashlib, json
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,6 +38,17 @@ def main():
         entry = output / 'index.html'
         entry.write_text(entry.read_text().replace('platform-web.js', 'platform-xhs.js'))
     else:
+        manifest = json.loads((ROOT / 'web-assets' / 'manifest.json').read_text())
+        large = {record['thumbnail']: record['large'] for record in manifest}
+        shutil.copytree(ROOT / 'web-assets' / 'images', output / 'assets' / 'large')
+        data_file = output / 'data.js'
+        payload = json.loads(data_file.read_text().split('=', 1)[1].strip().removesuffix(';'))
+        for artist in payload['artists']:
+            if artist['avatar'] in large: artist['avatarLarge'] = large[artist['avatar']]
+            for album in artist['albums']:
+                if album['cover'] in large: album['coverLarge'] = large[album['cover']]
+        data_file.write_text('window.LINEUP_DATA=' + json.dumps(payload, ensure_ascii=False,
+            separators=(',', ':')) + ';\n')
         # Pages caches scripts independently of HTML. A changed file gets a fresh URL.
         entry = output / 'index.html'
         def version(match):
@@ -46,6 +57,15 @@ def main():
             return match.group(1) + ref + '?v=' + digest + match.group(3)
         entry.write_text(re.sub(r'((?:src|href)=")([.]/[^"?]+\.(?:js|css))(\")', version, entry.read_text()))
     check = References(); check.folder = output; check.feed((output / 'index.html').read_text())
+    payload = json.loads((output / 'data.js').read_text().split('=', 1)[1].strip().removesuffix(';'))
+    for artist in payload['artists']:
+        refs = [artist['avatar']] + [album['cover'] for album in artist['albums']]
+        extras = [artist.get('avatarLarge')] + [album.get('coverLarge') for album in artist['albums']]
+        if args.target == 'xhs' and (any(extras) or (output / 'assets' / 'large').exists()):
+            raise ValueError('Web large images must not enter the offline bundle')
+        for ref in refs + [ref for ref in extras if ref]:
+            if not ref.startswith('assets/') or '..' in ref or not (output / ref).is_file():
+                raise ValueError('Invalid image reference: ' + ref)
     files = sorted(p for p in output.rglob('*') if p.is_file())
     if len(files) > 200: raise ValueError('More than 200 runtime files')
     for path in files:
@@ -62,8 +82,8 @@ def main():
     with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         for path in files: z.write(path, path.relative_to(output))
     size = archive.stat().st_size
-    if size > 10*1024*1024: raise ValueError('ZIP exceeds 10 MiB')
+    if args.target == 'xhs' and size > 10*1024*1024: raise ValueError('ZIP exceeds 10 MiB')
     print(f'{args.target}: {len(files)} files, {size/1024/1024:.2f} MiB, {archive}')
-    if size > 2*1024*1024: print('WARN: above the recommended 2 MiB budget; images retained for readability.')
+    if args.target == 'xhs' and size > 2*1024*1024: print('WARN: above the recommended 2 MiB budget; images retained for readability.')
 
 if __name__ == '__main__': main()

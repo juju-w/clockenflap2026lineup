@@ -23,6 +23,8 @@ python3 -m http.server 8765 --bind 127.0.0.1
 
 Open `http://127.0.0.1:8765/`. All scripts, artwork and styles are local, with no runtime package installation.
 
+To preview the web-only large images, build the website and open `http://127.0.0.1:8765/dist/web/` instead.
+
 ## Build and check
 
 ```sh
@@ -39,7 +41,7 @@ The two outputs share their UI, artist IDs, data, styles, wishlist storage and C
 | --- | --- | --- |
 | Copy release title | Browser clipboard, then selected-text fallback | Selected-text fallback |
 | Save PNG | Browser download / image preview | Official native album-save bridge |
-| Runtime images | Packaged local images | The same packaged local images |
+| Runtime images | Local thumbnails plus large images loaded on enlargement | Local compressed images |
 | Routing | Shareable artist hash | In-page dialogs |
 
 See [compatibility notes](docs/COMPATIBILITY.md) for test coverage and the container baseline.
@@ -52,6 +54,7 @@ See [compatibility notes](docs/COMPATIBILITY.md) for test coverage and the conta
 - `style.css`: poster and record-sleeve styles, with feature-based fallbacks.
 - `platform-web.js` / `platform-xhs.js`: capabilities belonging to each host.
 - `scripts/build.py`: allowlisted packaging; excludes documentation, designs, Git files and the other platform adapter.
+- `web-assets/`: larger versions of the same photographs/artwork, included only in the website build. Refresh from the recorded sources with `python3 scripts/prepare_web_images.py` (requires ffmpeg and ffprobe). Images keep their original proportions and are never upscaled; source resolution limits still apply.
 
 The older prediction workspace is not part of this repository. This public project is the maintained interactive guide.
 

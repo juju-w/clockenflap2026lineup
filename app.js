@@ -22,6 +22,7 @@
   var wishDay='all',removedWish=null,exportURL=null,exportImage=null,exporting=false,exportGeneration=0;
   var artworkRequests=new WeakMap(),artworkPreloads={};
   var layerMotions=new WeakMap(),artistSwitch=0,displayedId=null,contentMotion=null,copyState='';
+  var touchPress=null,touchTimer=null,blockedTouchClick=null,blockedTouchUntil=0;
   function t(key){return locales[language][key];}
   function intro(a){return language==='en'?locales.intros[a.id]:a.intro;}
   function genres(a){return a.genres.map(function(g){return language==='en'?(locales.genres[g]||g):g;}).join(' · ');}
@@ -82,12 +83,13 @@
       var line=document.createElement('div');line.className='lineup-row';line.dataset.row=index;
       row.forEach(function(spec,i){
         var a=byId[spec[0]],button=document.createElement('button');button.type='button';button.className='artist-name '+spec[1];button.dataset.artist=a.id;button.textContent=displayName(a);button.setAttribute('aria-label',a.name+', '+dayText(a)+', '+t('artistAction'));button.setAttribute('aria-haspopup','dialog');
-        button.addEventListener('pointerenter',function(event){if(event.pointerType==='touch'||!window.matchMedia('(hover: hover)').matches)return;queueHover(a,button,event);});
-        button.addEventListener('pointermove',function(event){if(hoverRequested!==a.id)return;if(hovered===a.id)positionHover(event.clientX,event.clientY);else hoverPoint={x:event.clientX,y:event.clientY};});
-        button.addEventListener('pointerleave',scheduleHoverHide);
+        button.addEventListener('pointerenter',function(event){if(event.pointerType==='touch'||event.pointerType==='pen'||!window.matchMedia('(hover: hover)').matches)return;queueHover(a,button,event);});
+        button.addEventListener('pointermove',function(event){if(event.pointerType==='touch'||event.pointerType==='pen')return;if(hoverRequested!==a.id)return;if(hovered===a.id)positionHover(event.clientX,event.clientY);else hoverPoint={x:event.clientX,y:event.clientY};});
+        button.addEventListener('pointerleave',function(event){if(event.pointerType!=='touch'&&event.pointerType!=='pen')scheduleHoverHide();});
         button.addEventListener('focus',function(){if(window.matchMedia('(hover: hover)').matches&&window.CF_COMPAT.focusVisible(button)){var rect=button.getBoundingClientRect();queueHover(a,button,{clientX:rect.right,clientY:rect.top+rect.height/2});}});
         button.addEventListener('blur',scheduleHoverHide);
-        button.addEventListener('click',function(){openArtist(a.id);});
+        bindTouchPreview(a,button);
+        button.addEventListener('click',function(event){activateArtist(a,event);});
         if(i){var dot=document.createElement('span');dot.className='separator mint';dot.textContent='•';dot.setAttribute('aria-hidden','true');line.appendChild(dot);}
         line.appendChild(button);
       });$('lineup').appendChild(line);
@@ -127,6 +129,37 @@
     $('hover-genres').textContent=genres(a);
     var text=intro(a),firstSentence=text.match(/^.*?[.!?](?:\s|$)/),sentence=language==='en'?(firstSentence?firstSentence[0].trim():text):text.split('。')[0]+'。';
     $('hover-intro').textContent=sentence;
+    $('hover-card').querySelector('.hover-open>span').textContent=t($('hover-card').classList.contains('is-touch-preview')?'touchRelease':'hoverOpen');
+  }
+  // Keep the browser's vertical scrolling; a hold is cancelled before it becomes a swipe.
+  function activateArtist(a,event){
+    if(event.detail!==0&&blockedTouchClick===a.id&&Date.now()<blockedTouchUntil){event.preventDefault();return;}
+    openArtist(a.id);
+  }
+  function bindTouchPreview(a,button){
+    button.addEventListener('pointerdown',function(event){
+      if(event.pointerType!=='touch'&&event.pointerType!=='pen')return;
+      if(event.isPrimary===false){finishTouchPreview(true);return;}
+      finishTouchPreview(true);blockedTouchClick=null;blockedTouchUntil=0;
+      touchPress={id:a.id,pointerId:event.pointerId,button:button,x:event.clientX,y:event.clientY,held:false};
+      var press=touchPress;button.classList.add('is-pressing');warmArtistArtwork(a);
+      touchTimer=setTimeout(function(){
+        touchTimer=null;if(touchPress!==press)return;
+        press.held=true;blockedTouchClick=a.id;blockedTouchUntil=Date.now()+1000;
+        queueHover(a,button,{clientX:press.x,clientY:press.y,pointerType:'touch'});
+      },380);
+    });
+    button.addEventListener('contextmenu',function(event){event.preventDefault();});
+  }
+  function moveTouchPreview(event){
+    if(!touchPress||event.pointerId!==touchPress.pointerId)return;
+    if(Math.abs(event.clientX-touchPress.x)+Math.abs(event.clientY-touchPress.y)>12)finishTouchPreview(true);
+  }
+  function finishTouchPreview(cancelled,event){
+    if(!touchPress||(event&&event.pointerId!==touchPress.pointerId))return;
+    var press=touchPress;touchPress=null;clearTimeout(touchTimer);touchTimer=null;
+    press.button.classList.remove('is-pressing');
+    if(press.held||cancelled){blockedTouchClick=press.id;blockedTouchUntil=Date.now()+1000;hideHover(true);}
   }
   function measureHover(){var card=$('hover-card');hoverSize={width:card.offsetWidth,height:card.offsetHeight};}
   function queueHover(a,button,event){
@@ -138,6 +171,7 @@
     var switching=!!hoverRequested||!$('hover-card').hidden;
     // A new target never carries the previous artist's card or image pixels.
     hideHover();warmArtistArtwork(a);hoverRequested=a.id;
+    $('hover-card').classList.toggle('is-touch-preview',event.pointerType==='touch');
     var generation=hoverGeneration,ready=false,elapsed=false,started=false;
     hoverPoint={x:event.clientX,y:event.clientY};
     var photo=document.createElement('img');photo.id='hover-photo';photo.alt=a.name;photo.decoding='async';
@@ -166,6 +200,11 @@
   }
   function positionHover(x,y,snap){
     hoverPoint={x:x,y:y};
+    if($('hover-card').classList.contains('is-touch-preview')){
+      var above=y-hoverSize.height-32,top=above>=16?above:y+42;
+      hoverTarget={x:Math.max(16,Math.min(x-hoverSize.width/2,window.innerWidth-hoverSize.width-16)),y:Math.max(16,Math.min(top,window.innerHeight-hoverSize.height-16))};
+      hoverCurrent={x:hoverTarget.x,y:hoverTarget.y};paintHover();return;
+    }
     var left=hoverSide===1?x+26:x-hoverSize.width-26;
     hoverTarget={x:Math.max(16,Math.min(left,window.innerWidth-hoverSize.width-16)),y:Math.max(16,Math.min(y+18,window.innerHeight-hoverSize.height-16))};
     if(snap||!hoverCurrent){hoverCurrent={x:hoverTarget.x,y:hoverTarget.y};paintHover();}
@@ -390,7 +429,13 @@
   $('close-media').addEventListener('click',closeMedia);document.querySelector('.media-scrim').addEventListener('click',closeMedia);$('copy-album').addEventListener('click',copyAlbum);
   $('download-wishlist').addEventListener('click',saveExportImage);$('back-to-wishlist').addEventListener('click',function(){closeArtist();});$('undo-wish').addEventListener('click',undoWish);$('add-wishlist').addEventListener('click',exploreLineup);$('export-wishlist').addEventListener('click',exportWishlist);
   $('open-wishlist').addEventListener('click',openWishlist);$('close-wishlist').addEventListener('click',closeWishlist);document.querySelector('.wishlist-scrim').addEventListener('click',closeWishlist);
-  document.addEventListener('keydown',handleKeys);window.addEventListener('popstate',fromLocation);window.addEventListener('hashchange',fromLocation);window.addEventListener('resize',function(){hideHover();requestAnimationFrame(fitPoster);});window.addEventListener('scroll',hideHover,{passive:true});
+  document.addEventListener('pointermove',moveTouchPreview,{passive:true});
+  document.addEventListener('pointerup',function(event){finishTouchPreview(false,event);});
+  document.addEventListener('pointercancel',function(event){finishTouchPreview(true,event);});
+  document.addEventListener('pointerdown',function(event){if(event.isPrimary===false)finishTouchPreview(true);});
+  window.addEventListener('blur',function(){finishTouchPreview(true);hideHover();});
+  document.addEventListener('visibilitychange',function(){if(document.hidden){finishTouchPreview(true);hideHover();}});
+  document.addEventListener('keydown',handleKeys);window.addEventListener('popstate',fromLocation);window.addEventListener('hashchange',fromLocation);window.addEventListener('resize',function(){finishTouchPreview(true);hideHover();requestAnimationFrame(fitPoster);});window.addEventListener('scroll',function(){finishTouchPreview(true);hideHover();},{passive:true});
   window.addEventListener('storage',function(event){if(event.key==='cf2026-poster-wishlist'||event.key===null){wishlist=readWishlist();updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();}});
   document.querySelectorAll('[data-language]').forEach(function(button){button.addEventListener('click',function(){language=button.dataset.language;try{localStorage.setItem('cf2026-poster-language',language);}catch(e){}applyLanguage();});});
   renderPoster();applyLanguage();fromLocation();

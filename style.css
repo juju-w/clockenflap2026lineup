@@ -149,3 +149,15 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .repository-link:hover{opacity:1}.repository-link svg{width:14px;height:14px}
 .no-flex-gap .rail-actions>*+*{margin-left:22px}.no-flex-gap .repository-link>*+*{margin-left:4px}
 @media(max-width:600px){.rail-actions{grid-column:2;grid-row:2;justify-content:flex-end;gap:12px}.repository-link{font-size:10px}.repository-link svg{width:12px;height:12px}.no-flex-gap .rail-actions>*+*{margin-left:12px}.rail-actions .language-nav{font-size:10px}}
+/* Touch preview leaves vertical panning to the browser. */
+.touch-hint{display:none;margin:-12px 0 24px;font-size:11px;letter-spacing:.01em;opacity:.6;text-align:center}
+.artist-name{touch-action:pan-y pinch-zoom;-webkit-touch-callout:none}
+.artist-name.is-pressing:not(.is-hovered):after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:2px;background:currentColor;transform-origin:left;animation:hold-progress .38s linear both}
+@keyframes hold-progress{from{transform:scaleX(0);opacity:.3}to{transform:scaleX(1);opacity:1}}
+.hover-card.is-touch-preview{width:260px;max-width:calc(100vw - 40px);max-height:calc(100vh - 40px);overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.3)}
+.hover-card.is-touch-preview>img{max-height:126px;width:100%;object-fit:contain}
+.hover-card.is-touch-preview>strong{font-size:21px}
+.hover-card.is-touch-preview .hover-open{font-size:11px;opacity:.65}
+.hover-card.is-touch-preview .hover-open svg{display:none}
+@media(hover:none),(pointer:coarse){.touch-hint{display:block}}
+@media(max-width:600px){.touch-hint{display:block}}

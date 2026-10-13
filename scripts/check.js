@@ -26,3 +26,5 @@ assert(html.includes('juju-w')&&locales.en.creator.includes('juju-w')&&locales.z
  let selected=false;assert.equal(await ctx.window.CF_PLATFORM.copyText({focus(){},select(){selected=true;}}),'fallback');assert(selected);
  console.log(`OK: ${ids.size} artists, bilingual strings, local image references and native save adapter contract.`);
 })().catch(e=>{console.error(e);process.exitCode=1;});
+
+require("./check-hover.js");

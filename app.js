@@ -18,7 +18,7 @@
   var wishlist={},language='en',locales=window.LINEUP_LOCALES;
   try{if(localStorage.getItem('cf2026-poster-language')==='zh')language='zh';}catch(e){}
   var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-  var hoverHideTimer=null,hoverFrame=0,hoverAnimation=null,hoverSide=1,hoverSize={width:280,height:360},hoverCurrent=null,hoverTarget=null,hoverTime=0;
+  var hoverRequested=null,hoverGeneration=0,hoverFrame=0,hoverAnimation=null,hoverSide=1,hoverSize={width:280,height:360},hoverCurrent=null,hoverTarget=null,hoverTime=0;
   var wishDay='all',removedWish=null,exportURL=null,exportImage=null,exporting=false,exportGeneration=0;
   var artworkRequests=new WeakMap(),artworkPreloads={};
   var layerMotions=new WeakMap(),artistSwitch=0,displayedId=null,contentMotion=null,copyState='';
@@ -83,7 +83,7 @@
       row.forEach(function(spec,i){
         var a=byId[spec[0]],button=document.createElement('button');button.type='button';button.className='artist-name '+spec[1];button.dataset.artist=a.id;button.textContent=displayName(a);button.setAttribute('aria-label',a.name+', '+dayText(a)+', '+t('artistAction'));button.setAttribute('aria-haspopup','dialog');
         button.addEventListener('pointerenter',function(event){if(event.pointerType==='touch'||!window.matchMedia('(hover: hover)').matches)return;queueHover(a,button,event);});
-        button.addEventListener('pointermove',function(event){if(hovered===a.id)positionHover(event.clientX,event.clientY);else if(hoverTimer)hoverPoint={x:event.clientX,y:event.clientY};});
+        button.addEventListener('pointermove',function(event){if(hoverRequested!==a.id)return;if(hovered===a.id)positionHover(event.clientX,event.clientY);else hoverPoint={x:event.clientX,y:event.clientY};});
         button.addEventListener('pointerleave',scheduleHoverHide);
         button.addEventListener('focus',function(){if(window.matchMedia('(hover: hover)').matches&&window.CF_COMPAT.focusVisible(button)){var rect=button.getBoundingClientRect();queueHover(a,button,{clientX:rect.right,clientY:rect.top+rect.height/2});}});
         button.addEventListener('blur',scheduleHoverHide);
@@ -123,7 +123,6 @@
     $('wish-count').textContent=Object.keys(wishlist).length;
   }
   function fillHover(a){
-    if($('hover-photo').getAttribute('src')!==a.avatar)$('hover-photo').src=a.avatar;
     $('hover-photo').alt=a.name;$('hover-name').textContent=displayName(a);$('hover-day').textContent=dayText(a);
     $('hover-genres').textContent=genres(a);
     var text=intro(a),firstSentence=text.match(/^.*?[.!?](?:\s|$)/),sentence=language==='en'?(firstSentence?firstSentence[0].trim():text):text.split('。')[0]+'。';
@@ -131,19 +130,39 @@
   }
   function measureHover(){var card=$('hover-card');hoverSize={width:card.offsetWidth,height:card.offsetHeight};}
   function queueHover(a,button,event){
-    clearTimeout(hoverTimer);clearTimeout(hoverHideTimer);warmArtistArtwork(a);
+    if(hoverRequested===a.id){
+      hoverPoint={x:event.clientX,y:event.clientY};
+      if(hovered===a.id)positionHover(hoverPoint.x,hoverPoint.y);
+      return;
+    }
+    var switching=!!hoverRequested||!$('hover-card').hidden;
+    // A new target never carries the previous artist's card or image pixels.
+    hideHover();warmArtistArtwork(a);hoverRequested=a.id;
+    var generation=hoverGeneration,ready=false,elapsed=false,started=false;
     hoverPoint={x:event.clientX,y:event.clientY};
-    // Bridge the gaps between names without blinking the card off and on.
-    var delay=hovered?35:90;
-    hoverTimer=setTimeout(function(){
-      if(activeId||!$('wishlist-layer').hidden)return;
-      document.querySelectorAll('.is-hovered').forEach(function(b){b.classList.remove('is-hovered');});
-      var wasHidden=$('hover-card').hidden;hovered=a.id;button.classList.add('is-hovered');fillHover(a);
-      if(hoverAnimation)hoverAnimation.cancel();$('hover-card').hidden=false;measureHover();
+    var photo=document.createElement('img');photo.id='hover-photo';photo.alt=a.name;photo.decoding='async';
+    var previous=$('hover-photo');previous.parentNode.replaceChild(photo,previous);
+    function current(){return generation===hoverGeneration&&hoverRequested===a.id&&!activeId&&$('wishlist-layer').hidden;}
+    function show(){
+      if(!ready||!elapsed||!current())return;
+      hovered=a.id;button.classList.add('is-hovered');fillHover(a);
+      $('hover-card').dataset.artist=a.id;$('hover-card').hidden=false;measureHover();
       hoverSide=hoverPoint.x+hoverSize.width+40>window.innerWidth?-1:1;
-      positionHover(hoverPoint.x,hoverPoint.y,wasHidden);
-      hoverAnimation=animate($('hover-card'),[{opacity:wasHidden?0:.75},{opacity:1}],180);
-    },delay);
+      positionHover(hoverPoint.x,hoverPoint.y,true);
+      hoverAnimation=animate($('hover-card'),[{opacity:0},{opacity:1}],150);
+    }
+    function loaded(ok){
+      if(started)return;started=true;
+      var decoded=ok&&photo.decode?photo.decode().catch(function(){return null;}):Promise.resolve();
+      decoded.then(function(){
+        if(!current())return;
+        if(!ok||!photo.naturalWidth){hideHover();return;}
+        ready=true;show();
+      });
+    }
+    photo.onload=function(){loaded(true);};photo.onerror=function(){loaded(false);};
+    photo.src=a.avatar;if(photo.complete)loaded(photo.naturalWidth>0);
+    hoverTimer=setTimeout(function(){hoverTimer=null;elapsed=true;show();},switching?0:65);
   }
   function positionHover(x,y,snap){
     hoverPoint={x:x,y:y};
@@ -160,16 +179,18 @@
     hoverCurrent.x+=(hoverTarget.x-hoverCurrent.x)*ease;hoverCurrent.y+=(hoverTarget.y-hoverCurrent.y)*ease;paintHover();
     if(Math.abs(hoverTarget.x-hoverCurrent.x)+Math.abs(hoverTarget.y-hoverCurrent.y)>.25)hoverFrame=requestAnimationFrame(trackHover);
   }
-  function scheduleHoverHide(){clearTimeout(hoverTimer);clearTimeout(hoverHideTimer);hoverHideTimer=setTimeout(function(){hideHover(true);},110);}
+  function scheduleHoverHide(){hideHover(true);}
   function hideHover(soft){
-    clearTimeout(hoverTimer);clearTimeout(hoverHideTimer);cancelAnimationFrame(hoverFrame);hoverFrame=0;
-    hovered=null;hoverPoint=null;hoverTarget=null;
+    ++hoverGeneration;clearTimeout(hoverTimer);hoverTimer=null;
+    cancelAnimationFrame(hoverFrame);hoverFrame=0;
+    hovered=null;hoverRequested=null;hoverPoint=null;hoverTarget=null;
     document.querySelectorAll('.is-hovered').forEach(function(b){b.classList.remove('is-hovered');});
+    var card=$('hover-card'),opacity=card.hidden?0:getComputedStyle(card).opacity;
     if(hoverAnimation)hoverAnimation.cancel();
-    if(soft&&!$('hover-card').hidden){
-      var closing=hoverAnimation=animate($('hover-card'),[{opacity:1},{opacity:0}],140);
-      closing.finished.then(function(){if(hoverAnimation===closing){$('hover-card').hidden=true;hoverCurrent=null;closing.cancel();}},function(){});
-    }else{$('hover-card').hidden=true;hoverCurrent=null;}
+    if(soft&&!card.hidden){
+      var closing=hoverAnimation=animate(card,[{opacity:opacity},{opacity:0}],90);
+      closing.finished.then(function(){if(hoverAnimation===closing){card.hidden=true;hoverCurrent=null;closing.cancel();}},function(){});
+    }else{card.hidden=true;hoverCurrent=null;}
   }
   // Keep artwork transparent until its pixels are decoded. Tokens ignore stale loads.
   function revealArtwork(image,src,frame){
@@ -371,7 +392,6 @@
   $('open-wishlist').addEventListener('click',openWishlist);$('close-wishlist').addEventListener('click',closeWishlist);document.querySelector('.wishlist-scrim').addEventListener('click',closeWishlist);
   document.addEventListener('keydown',handleKeys);window.addEventListener('popstate',fromLocation);window.addEventListener('hashchange',fromLocation);window.addEventListener('resize',function(){hideHover();requestAnimationFrame(fitPoster);});window.addEventListener('scroll',hideHover,{passive:true});
   window.addEventListener('storage',function(event){if(event.key==='cf2026-poster-wishlist'||event.key===null){wishlist=readWishlist();updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();}});
-  $('hover-photo').addEventListener('load',function(){if(hoverPoint&&!$('hover-card').hidden){measureHover();positionHover(hoverPoint.x,hoverPoint.y);}});
   document.querySelectorAll('[data-language]').forEach(function(button){button.addEventListener('click',function(){language=button.dataset.language;try{localStorage.setItem('cf2026-poster-language',language);}catch(e){}applyLanguage();});});
   renderPoster();applyLanguage();fromLocation();
   var warmPortraits=function(){artists.forEach(function(a){var image=new Image();image.decoding='async';image.src=a.avatar;if(image.decode)image.decode().catch(function(){});});};

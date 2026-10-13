@@ -1,6 +1,6 @@
 window.LINEUP_LOCALES = {
   en: {
-    saveToAlbum:'Save to photos', saveAlbumHint:'Tap the button to save this image to your photos.', imageSaved:'Saved to photos.', downloadStarted:'Download started.', imageSaveError:'Could not save the image. Please try again.', backWishlist:'Back to wishlist', addMore:'Explore lineup', saveLineup:'Save my lineup', saveDay:'Save this day', undo:'Undo', removed:' removed', download:'Download PNG', saveHint:'Hold the image to save it, or download the PNG.', myLineup:'My Clockenflap 2026', noDay:'Nothing saved for this day yet.', exportError:'Could not create the image. Please try again.',
+    imageUnavailable:'Image unavailable', saveToAlbum:'Save to photos', saveAlbumHint:'Tap the button to save this image to your photos.', imageSaved:'Saved to photos.', downloadStarted:'Download started.', imageSaveError:'Could not save the image. Please try again.', backWishlist:'Back to wishlist', addMore:'Explore lineup', saveLineup:'Save my lineup', saveDay:'Save this day', undo:'Undo', removed:' removed', download:'Download PNG', saveHint:'Hold the image to save it, or download the PNG.', myLineup:'My Clockenflap 2026', noDay:'Nothing saved for this day yet.', exportError:'Could not create the image. Please try again.',
     all:'ALL', fri:'FRI', sat:'SAT', sun:'SUN', dayNav:'Filter by day',
     posterLabel:'Clockenflap 2026 interactive lineup poster', lineupLabel:'Choose an artist to explore their music',
     heading:'1<sup>ST</sup> ROUND MUSIC LINEUP', more:'AND MANY MORE TO COME', moreNote:'Full lineup still to come',
@@ -14,7 +14,7 @@ window.LINEUP_LOCALES = {
     remove:'Remove ', artistAction:'Explore biography and music', cover:' cover', photo:' press photo'
   },
   zh: {
-    saveToAlbum:'保存到相册', saveAlbumHint:'点击按钮，把这张图保存到相册。', imageSaved:'已保存到相册。', downloadStarted:'已开始下载。', imageSaveError:'图片保存失败，请再试一次。', backWishlist:'返回想看', addMore:'继续挑选', saveLineup:'保存我的阵容', saveDay:'保存这一天', undo:'撤销', removed:'已移除', download:'下载图片', saveHint:'长按图片保存，也可以点击下载。', myLineup:'我的鸡飞 2026', noDay:'这一天还没选，去海报上挑几组吧。', exportError:'图片生成失败，请再试一次。',
+    imageUnavailable:'图片暂时无法显示', saveToAlbum:'保存到相册', saveAlbumHint:'点击按钮，把这张图保存到相册。', imageSaved:'已保存到相册。', downloadStarted:'已开始下载。', imageSaveError:'图片保存失败，请再试一次。', backWishlist:'返回想看', addMore:'继续挑选', saveLineup:'保存我的阵容', saveDay:'保存这一天', undo:'撤销', removed:'已移除', download:'下载图片', saveHint:'长按图片保存，也可以点击下载。', myLineup:'我的鸡飞 2026', noDay:'这一天还没选，去海报上挑几组吧。', exportError:'图片生成失败，请再试一次。',
     all:'全部', fri:'周五', sat:'周六', sun:'周日', dayNav:'按演出日期查看',
     posterLabel:'Clockenflap 2026 首轮阵容互动海报', lineupLabel:'点艺人名字看简介和作品',
     heading:'首輪音樂陣容', more:'AND MANY MORE TO COME', moreNote:'更多阵容陆续公布',

@@ -20,6 +20,7 @@
   var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   var hoverHideTimer=null,hoverFrame=0,hoverAnimation=null,hoverSide=1,hoverSize={width:280,height:360},hoverCurrent=null,hoverTarget=null,hoverTime=0;
   var wishDay='all',removedWish=null,exportURL=null,exportImage=null,exporting=false,exportGeneration=0;
+  var artworkRequests=new WeakMap(),artworkPreloads={};
   var layerMotions=new WeakMap(),artistSwitch=0,displayedId=null,contentMotion=null,copyState='';
   function t(key){return locales[language][key];}
   function intro(a){return language==='en'?locales.intros[a.id]:a.intro;}
@@ -35,6 +36,7 @@
     if(activeId){if(displayedId)localizeArtist(byId[displayedId]);refreshWant();}
     if(hovered){fillHover(byId[hovered]);measureHover();}
     if(!$('wishlist-layer').hidden)renderWishlist();
+    $('media-art').dataset.imageFallback=t('imageUnavailable');
     $('copy-album').textContent=t(copyState==='success'?'copied':'copy');
     $('copy-message').textContent=copyState?t(copyState==='success'?'copySuccess':'copyFallback'):'';
     requestAnimationFrame(fitPoster);
@@ -129,7 +131,7 @@
   }
   function measureHover(){var card=$('hover-card');hoverSize={width:card.offsetWidth,height:card.offsetHeight};}
   function queueHover(a,button,event){
-    clearTimeout(hoverTimer);clearTimeout(hoverHideTimer);
+    clearTimeout(hoverTimer);clearTimeout(hoverHideTimer);warmArtistArtwork(a);
     hoverPoint={x:event.clientX,y:event.clientY};
     // Bridge the gaps between names without blinking the card off and on.
     var delay=hovered?35:90;
@@ -169,23 +171,53 @@
       closing.finished.then(function(){if(hoverAnimation===closing){$('hover-card').hidden=true;hoverCurrent=null;closing.cancel();}},function(){});
     }else{$('hover-card').hidden=true;hoverCurrent=null;}
   }
+  // Keep artwork transparent until its pixels are decoded. Tokens ignore stale loads.
+  function revealArtwork(image,src,frame){
+    var ticket={started:false};artworkRequests.set(image,ticket);
+    image.classList.remove('is-ready');image.classList.remove('has-image-error');
+    if(frame){frame.dataset.imageStatus='pending';frame.dataset.imageFallback=t('imageUnavailable');}
+    function finish(ok){
+      if(ticket.started)return;ticket.started=true;
+      var decoded=ok&&image.decode?image.decode().catch(function(){return null;}):Promise.resolve();
+      decoded.then(function(){
+        if(artworkRequests.get(image)!==ticket||!document.documentElement.contains(image)||image.getAttribute('src')!==src)return;
+        if(!ok||!image.naturalWidth){image.classList.add('has-image-error');if(frame)frame.dataset.imageStatus='error';return;}
+        // Two frames establish the hidden pose even when the image is cached.
+        requestAnimationFrame(function(){requestAnimationFrame(function(){
+          if(artworkRequests.get(image)!==ticket||!document.documentElement.contains(image))return;
+          image.classList.add('is-ready');if(frame)frame.dataset.imageStatus='ready';
+        });});
+      });
+    }
+    image.onload=function(){finish(true);};image.onerror=function(){finish(false);};
+    image.decoding='async';image.src=src;
+    if(image.complete)finish(image.naturalWidth>0);
+  }
+  function warmArtistArtwork(a){
+    [a.avatar].concat(a.albums.map(function(album){return album.cover;})).forEach(function(src){
+      if(artworkPreloads[src])return;
+      var image=new Image();artworkPreloads[src]=true;image.decoding='async';image.src=src;
+      if(image.decode)image.decode().catch(function(){});
+    });
+  }
   function localizeArtist(a){
     $('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a);
-    $('album-list').querySelectorAll('.album-sleeve').forEach(function(button,i){var album=a.albums[i];button.setAttribute('aria-label',a.name+' — '+album.title+': '+t('hoverOpen'));button.querySelector('img').alt=album.title+t('cover');});
+    $('album-list').querySelectorAll('.album-sleeve').forEach(function(button,i){var album=a.albums[i];button.setAttribute('aria-label',a.name+' — '+album.title+': '+t('hoverOpen'));button.querySelector('img').alt=album.title+t('cover');button.querySelector('.album-art').dataset.imageFallback=t('imageUnavailable');});
   }
   function fillArtist(a){
     displayedId=a.id;
     $('artist-photo').src=a.avatar;$('artist-name').textContent=displayName(a);$('artist-name').classList.toggle('long-name',a.name.length>22);
     $('album-section').hidden=!a.albums.length;$('album-list').textContent='';
-    a.albums.forEach(function(album){
+    a.albums.forEach(function(album,index){
       var button=document.createElement('button');button.type='button';button.className='album-sleeve';
-      var image=document.createElement('img');image.className='album-cover';image.src=album.cover;image.width=480;image.height=480;
+      var frame=document.createElement('span');frame.className='album-art';
+      var image=document.createElement('img');image.className='album-cover';image.width=480;image.height=480;image.style.setProperty('--artwork-delay',(index*65)+'ms');frame.appendChild(image);
       var title=document.createElement('strong');title.textContent=album.title;var year=document.createElement('small');year.textContent=album.year;
-      button.appendChild(image);button.appendChild(title);button.appendChild(year);button.addEventListener('click',function(){openMedia(album.cover,a.name+' — '+album.title,true,button);});$('album-list').appendChild(button);
+      button.appendChild(frame);button.appendChild(title);button.appendChild(year);button.addEventListener('click',function(){openMedia(album.cover,a.name+' — '+album.title,true,button);});$('album-list').appendChild(button);revealArtwork(image,album.cover,frame);
     });
     localizeArtist(a);refreshWant();$('artist-dialog').scrollTop=0;
-    // Decode neighbouring portraits ahead of arrow navigation.
-    var index=artists.indexOf(a);[artists[(index+1)%artists.length],artists[(index-1+artists.length)%artists.length]].forEach(function(next){var image=new Image();image.src=next.avatar;if(image.decode)image.decode().catch(function(){});});
+    // Warm neighbouring portraits and covers ahead of arrow navigation.
+    var index=artists.indexOf(a);[artists[(index+1)%artists.length],artists[(index-1+artists.length)%artists.length]].forEach(warmArtistArtwork);
   }
   function openArtist(id,fromHash){
     var a=byId[id];if(!a)return;
@@ -227,10 +259,10 @@
   function stepArtist(direction){var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
   function openMedia(src,name,isAlbum,origin){
     if(exportURL){URL.revokeObjectURL(exportURL);exportURL=null;}exportImage=null;$('export-controls').hidden=true;
-    mediaFocus=origin||document.activeElement;$('media-image').src=src;$('media-image').alt=name;$('media-name').textContent=name;$('media-dialog').classList.toggle('is-album',isAlbum);
+    mediaFocus=origin||document.activeElement;$('media-image').alt=name;$('media-name').textContent=name;$('media-dialog').classList.toggle('is-album',isAlbum);revealArtwork($('media-image'),src,$('media-art'));
     $('copy-controls').hidden=!isAlbum;$('copy-text').value=name;copyState='';$('copy-message').textContent='';$('copy-album').textContent=t('copy');revealLayer($('media-layer'));$('close-media').focus({preventScroll:true});
   }
-  function closeMedia(){dismissLayer($('media-layer'),function(){$('media-image').removeAttribute('src');exportImage=null;if(exportURL){URL.revokeObjectURL(exportURL);exportURL=null;}if(mediaFocus&&document.contains(mediaFocus))mediaFocus.focus({preventScroll:true});});}
+  function closeMedia(){dismissLayer($('media-layer'),function(){artworkRequests.delete($('media-image'));$('media-image').onload=null;$('media-image').onerror=null;$('media-image').classList.remove('is-ready');$('media-image').removeAttribute('src');exportImage=null;if(exportURL){URL.revokeObjectURL(exportURL);exportURL=null;}if(mediaFocus&&document.contains(mediaFocus))mediaFocus.focus({preventScroll:true});});}
   function syncScroll(){document.body.classList.toggle('has-modal',!$('artist-layer').hidden||!$('media-layer').hidden||!$('wishlist-layer').hidden);}
   async function copyAlbum(){
     copyState=await window.CF_PLATFORM.copyText($('copy-text'));

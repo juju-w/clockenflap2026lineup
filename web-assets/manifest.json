@@ -880,22 +880,6 @@
     "bytes": 59156
   },
   {
-    "thumbnail": "assets/images/qotsa-album-2.webp",
-    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music114/v4/87/b4/aa/87b4aab6-8d32-5001-546d-71d829af1a12/00602527472270.rgb.jpg/1600x1600bb.jpg",
-    "kind": "album",
-    "name": "Queens of the Stone Age — Rated R",
-    "large": "assets/large/qotsa-album-2.webp",
-    "dimensions": [
-      1483,
-      1483
-    ],
-    "sourceDimensions": [
-      1483,
-      1483
-    ],
-    "bytes": 33030
-  },
-  {
     "thumbnail": "assets/images/qotsa-album-3.webp",
     "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/0c/73/3c/0c733c12-fc9a-bb06-da19-9f25d7c99050/744861104063.png/1600x1600bb.jpg",
     "kind": "album",
@@ -926,6 +910,22 @@
       1080
     ],
     "bytes": 322862
+  },
+  {
+    "thumbnail": "assets/images/qotsa-perfecth.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/89/4a/62/894a62a0-230a-cff6-e25a-a7de7e95fb40/191401225373.png/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Queens of the Stone Age — Perfecth",
+    "large": "assets/large/qotsa-perfecth.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 285026
   },
   {
     "thumbnail": "assets/images/six60-album-1.webp",

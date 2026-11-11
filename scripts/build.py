@@ -43,7 +43,7 @@ def main():
         shutil.copytree(ROOT / 'web-assets' / 'images', output / 'assets' / 'large')
         data_file = output / 'data.js'
         payload = json.loads(data_file.read_text().split('=', 1)[1].strip().removesuffix(';'))
-        for artist in payload['artists']:
+        for artist in payload['artists'] + payload.get('previews', []):
             if artist['avatar'] in large: artist['avatarLarge'] = large[artist['avatar']]
             for album in artist['albums']:
                 if album['cover'] in large: album['coverLarge'] = large[album['cover']]
@@ -58,7 +58,7 @@ def main():
         entry.write_text(re.sub(r'((?:src|href)=")([.]/[^"?]+\.(?:js|css))(\")', version, entry.read_text()))
     check = References(); check.folder = output; check.feed((output / 'index.html').read_text())
     payload = json.loads((output / 'data.js').read_text().split('=', 1)[1].strip().removesuffix(';'))
-    for artist in payload['artists']:
+    for artist in payload['artists'] + payload.get('previews', []):
         refs = [artist['avatar']] + [album['cover'] for album in artist['albums']]
         extras = [artist.get('avatarLarge')] + [album.get('coverLarge') for album in artist['albums']]
         if args.target == 'xhs' and (any(extras) or (output / 'assets' / 'large').exists()):

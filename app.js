@@ -1,6 +1,7 @@
 (function(){
   'use strict';
   var data=window.LINEUP_DATA,artists=data.artists,byId={},selectedDay='all',activeId=null,hoverTimer=null,hovered=null,hoverPoint=null,lastFocus=null,mediaFocus=null,wishFocus=null;
+  var previews=data.previews||[];
   var $=function(id){return document.getElementById(id);};
   var days={'4':{en:'FRI',zh:'周五',date:'12.4'},'5':{en:'SAT',zh:'周六',date:'12.5'},'6':{en:'SUN',zh:'周日',date:'12.6'}};
   var rows=[
@@ -33,7 +34,12 @@
     document.querySelectorAll('[data-i18n-html]').forEach(function(n){n.innerHTML=t(n.dataset.i18nHtml);});
     document.querySelectorAll('[data-i18n-aria]').forEach(function(n){n.setAttribute('aria-label',t(n.dataset.i18nAria));});
     document.querySelectorAll('[data-language]').forEach(function(n){n.setAttribute('aria-pressed',String(n.dataset.language===language));});
-    document.querySelectorAll('[data-artist]').forEach(function(n){var a=byId[n.dataset.artist];n.setAttribute('aria-label',a.name+', '+dayText(a)+', '+t('artistAction'));});
+    document.querySelectorAll('[data-artist]').forEach(function(n){var a=byId[n.dataset.artist];n.setAttribute('aria-label',displayName(a)+', '+dayText(a)+', '+t('artistAction'));});
+    $('lineup-previews').querySelectorAll('[data-artist]').forEach(function(button){
+      var a=byId[button.dataset.artist];
+      button.querySelector('strong').textContent=displayName(a);
+      button.querySelector('.preview-day').textContent=dayLabel(a.previewDay);
+    });
     if(activeId){if(displayedId)localizeArtist(byId[displayedId]);refreshWant();}
     if(hovered){fillHover(byId[hovered]);measureHover();}
     if(!$('wishlist-layer').hidden)renderWishlist();
@@ -72,11 +78,23 @@
       layer.hidden=true;layer.inert=false;animations.forEach(function(a){a.cancel();});syncScroll();if(done)done();
     },function(){});
   }
-  artists.forEach(function(a){byId[a.id]=a;});
-  function readWishlist(){var next={};try{var stored=JSON.parse(localStorage.getItem('cf2026-poster-wishlist')||'[]');if(Array.isArray(stored))stored.forEach(function(id){if(byId[id])next[id]=true;});return next;}catch(e){return Object.assign({},wishlist);}}
+  artists.concat(previews).forEach(function(a){byId[a.id]=a;});
+  function readWishlist(){var next={};try{var stored=JSON.parse(localStorage.getItem('cf2026-poster-wishlist')||'[]');if(Array.isArray(stored))stored.forEach(function(id){if(byId[id]&&byId[id].officialDay)next[id]=true;});return next;}catch(e){return Object.assign({},wishlist);}}
   wishlist=readWishlist();
-  function displayName(a){if(a.id==='domi')return 'DOMi & JD BECK';if(a.id==='jamc')return 'THE JESUS & MARY CHAIN';return a.name.toUpperCase();}
-  function dayText(a){var day=days[a.officialDay];return dayLabel(a.officialDay);}
+  function displayName(a){if(language==='zh'&&a.nameZh)return a.nameZh;if(a.id==='domi')return 'DOMi & JD BECK';if(a.id==='jamc')return 'THE JESUS & MARY CHAIN';return a.name.toUpperCase();}
+  function dayText(a){return a.previewDay?dayLabel(a.previewDay)+' · '+t('unconfirmed'):dayLabel(a.officialDay);}
+
+  function renderPreviews(){
+    previews.forEach(function(a){
+      var button=document.createElement('button');
+      button.type='button';button.className='lineup-preview';button.dataset.artist=a.id;
+      button.setAttribute('aria-haspopup','dialog');
+      button.innerHTML='<img alt="" width="42" height="42"><span class="preview-details"><span class="preview-day"></span><strong></strong></span><span class="preview-status" data-i18n="unconfirmed"></span>';
+      button.querySelector('img').src=a.avatar;
+      button.addEventListener('click',function(){openArtist(a.id);});
+      $('lineup-previews').appendChild(button);
+    });
+  }
 
   function renderPoster(){
     rows.forEach(function(row,index){
@@ -93,7 +111,7 @@
         if(i){var dot=document.createElement('span');dot.className='separator mint';dot.textContent='•';dot.setAttribute('aria-hidden','true');line.appendChild(dot);}
         line.appendChild(button);
       });$('lineup').appendChild(line);
-    });updatePoster();fitPoster();
+    });renderPreviews();updatePoster();fitPoster();
   }
   function fitPoster(){
     var mobile=window.innerWidth<=600,noGap=document.documentElement.classList.contains('no-flex-gap'),available=$('lineup').clientWidth-(mobile&&noGap?16:0);
@@ -121,7 +139,13 @@
     }
   }
   function updatePoster(){
-    document.querySelectorAll('[data-artist]').forEach(function(button){var a=byId[button.dataset.artist];button.classList.toggle('is-wanted',!!wishlist[a.id]);button.classList.toggle('is-dimmed',selectedDay!=='all'&&a.officialDay!==selectedDay);});
+    $('lineup').querySelectorAll('[data-artist]').forEach(function(button){var a=byId[button.dataset.artist];button.classList.toggle('is-wanted',!!wishlist[a.id]);button.classList.toggle('is-dimmed',selectedDay!=='all'&&a.officialDay!==selectedDay);});
+    var container=$('lineup-previews'),hasVisiblePreview=false;
+    container.querySelectorAll('[data-artist]').forEach(function(button){
+      button.hidden=selectedDay!=='all'&&byId[button.dataset.artist].previewDay!==selectedDay;
+      hasVisiblePreview=hasVisiblePreview||!button.hidden;
+    });
+    if(container.hidden===hasVisiblePreview){container.hidden=!hasVisiblePreview;requestAnimationFrame(fitPoster);}
     $('wish-count').textContent=Object.keys(wishlist).length;
   }
   function fillHover(a){
@@ -261,12 +285,15 @@
     });
   }
   function localizeArtist(a){
-    $('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a);
+    $('artist-name').textContent=displayName(a);$('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a);
+    $('schedule-note').textContent=t(a.previewDay?'previewNote':'pending');
     $('album-list').querySelectorAll('.album-sleeve').forEach(function(button,i){var album=a.albums[i];button.setAttribute('aria-label',a.name+' — '+album.title+': '+t('hoverOpen'));button.querySelector('img').alt=album.title+t('cover');button.querySelector('.album-art').dataset.imageFallback=t('imageUnavailable');});
   }
   function fillArtist(a){
     displayedId=a.id;
-    $('artist-photo').src=a.avatar;$('artist-name').textContent=displayName(a);$('artist-name').classList.toggle('long-name',a.name.length>22);
+    $('artist-photo').src=a.avatar;$('artist-name').classList.toggle('long-name',a.name.length>22);
+    $('artist-want').hidden=!!a.previewDay;
+    $('artist-dialog').querySelector('.artist-pager').hidden=!!a.previewDay;
     $('album-section').hidden=!a.albums.length;$('album-list').textContent='';
     a.albums.forEach(function(album,index){
       var button=document.createElement('button');button.type='button';button.className='album-sleeve';
@@ -277,7 +304,7 @@
     });
     localizeArtist(a);refreshWant();$('artist-dialog').scrollTop=0;
     // Warm neighbouring portraits and covers ahead of arrow navigation.
-    var index=artists.indexOf(a);[artists[(index+1)%artists.length],artists[(index-1+artists.length)%artists.length]].forEach(warmArtistArtwork);
+    var index=artists.indexOf(a);if(index>=0)[artists[(index+1)%artists.length],artists[(index-1+artists.length)%artists.length]].forEach(warmArtistArtwork);
   }
   function openArtist(id,fromHash){
     var a=byId[id];if(!a)return;
@@ -311,12 +338,13 @@
   }
   function refreshWant(){var wanted=!!wishlist[activeId];$('artist-want').setAttribute('aria-pressed',String(wanted));$('artist-want').querySelector('span').textContent=language==='en'?(wanted?'Saved':'Want to see'):(wanted?'已想看':'想看');}
   function toggleWant(id){
+    if(!byId[id].officialDay)return;
     wishlist=readWishlist();
     if(wishlist[id])delete wishlist[id];else wishlist[id]=true;
     try{localStorage.setItem('cf2026-poster-wishlist',JSON.stringify(Object.keys(wishlist)));}catch(e){}
     updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();
   }
-  function stepArtist(direction){var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
+  function stepArtist(direction){if(!byId[activeId].officialDay)return;var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
   function openMedia(src,name,isAlbum,origin){
     if(exportURL){URL.revokeObjectURL(exportURL);exportURL=null;}exportImage=null;$('export-controls').hidden=true;
     mediaFocus=origin||document.activeElement;$('media-image').alt=name;$('media-name').textContent=name;$('media-dialog').classList.toggle('is-album',isAlbum);revealArtwork($('media-image'),src,$('media-art'));

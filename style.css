@@ -161,3 +161,16 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .hover-card.is-touch-preview .hover-open svg{display:none}
 @media(hover:none),(pointer:coarse){.touch-hint{display:block}}
 @media(max-width:600px){.touch-hint{display:block}}
+
+.lineup-previews{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:18px}
+.lineup-preview{
+ display:flex;align-items:center;max-width:100%;padding:6px 10px 6px 6px;
+ border:1px solid rgba(250,234,212,.32);border-radius:4px;text-align:left;
+ transition:background-color .2s,border-color .2s;
+}
+.lineup-preview:hover,.lineup-preview:focus-visible{border-color:var(--coral);background:rgba(250,234,212,.08)}
+.lineup-preview>img{object-fit:cover;border-radius:2px;flex-shrink:0}
+.preview-details{display:grid;gap:2px;margin:0 12px 0 10px}
+.preview-day{font-size:10px;font-weight:700;letter-spacing:.06em}
+.preview-details>strong{font-size:17px;font-weight:900;line-height:1.12}
+.preview-status{padding:4px 6px;border:1px solid currentColor;border-radius:3px;color:var(--coral);font-size:10px;font-weight:700;white-space:nowrap}

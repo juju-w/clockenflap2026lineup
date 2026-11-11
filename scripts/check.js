@@ -4,9 +4,11 @@ const root=path.resolve(__dirname,'..'),context={window:{}};
 vm.createContext(context);
 for(const file of ['data.js','locales.js'])vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),context);
 const data=context.window.LINEUP_DATA,locales=context.window.LINEUP_LOCALES,ids=new Set();
-for(const artist of data.artists){
+const previews=data.previews||[],profiles=data.artists.concat(previews),days=['4','5','6'];
+assert(data.artists.every(a=>days.includes(a.officialDay)&&!a.previewDay),'Invalid official day');
+assert(previews.every(a=>days.includes(a.previewDay)&&!a.officialDay),'Invalid unconfirmed day');
+for(const artist of profiles){
  assert(!ids.has(artist.id),'Duplicate artist ID');ids.add(artist.id);
- assert(['4','5','6'].includes(String(artist.officialDay)),'Unknown official day');
  assert(artist.intro&&locales.intros[artist.id],'Both biography languages are required');
  for(const ref of [artist.avatar,...artist.albums.map(a=>a.cover)]){
   assert(ref&&!ref.includes('..')&&!/^https?:/.test(ref),'Use packaged images');
@@ -16,7 +18,7 @@ for(const artist of data.artists){
 assert.deepStrictEqual(Object.keys(locales.en).sort(),Object.keys(locales.zh).sort(),'UI translations differ');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const largeImages=JSON.parse(fs.readFileSync(path.join(root,'web-assets/manifest.json'),'utf8'));
-const expectedImages=new Set(data.artists.flatMap(a=>[a.avatar,...a.albums.map(album=>album.cover)]));
+const expectedImages=new Set(profiles.flatMap(a=>[a.avatar,...a.albums.map(album=>album.cover)]));
 assert.equal(largeImages.length,expectedImages.size,'Every displayed image needs a web large-image record');
 for(const record of largeImages){
  assert(expectedImages.delete(record.thumbnail),'Unknown or duplicate large image');

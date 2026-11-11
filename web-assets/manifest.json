@@ -1118,5 +1118,69 @@
       1061
     ],
     "bytes": 135826
+  },
+  {
+    "thumbnail": "assets/images/cheerchen-avatar.webp",
+    "source": "https://team-ear.com/upload_image/artistsDetail/artistsDetail_a8ce280b61efe693a8533f5189b322f3.png",
+    "kind": "portrait",
+    "name": "Cheer Chen",
+    "large": "assets/large/cheerchen-avatar.webp",
+    "dimensions": [
+      543,
+      356
+    ],
+    "sourceDimensions": [
+      543,
+      356
+    ],
+    "bytes": 17318
+  },
+  {
+    "thumbnail": "assets/images/cheerchen-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/3c/a2/21/3ca22123-14d6-57f4-9e52-aa4573a05b07/mzm.clkcarof.jpg/1400x1400bb.jpg",
+    "kind": "album",
+    "name": "Cheer Chen — 吉他手",
+    "large": "assets/large/cheerchen-album-1.webp",
+    "dimensions": [
+      1400,
+      1400
+    ],
+    "sourceDimensions": [
+      1400,
+      1400
+    ],
+    "bytes": 361906
+  },
+  {
+    "thumbnail": "assets/images/cheerchen-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/c5/c5/b9/c5c5b9a5-7b08-1579-950e-6ad69d8f105a/2005_9-_1400.jpg/1400x1400bb.jpg",
+    "kind": "album",
+    "name": "Cheer Chen — 華麗的冒險",
+    "large": "assets/large/cheerchen-album-2.webp",
+    "dimensions": [
+      1400,
+      1400
+    ],
+    "sourceDimensions": [
+      1400,
+      1400
+    ],
+    "bytes": 580600
+  },
+  {
+    "thumbnail": "assets/images/cheerchen-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/07/70/06/077006a5-18c5-0e56-0e0c-ba052672b07a/4719760090010_new.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Cheer Chen — 太陽",
+    "large": "assets/large/cheerchen-album-3.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 279300
   }
 ]

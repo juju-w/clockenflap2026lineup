@@ -2,7 +2,7 @@
 
 Original code and documentation are MIT licensed. Artist photographs and album artwork are third-party materials and are **not** relicensed under MIT. Artists, photographers, labels and other respective rights holders retain their rights. These images are included to identify the performers and recommended releases in a fan-made guide. The source links below are provenance, not evidence of an open-content license.
 
-Official lineup/day source: [Clockenflap 2026 lineup](https://www.clockenflap.com/2026-lineup).
+Official lineup/day source: [Clockenflap 2026 lineup](https://www.clockenflap.com/2026-lineup-1).
 
 The website's enlarged images use the same photograph/artwork sources at higher resolution and lighter compression. Exact source URLs and native/output dimensions are recorded in [web-assets/manifest.json](web-assets/manifest.json). Large files are packaged locally for the website only and loaded when an image is enlarged; they are excluded from the offline mini-tool. Sources smaller than the target size are not upscaled.
 
@@ -27,5 +27,6 @@ The website's enlarged images use the same photograph/artwork sources at higher 
 | Fazerdaze | [Source](https://thehoneycombers.com/hong-kong/fazerdaze-amelia-murray-morningside-music-interview/) | [Morningside](https://music.apple.com/hk/album/morningside/1201189719?uo=4)<br>[Soft Power](https://music.apple.com/hk/album/soft-power/1783184684?uo=4)<br>[Break!](https://music.apple.com/hk/album/break-ep/1783175972?uo=4) |
 | Chanpan | Local project source record; photographer/license not established | [autogratis](https://music.apple.com/us/album/autogratis/1892181981?uo=4)<br>[endlessly](https://music.apple.com/us/album/endlessly/1817513109?uo=4) |
 | Brekky Boy | Local project source record; photographer/license not established | [Seita - EP](https://music.apple.com/us/album/seita-ep/1703728287?uo=4)<br>[Setsuko - EP](https://music.apple.com/us/album/setsuko-ep/1572081147?uo=4)<br>[Sagarmatha - EP](https://music.apple.com/us/album/sagarmatha-ep/1464602007?uo=4) |
+| Cheer Chen (unconfirmed) | [Team Ear Music](https://team-ear.com/artists_detail.php?id=6) | [吉他手](https://music.apple.com/cn/album/%E5%90%89%E4%BB%96%E6%89%8B/152197399)<br>[華麗的冒險](https://music.apple.com/cn/album/%E8%8F%AF%E9%BA%97%E7%9A%84%E5%86%92%E9%9A%AA/818157917)<br>[太陽](https://music.apple.com/cn/album/%E5%A4%AA%E9%99%BD/815493324) |
 
 For reuse of artwork beyond identification in this guide, obtain the appropriate permission from its rights holder. Repository issues can be used for corrections or removal requests.

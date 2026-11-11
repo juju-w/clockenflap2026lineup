@@ -8,6 +8,7 @@ window.LINEUP_LOCALES = {
     creator:'juju-w · Fan-made', wishlist:'My wishlist', hoverOpen:'Take a look',
     closeArtist:'Close artist profile', portrait:'Enlarge artist photo', about:'ABOUT', listen:'START HERE',
     pending:'Stages and set times to be announced', albumHint:'Click a cover to enlarge it or copy the title',
+    unconfirmed:'Unconfirmed', previewNote:'Clockenflap has yet to announce this appearance.',
     browse:'Browse artists', previous:'Previous', next:'Next', closeMedia:'Close image',
     copyLabel:'Artist and release title', copy:'Copy title', copied:'Copied', copySuccess:'Find it in your favourite music app.',
     copyFallback:'Text selected. Hold to copy, or press Ctrl / ⌘ + C.', closeWishlist:'Close wishlist',
@@ -23,6 +24,7 @@ window.LINEUP_LOCALES = {
     creator:'juju-w · 乐迷制作', wishlist:'我的想看', hoverOpen:'点击看看',
     closeArtist:'关闭艺人介绍', portrait:'放大艺人照片', about:'这是谁', listen:'从这几张开始听',
     pending:'舞台和时间待公布', albumHint:'点击封面，放大看 / 复制作品名',
+    unconfirmed:'待官宣', previewNote:'主办方尚未公布这场演出。',
     browse:'浏览艺人', previous:'上一组', next:'下一组', closeMedia:'关闭大图',
     copyLabel:'可复制的艺人和作品名', copy:'复制作品名', copied:'已复制', copySuccess:'去常用的音乐软件搜一下。',
     copyFallback:'文字已选中，长按或按 Ctrl / ⌘ + C 复制。', closeWishlist:'关闭我的想看',
@@ -36,6 +38,7 @@ window.LINEUP_LOCALES = {
     '卧室流行':'Bedroom pop', '器乐':'Instrumental'
   },
   intros: {
+    cheerchen:'A Taiwanese singer-songwriter from Luzhou who formed the band 防曬油 in 1996 and released her solo debut, 讓我想一想, in 1998. Her records range from spare acoustic songs to fuller band arrangements. She played Clockenflap in 2016.',
     hayleywilliams:'An American singer and songwriter, and the lead vocalist of Paramore. Albums such as Riot! made her one of the defining voices of the 2000s emo and pop-punk generation, before the band moved towards new wave and alternative rock. Her solo debut, Petals for Armor, arrived in 2020, followed by FLOWERS for VASES / descansos and Ego Death at a Bachelorette Party. This Clockenflap appearance is a solo performance.',
     keshi:'A Vietnamese-American singer, songwriter and producer raised in Houston, born Casey Luong. He worked as an oncology nurse while writing, producing and recording music in his bedroom. Soft vocals, guitar and a blend of lo-fi pop and alternative R&B shaped his early sound.',
     slowdive:'Formed in Reading, England in 1989, Slowdive are one of shoegaze’s defining bands. Neil Halstead and Rachel Goswell sing and play guitar, alongside Christian Savill, Nick Chaplin and Simon Scott. Their signature sound pairs layers of guitar with gentle vocals. They split in 1995 and reunited in 2014, later releasing Slowdive and everything is alive. Start with Souvlaki, then try the two reunion-era albums to hear how their sound has evolved.',

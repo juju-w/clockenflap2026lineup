@@ -8,7 +8,7 @@ window.LINEUP_LOCALES = {
     creator:'juju-w · Fan-made', wishlist:'My wishlist', hoverOpen:'Take a look',
     closeArtist:'Close artist profile', portrait:'Enlarge artist photo', about:'ABOUT', listen:'START HERE',
     pending:'Stages and set times to be announced', albumHint:'Click a cover to enlarge it or copy the title',
-    unconfirmed:'Unconfirmed', previewNote:'Clockenflap has yet to announce this appearance.',
+    previewsHeading:'LINEUP RUMOURS', unconfirmed:'Unconfirmed', previewNote:'Clockenflap has yet to announce this appearance.',
     browse:'Browse artists', previous:'Previous', next:'Next', closeMedia:'Close image',
     copyLabel:'Artist and release title', copy:'Copy title', copied:'Copied', copySuccess:'Find it in your favourite music app.',
     copyFallback:'Text selected. Hold to copy, or press Ctrl / ⌘ + C.', closeWishlist:'Close wishlist',
@@ -24,7 +24,7 @@ window.LINEUP_LOCALES = {
     creator:'juju-w · 乐迷制作', wishlist:'我的想看', hoverOpen:'点击看看',
     closeArtist:'关闭艺人介绍', portrait:'放大艺人照片', about:'这是谁', listen:'从这几张开始听',
     pending:'舞台和时间待公布', albumHint:'点击封面，放大看 / 复制作品名',
-    unconfirmed:'待官宣', previewNote:'主办方尚未公布这场演出。',
+    previewsHeading:'阵容风声', unconfirmed:'待官宣', previewNote:'主办方尚未公布这场演出。',
     browse:'浏览艺人', previous:'上一组', next:'下一组', closeMedia:'关闭大图',
     copyLabel:'可复制的艺人和作品名', copy:'复制作品名', copied:'已复制', copySuccess:'去常用的音乐软件搜一下。',
     copyFallback:'文字已选中，长按或按 Ctrl / ⌘ + C 复制。', closeWishlist:'关闭我的想看',
@@ -35,9 +35,14 @@ window.LINEUP_LOCALES = {
     '另类流行':'Alternative pop', '沙漠摇滚':'Desert rock', '另类摇滚':'Alternative rock',
     '噪音流行':'Noise pop', '实验摇滚':'Experimental rock', '另类 Hip-hop':'Alternative hip-hop',
     '爵士融合':'Jazz fusion', '电子':'Electronic', '唱作人':'Singer-songwriter',
-    '卧室流行':'Bedroom pop', '器乐':'Instrumental'
+    '卧室流行':'Bedroom pop', '器乐':'Instrumental', '硬核朋克':'Hardcore punk',
+    '舞曲':'Dance', '民谣摇滚':'Folk rock', '粤东民谣':'Eastern Guangdong folk'
   },
   intros: {
+    turnstile:'A Baltimore hardcore punk band fronted by Brendan Yates. The tight riffs and breakdowns of Time & Space opened up into bright melodies, synths and percussion on GLOW ON. Their 2025 album NEVER ENOUGH won Best Rock Album at the 2026 Grammys.',
+    sofitukker:'Sophie Hawley-Weld and Tucker Halpern met at Brown University and formed an electronic duo. Their breakout track Drinkee sets Portuguese verse to a guitar loop and house beat. It earned a Grammy nomination, as did their debut album Treehouse. BREAD leans further into Brazilian rhythms.',
+    wutiaoren:'A folk-rock band from Haifeng, Guangdong, founded by Ren Ke and Mao Tao. They sing in Haifeng dialect, Mandarin and Cantonese, drawing stories from county towns, migrant neighbourhoods and street life. The band played Clockenflap in 2018 and reached a wider audience on The Big Band in 2020.',
+    janeremover:'A New Jersey-raised producer, singer and rapper who broke out in the online digicore scene. Their albums take sharply different turns, from the bedroom production of Frailty to the noisy guitars of Census Designated and the distorted synths and rage beats of Revengeseekerz.',
     cheerchen:'A Taiwanese singer-songwriter from Luzhou who formed the band 防曬油 in 1996 and released her solo debut, 讓我想一想, in 1998. Her records range from spare acoustic songs to fuller band arrangements. She played Clockenflap in 2016.',
     hayleywilliams:'An American singer and songwriter, and the lead vocalist of Paramore. Albums such as Riot! made her one of the defining voices of the 2000s emo and pop-punk generation, before the band moved towards new wave and alternative rock. Her solo debut, Petals for Armor, arrived in 2020, followed by FLOWERS for VASES / descansos and Ego Death at a Bachelorette Party. This Clockenflap appearance is a solo performance.',
     keshi:'A Vietnamese-American singer, songwriter and producer raised in Houston, born Casey Luong. He worked as an oncology nurse while writing, producing and recording music in his bedroom. Soft vocals, guitar and a blend of lo-fi pop and alternative R&B shaped his early sound.',

@@ -7,6 +7,7 @@ const data=context.window.LINEUP_DATA,locales=context.window.LINEUP_LOCALES,ids=
 const previews=data.previews||[],profiles=data.artists.concat(previews),days=['4','5','6'];
 assert(data.artists.every(a=>days.includes(a.officialDay)&&!a.previewDay),'Invalid official day');
 assert(previews.every(a=>days.includes(a.previewDay)&&!a.officialDay),'Invalid unconfirmed day');
+assert(previews.every(a=>['lead','featured','standard'].includes(a.billing)),'Invalid preview billing tier');
 for(const artist of profiles){
  assert(!ids.has(artist.id),'Duplicate artist ID');ids.add(artist.id);
  assert(artist.intro&&locales.intros[artist.id],'Both biography languages are required');

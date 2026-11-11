@@ -1182,5 +1182,261 @@
       1600
     ],
     "bytes": 279300
+  },
+  {
+    "thumbnail": "assets/images/turnstile-avatar.webp",
+    "source": "https://thefader-res.cloudinary.com/private_images/c_limit,w_1024/c_crop,h_533,w_1024,x_0,y_135,f_auto,q_auto:eco/TURNSTILE_-_Main_Pub_2025_-_Atiba_Jefferson_b0aeti/TURNSTILE_-_Main_Pub_2025_-_Atiba_Jefferson_b0aeti.jpg",
+    "kind": "portrait",
+    "name": "Turnstile",
+    "large": "assets/large/turnstile-avatar.webp",
+    "dimensions": [
+      1024,
+      533
+    ],
+    "sourceDimensions": [
+      1024,
+      533
+    ],
+    "bytes": 48326
+  },
+  {
+    "thumbnail": "assets/images/turnstile-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/d1/1c/28/d11c28a8-0e83-41c3-afc7-b873dd7be188/075679614896.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Turnstile — NEVER ENOUGH",
+    "large": "assets/large/turnstile-album-1.webp",
+    "dimensions": [
+      1425,
+      1425
+    ],
+    "sourceDimensions": [
+      1425,
+      1425
+    ],
+    "bytes": 777176
+  },
+  {
+    "thumbnail": "assets/images/turnstile-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/bd/ed/05/bded05c9-3355-c885-3840-b9a4b427b118/075679792839.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Turnstile — GLOW ON",
+    "large": "assets/large/turnstile-album-2.webp",
+    "dimensions": [
+      1425,
+      1425
+    ],
+    "sourceDimensions": [
+      1425,
+      1425
+    ],
+    "bytes": 528856
+  },
+  {
+    "thumbnail": "assets/images/turnstile-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/9f/8e/2b/9f8e2b2f-0b4d-3658-0e0e-1e335122edcc/016861744236.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Turnstile — Time & Space",
+    "large": "assets/large/turnstile-album-3.webp",
+    "dimensions": [
+      1425,
+      1425
+    ],
+    "sourceDimensions": [
+      1425,
+      1425
+    ],
+    "bytes": 684760
+  },
+  {
+    "thumbnail": "assets/images/sofitukker-avatar.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages221/v4/07/88/61/078861b3-ebee-c2fc-8271-314d21716ee9/ami-identity-f80de6117cde6287a76c0c685fd23ceb-2026-01-27T21-34-58.609Z_cropped.png/1400x1400bb.jpg",
+    "kind": "portrait",
+    "name": "SOFI TUKKER",
+    "large": "assets/large/sofitukker-avatar.webp",
+    "dimensions": [
+      1400,
+      1400
+    ],
+    "sourceDimensions": [
+      1400,
+      1400
+    ],
+    "bytes": 306306
+  },
+  {
+    "thumbnail": "assets/images/sofitukker-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/c1/e9/80/c1e98087-4a2f-ada2-32b8-5a72775e9452/0617465945052_cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "SOFI TUKKER — Treehouse",
+    "large": "assets/large/sofitukker-album-1.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 802594
+  },
+  {
+    "thumbnail": "assets/images/sofitukker-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/7b/38/74/7b38741d-ea45-8b57-e14c-416421bea722/886449932030_cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "SOFI TUKKER — WET TENNIS",
+    "large": "assets/large/sofitukker-album-2.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 1046068
+  },
+  {
+    "thumbnail": "assets/images/sofitukker-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/ef/36/43/ef3643fe-e787-917e-4ee3-b8ee9292d88f/00196922938610_Cover.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "SOFI TUKKER — BREAD",
+    "large": "assets/large/sofitukker-album-3.webp",
+    "dimensions": [
+      1400,
+      1400
+    ],
+    "sourceDimensions": [
+      1400,
+      1400
+    ],
+    "bytes": 529818
+  },
+  {
+    "thumbnail": "assets/images/wutiaoren-avatar.webp",
+    "source": "https://jetmagazine.com.hk/wp-content/uploads/Wutiaoren_IMG_1570-1024x683.jpg",
+    "kind": "portrait",
+    "name": "Wu Tiao Ren",
+    "large": "assets/large/wutiaoren-avatar.webp",
+    "dimensions": [
+      1024,
+      683
+    ],
+    "sourceDimensions": [
+      1024,
+      683
+    ],
+    "bytes": 75038
+  },
+  {
+    "thumbnail": "assets/images/wutiaoren-album-1.webp",
+    "source": "https://wutiaoren.info/assets/imgs/county2009.jpg",
+    "kind": "album",
+    "name": "Wu Tiao Ren — 縣城記",
+    "large": "assets/large/wutiaoren-album-1.webp",
+    "dimensions": [
+      447,
+      265
+    ],
+    "sourceDimensions": [
+      447,
+      265
+    ],
+    "bytes": 19886
+  },
+  {
+    "thumbnail": "assets/images/wutiaoren-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/9e/56/68/9e56688e-83b9-3220-455c-f1ece7c0f4a3/1400.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Wu Tiao Ren — 夢幻麗莎髮廊",
+    "large": "assets/large/wutiaoren-album-2.webp",
+    "dimensions": [
+      1400,
+      1400
+    ],
+    "sourceDimensions": [
+      1400,
+      1400
+    ],
+    "bytes": 221722
+  },
+  {
+    "thumbnail": "assets/images/wutiaoren-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/75/a0/ee/75a0eecd-a24a-6733-972f-94d41293ea4d/25UMGIM42264.rgb.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Wu Tiao Ren — 廣東姑娘",
+    "large": "assets/large/wutiaoren-album-3.webp",
+    "dimensions": [
+      1500,
+      1500
+    ],
+    "sourceDimensions": [
+      1500,
+      1500
+    ],
+    "bytes": 362792
+  },
+  {
+    "thumbnail": "assets/images/janeremover-avatar.webp",
+    "source": "https://media.pitchfork.com/photos/69e656dc46e9aebca6bad161/16:9/w_1280,c_limit/jane-remover-tour.jpeg",
+    "kind": "portrait",
+    "name": "Jane Remover",
+    "large": "assets/large/janeremover-avatar.webp",
+    "dimensions": [
+      1280,
+      720
+    ],
+    "sourceDimensions": [
+      1280,
+      720
+    ],
+    "bytes": 131364
+  },
+  {
+    "thumbnail": "assets/images/janeremover-album-1.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/18/cf/f6/18cff6df-c7b6-0ca1-8067-83743f6c1f8a/193436418720_coverGriffinMcMahon.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Jane Remover — Revengeseekerz",
+    "large": "assets/large/janeremover-album-1.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 491140
+  },
+  {
+    "thumbnail": "assets/images/janeremover-album-2.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/3b/6b/c4/3b6bc43f-d549-2ec2-c313-051405bdebc4/193436350761_censusdesignatedgrain.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Jane Remover — Census Designated",
+    "large": "assets/large/janeremover-album-2.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 635210
+  },
+  {
+    "thumbnail": "assets/images/janeremover-album-3.webp",
+    "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/00/5a/62/005a62da-043d-c814-407a-9a36547137c3/193436274180_01_img001.jpg/1600x1600bb.jpg",
+    "kind": "album",
+    "name": "Jane Remover — Frailty",
+    "large": "assets/large/janeremover-album-3.webp",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "sourceDimensions": [
+      1600,
+      1600
+    ],
+    "bytes": 623266
   }
 ]

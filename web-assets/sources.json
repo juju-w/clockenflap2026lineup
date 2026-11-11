@@ -538,5 +538,29 @@
     "source": "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/00/5a/62/005a62da-043d-c814-407a-9a36547137c3/193436274180_01_img001.jpg/1600x1600bb.jpg",
     "kind": "album",
     "name": "Jane Remover — Frailty"
+  },
+  {
+    "thumbnail": "assets/images/nono-avatar.webp",
+    "source": "https://songstoryworks.com/wp-content/uploads/2026/09/nono-voices-2026-cover.png",
+    "kind": "portrait",
+    "name": "Nono"
+  },
+  {
+    "thumbnail": "assets/images/nono-album-1.webp",
+    "source": "https://f4.bcbits.com/img/a3806356087_10.jpg",
+    "kind": "album",
+    "name": "Nono — 手接我的回旋镖"
+  },
+  {
+    "thumbnail": "assets/images/nono-album-2.webp",
+    "source": "https://f4.bcbits.com/img/a3202673177_10.jpg",
+    "kind": "album",
+    "name": "Nono — No，no！"
+  },
+  {
+    "thumbnail": "assets/images/nono-album-3.webp",
+    "source": "https://f4.bcbits.com/img/a1825936959_10.jpg",
+    "kind": "album",
+    "name": "Nono — No，now！"
   }
 ]

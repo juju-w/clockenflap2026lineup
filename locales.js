@@ -36,9 +36,11 @@ window.LINEUP_LOCALES = {
     '噪音流行':'Noise pop', '实验摇滚':'Experimental rock', '另类 Hip-hop':'Alternative hip-hop',
     '爵士融合':'Jazz fusion', '电子':'Electronic', '唱作人':'Singer-songwriter',
     '卧室流行':'Bedroom pop', '器乐':'Instrumental', '硬核朋克':'Hardcore punk',
-    '舞曲':'Dance', '民谣摇滚':'Folk rock', '粤东民谣':'Eastern Guangdong folk'
+    '舞曲':'Dance', '民谣摇滚':'Folk rock', '粤东民谣':'Eastern Guangdong folk',
+    '独立摇滚':'Indie rock', '卧室摇滚':'Bedroom rock'
   },
   intros: {
+    nono:'Nono is the solo project of Zhang Xingchan, a singer-songwriter and producer who started recording in Wuhan. She writes, arranges and mixes her own records, from the bedroom rock of No，no！ to the more layered guitars and bass on 手接我的回旋镖. She also makes music with the band Trigger under the name 抓子.',
     turnstile:'A Baltimore hardcore punk band fronted by Brendan Yates. The tight riffs and breakdowns of Time & Space opened up into bright melodies, synths and percussion on GLOW ON. Their 2025 album NEVER ENOUGH won Best Rock Album at the 2026 Grammys.',
     sofitukker:'Sophie Hawley-Weld and Tucker Halpern met at Brown University and formed an electronic duo. Their breakout track Drinkee sets Portuguese verse to a guitar loop and house beat. It earned a Grammy nomination, as did their debut album Treehouse. BREAD leans further into Brazilian rhythms.',
     wutiaoren:'A folk-rock band from Haifeng, Guangdong, founded by Ren Ke and Mao Tao. They sing in Haifeng dialect, Mandarin and Cantonese, drawing stories from county towns, migrant neighbourhoods and street life. The band played Clockenflap in 2018 and reached a wider audience on The Big Band in 2020.',

@@ -13,7 +13,7 @@ Hover a name to meet the artist. Click to open a record-sleeve-style profile wit
 - Keyboard navigation, reduced-motion support and mobile layouts.
 - No accounts, analytics or backend. Picks are stored on the current device.
 
-The fan-made poster shows 19 announced artists and five unconfirmed names. An asterisk marks each unconfirmed appearance.
+The fan-made poster shows 19 announced artists alongside unconfirmed names marked with an asterisk.
 
 ## Run locally
 

@@ -16,7 +16,7 @@
     [['marceldettmann','cream'],['hersoundsystem','mint']],
     [['danielaandrade','coral'],['six60','cream'],['pami','mint']],
     [['wutiaoren','cream'],['janeremover','mint']],
-    [['fazer','cream'],['chanpan','mint'],['brekkyboy','coral']]
+    [['fazer','cream'],['chanpan','mint'],['brekkyboy','coral'],['nono','cream']]
   ];
   var desktopSizes=[106,126,88,60,60,64,60,60,60,60,54,60];
   var mobileSizes=[36,49,34,23,23,26,23,23,23,23,22,23];

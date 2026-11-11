@@ -1438,5 +1438,69 @@
       1600
     ],
     "bytes": 623266
+  },
+  {
+    "thumbnail": "assets/images/nono-avatar.webp",
+    "source": "https://songstoryworks.com/wp-content/uploads/2026/09/nono-voices-2026-cover.png",
+    "kind": "portrait",
+    "name": "Nono",
+    "large": "assets/large/nono-avatar.webp",
+    "dimensions": [
+      1080,
+      810
+    ],
+    "sourceDimensions": [
+      1080,
+      810
+    ],
+    "bytes": 133922
+  },
+  {
+    "thumbnail": "assets/images/nono-album-1.webp",
+    "source": "https://f4.bcbits.com/img/a3806356087_10.jpg",
+    "kind": "album",
+    "name": "Nono — 手接我的回旋镖",
+    "large": "assets/large/nono-album-1.webp",
+    "dimensions": [
+      1200,
+      1200
+    ],
+    "sourceDimensions": [
+      1200,
+      1200
+    ],
+    "bytes": 271482
+  },
+  {
+    "thumbnail": "assets/images/nono-album-2.webp",
+    "source": "https://f4.bcbits.com/img/a3202673177_10.jpg",
+    "kind": "album",
+    "name": "Nono — No，no！",
+    "large": "assets/large/nono-album-2.webp",
+    "dimensions": [
+      1200,
+      1200
+    ],
+    "sourceDimensions": [
+      1200,
+      1200
+    ],
+    "bytes": 226550
+  },
+  {
+    "thumbnail": "assets/images/nono-album-3.webp",
+    "source": "https://f4.bcbits.com/img/a1825936959_10.jpg",
+    "kind": "album",
+    "name": "Nono — No，now！",
+    "large": "assets/large/nono-album-3.webp",
+    "dimensions": [
+      1200,
+      1200
+    ],
+    "sourceDimensions": [
+      1200,
+      1200
+    ],
+    "bytes": 217872
   }
 ]

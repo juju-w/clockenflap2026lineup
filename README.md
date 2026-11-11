@@ -7,13 +7,13 @@ A fan-made, interactive Clockenflap 2026 lineup poster by [juju-w](https://githu
 Hover a name to meet the artist. Click to open a record-sleeve-style profile with a biography and recommended albums. Save your picks in a wishlist and export your own lineup poster.
 
 - English by default, with Chinese throughout the interface and artist biographies.
-- Official day filters, real photographs and album covers, full artist names.
+- Day filters, real photographs and album covers, full artist names.
 - Wishlist grouped by day, with removal/undo and a direct return from artist profiles.
 - Canvas PNG export: one selected day or all saved days, without cutting names off.
 - Keyboard navigation, reduced-motion support and mobile layouts.
 - No accounts, analytics or backend. Picks are stored on the current device.
 
-This is a fan project, not an official festival website. The current data contains the first 19 announced artists and their days. Stage assignments and set times have not been added.
+The fan-made poster shows 19 announced artists and five unconfirmed names. An asterisk marks each unconfirmed appearance.
 
 ## Run locally
 

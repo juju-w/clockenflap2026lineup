@@ -2,7 +2,7 @@
 
 Original code and documentation are MIT licensed. Artist photographs and album artwork are third-party materials and are **not** relicensed under MIT. Artists, photographers, labels and other respective rights holders retain their rights. These images are included to identify the performers and recommended releases in a fan-made guide. The source links below are provenance, not evidence of an open-content license.
 
-The masthead and footer illustrations are cropped from the Clockenflap first-round poster supplied as the visual reference. Clockenflap artwork is excluded from the repository’s MIT license.
+The record and harbour illustrations in `assets/poster/` are original SVG artwork for this fan-made site.
 
 Official lineup/day source: [Clockenflap 2026 lineup](https://www.clockenflap.com/2026-lineup-1).
 

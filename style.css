@@ -170,29 +170,31 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .top-rail .day-nav{margin-left:0}
 .poster{justify-content:flex-start;padding:0 24px 0}
 .poster-sheet{width:100%;max-width:1080px;margin:0 auto}
-.masthead{text-align:center}
-.poster-title{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
-.masthead-art,.poster-ground{display:block;width:100%;height:auto;pointer-events:none}
-.poster-heading{margin:9px 0 0;font-size:clamp(13px,2.15vw,26px);letter-spacing:.015em}
+.masthead{padding:18px 3.4% 0;text-align:center}
+.masthead-meta{display:flex;align-items:center;justify-content:space-between}
+.masthead-meta img{display:block;width:82px;width:clamp(53px,8.4vw,108px);height:auto;pointer-events:none}
+.poster-date{color:var(--coral);font-size:20px;font-size:clamp(12px,2vw,26px);font-weight:800;letter-spacing:.025em;white-space:nowrap}
+.poster-title{margin:0;font-family:Arial,"Helvetica Neue",sans-serif;font-size:100px;font-size:clamp(42px,14vw,156px);font-weight:800;line-height:.95;letter-spacing:-.052em;white-space:nowrap}
+.poster-ground{display:block;width:100%;height:auto;margin-top:9px;pointer-events:none}
+.poster-heading{margin:20px 0 0;font-size:18px;font-size:clamp(13px,2vw,23px);letter-spacing:.015em}
 .touch-hint{margin:8px 0 0}
 .lineup-key{margin:6px 0 0;font-size:12px}
 .lineup{padding:12px 3.4% 0;gap:3px}
 .lineup-row{gap:.17em;line-height:1.065}
-.poster-ending{position:relative;z-index:1;margin:22px 0 0;pointer-events:none}
-.poster-ending .ending-box{display:inline-block;margin:0;padding:10px 20px;background:#ff777d;color:#002c24;text-align:center}
+.poster-ending{margin:29px 0 0}
+.poster-ending .ending-box{display:inline-block;margin:0;padding:9px 17px;background:var(--coral);color:var(--forest);text-align:center}
 .ending-box strong{display:block;font-family:var(--display-font);font-weight:900;font-size:clamp(14px,2.05vw,27px);letter-spacing:-.015em;line-height:1.15}
 .ending-box span{display:block;margin-top:4px;font-size:clamp(10px,1.22vw,15px);font-weight:700;letter-spacing:.025em}
-.poster-ground{margin-top:-9.5%}
 @media(max-width:600px){
  .top-rail{display:flex;gap:8px 12px;padding:12px 16px}
  .top-rail .day-nav{gap:16px}
  .no-flex-gap .top-rail .day-nav>*+*{margin-left:16px}
  .poster{padding:0}
- .poster-sheet{padding-top:5px}
- .poster-heading{margin:8px 0 0}
+ .masthead{padding:10px 4% 0}
+ .poster-title{font-size:14vw;font-size:clamp(42px,14vw,80px)}
+ .poster-heading{margin:13px 0 0}
  .lineup{padding:16px 4% 0;gap:7px}
  .lineup-row{gap:3px 16px}
  .poster-ending{margin-top:24px}
  .poster-ending .ending-box{padding:7px 11px}
- .poster-ground{margin-top:-6%}
 }

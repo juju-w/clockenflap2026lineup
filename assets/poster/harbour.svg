@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 190">
+  <!-- A record rising over the harbour. -->
+  <circle cx="540" cy="98" r="76" fill="#ffa3ad"/>
+  <circle cx="540" cy="98" r="62" fill="none" stroke="#002c24" stroke-width="1.5" opacity=".48"/>
+  <circle cx="540" cy="98" r="52" fill="none" stroke="#002c24" stroke-width="1.5" opacity=".48"/>
+  <circle cx="540" cy="98" r="29" fill="#faead4"/>
+  <circle cx="540" cy="98" r="5" fill="#002c24"/>
+  <g fill="#faead4">
+    <path d="M391 38c1.6 8 4 10.4 12 12-8 1.6-10.4 4-12 12-1.6-8-4-10.4-12-12 8-1.6 10.4-4 12-12Z"/>
+    <path d="M713 55c1 5 2.5 6.5 7.5 7.5-5 1-6.5 2.5-7.5 7.5-1-5-2.5-6.5-7.5-7.5 5-1 6.5-2.5 7.5-7.5Z"/>
+  </g>
+  <circle cx="432" cy="75" r="3" fill="#00d9b4"/>
+  <circle cx="658" cy="37" r="3" fill="#00d9b4"/>
+
+  <!-- The quay, stage and lamps. -->
+  <path fill="#09483d" d="M0 112h36V98h34v14h25V86h27v26h23V97h26v22h29V88h37v17h29v14h61v-13h42v18h31v-11h42v15h228v-17h32v13h34v-20h36v14h26V98h29v17h25V91h39v23h27V99h40v13h29V92h34v20h59v29H0Z"/>
+  <path d="M75 130V99l79-38 77 38v31Z" fill="#002c24" stroke="#faead4" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="m76 99 78-38 76 38Z" fill="#faead4"/>
+  <path d="M103 103h18l-9 26H88Zm43 0h16l11 26h-38Zm40 0h18l15 26h-24Z" fill="#ffa3ad"/>
+  <path d="M294 129V96m28 33v-26m-28-7h13m15 7h10" fill="none" stroke="#00d9b4" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="307" cy="96" r="3" fill="#faead4"/>
+  <circle cx="332" cy="103" r="3" fill="#faead4"/>
+
+  <!-- A low wave keeps the full-width scene attached to the poster. -->
+  <path d="M0 132c155-21 241 10 384 3 129-6 189-24 304-17 143 9 231 23 392 5v67H0Z" fill="#00d9b4"/>
+  <path d="M0 163c155-13 244 16 394 7 123-7 198-25 321-16 147 11 241 24 365 8v28H0Z" fill="#007e6b"/>
+  <g fill="none" stroke-linecap="round" stroke-width="2">
+    <path d="M38 151h57m23 0h15m129 8h61m134-14h164m-137 10h105m-82 11h51m374 7h63m18 0h20" stroke="#002c24" opacity=".48"/>
+    <path d="M183 172h37m511-17h47m187-18h67" stroke="#faead4" opacity=".85"/>
+  </g>
+
+  <!-- A tiny ferry and its wake. -->
+  <path d="M803 120h132l-16 20h-99Z" fill="#002c24"/>
+  <path d="M825 105h85l12 15H819Z" fill="#faead4"/>
+  <path d="M842 93h42l10 12h-57Z" fill="#faead4"/>
+  <path d="M852 93V79l22 6-22 5" fill="#ffa3ad"/>
+  <path d="M835 111h70" stroke="#002c24" stroke-width="4" stroke-dasharray="10 5"/>
+  <path d="M792 147h153m-107 7h70" fill="none" stroke="#faead4" stroke-width="2" stroke-linecap="round"/>
+</svg>

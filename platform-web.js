@@ -1,6 +1,7 @@
 /* Browser-only capabilities. This file is excluded from the Xiaohongshu bundle. */
 window.CF_PLATFORM = {
   target: 'web',
+  openListening: function(url) { window.open(url, '_blank', 'noopener,noreferrer'); },
   copyText: async function(input) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       try { await navigator.clipboard.writeText(input.value); return 'success'; } catch (e) {}

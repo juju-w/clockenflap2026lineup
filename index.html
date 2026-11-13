@@ -35,12 +35,7 @@
         <p class="touch-hint" data-i18n="touchHint">Hold a name to preview · Tap to explore</p>
         <button id="plan-lineup" class="plan-lineup" type="button" aria-haspopup="dialog" data-i18n="planLineup">Pick artists & share</button>
       </header>
-      <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music">
-        <details id="more-artists" class="more-artists">
-          <summary><span class="more-open" data-i18n="fullLineup">View full lineup</span><span class="more-close" data-i18n="collapseLineup">Collapse lineup</span></summary>
-          <div id="more-artist-names"></div>
-        </details>
-      </div>
+      <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music"></div>
       <img class="poster-ground" src="./assets/poster/harbour.svg" width="1080" height="190" alt="">
     </div>
   </main>
@@ -74,7 +69,13 @@
         </div>
         <div class="artist-story">
           <section class="biography"><h3 data-i18n="about">ABOUT</h3><p id="artist-intro"></p></section>
-          <section id="album-section" class="listening"><h3 data-i18n="listen">START HERE</h3><div id="album-list" class="album-list"></div><p class="album-hint" data-i18n="albumHint">Click a cover to enlarge it or copy the title</p></section>
+          <section id="album-section" class="listening">
+            <h3 data-i18n="listen">START HERE</h3>
+            <div id="album-list" class="album-list"></div>
+            <div id="listening-links" class="listening-links" hidden></div>
+            <p id="listening-note" class="listening-note" hidden></p>
+            <p id="album-hint" class="album-hint" data-i18n="albumHint">Click a cover to enlarge it or copy the title</p>
+          </section>
           <nav class="artist-pager" data-i18n-aria="browse" aria-label="Browse artists">
             <button id="previous-artist" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H4m6-6-6 6 6 6"/></svg><span data-i18n="previous">Previous</span></button>
             <button id="next-artist" type="button"><span data-i18n="next">Next</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg></button>

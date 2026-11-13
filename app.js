@@ -4,9 +4,8 @@
   var previews=data.previews||[];
   var $=function(id){return document.getElementById(id);};
   var days={'4':{en:'FRI',zh:'周五',date:'12.4'},'5':{en:'SAT',zh:'周六',date:'12.5'},'6':{en:'SUN',zh:'周日',date:'12.6'}};
-  var rowLengths=[2,1,3,3,4,4,3,3,2,5,4,2,4,5];
-  var rowSizes=[62,62,36,34];
-  var mobileSizes=[32,32,19,19];
+  var rowLengths=[2,2,2,3,4,4,3,4,4,4,4,4,5];
+  var rowSizes=[62,49,46,43,39,35,35,32,31,30,30,29,29];
   var rows=[],offset=0,posterColors=['mint','coral','cream'];
   rowLengths.forEach(function(length,index){
     rows.push(artists.slice(offset,offset+length).map(function(artist,column){
@@ -82,10 +81,9 @@
   function dayText(a){return a.previewDay?dayLabel(a.previewDay)+' · '+t('unconfirmed'):dayLabel(a.officialDay);}
 
   function renderPoster(){
-    var lineup=$('lineup'),more=$('more-artists');
+    var lineup=$('lineup');
     rows.forEach(function(row,index){
       var line=document.createElement('div');line.className='lineup-row';line.dataset.row=index;
-      if(index<2)line.classList.add('headliner-row');
       row.forEach(function(spec,i){
         var a=byId[spec[0]],button=document.createElement('button');button.type='button';button.className='artist-name '+spec[1];button.dataset.artist=a.id;
         button.appendChild(document.createTextNode(displayName(a)));button.setAttribute('aria-haspopup','dialog');
@@ -102,25 +100,28 @@
         if(i){var dot=document.createElement('span');dot.className='separator mint';dot.textContent='•';dot.setAttribute('aria-hidden','true');line.appendChild(dot);}
         line.appendChild(button);
       });
-      if(index<rowSizes.length)lineup.insertBefore(line,more);
-      else $('more-artist-names').appendChild(line);
+      lineup.appendChild(line);
     });updatePoster();fitPoster();
   }
   function fitPoster(){
     var lineup=$('lineup'),layout=getComputedStyle(lineup),mobile=window.innerWidth<=600;
     var noGap=document.documentElement.classList.contains('no-flex-gap');
-    var available=lineup.clientWidth-parseFloat(layout.paddingLeft)-parseFloat(layout.paddingRight);
-    if(mobile&&noGap)available-=16;
-    var scale=Math.min(1.08,available/990);
+    var scale=Math.min(1,(lineup.clientWidth-parseFloat(layout.paddingLeft)-parseFloat(layout.paddingRight))/1100);
     lineup.querySelectorAll('.lineup-row').forEach(function(line,index){
       if(!line.offsetWidth)return;
-      var size=mobile?(mobileSizes[index]||16):Math.floor((rowSizes[index]||26)*scale);
+      var rowStyle=getComputedStyle(line);
+      var available=line.clientWidth-parseFloat(rowStyle.paddingLeft)-parseFloat(rowStyle.paddingRight);
+      if(mobile&&noGap)available-=16;
+      var size=mobile?(index===0?31:index<4?23:index<8?19:17):Math.max(20,Math.floor(rowSizes[index]*scale));
       line.style.fontSize=size+'px';
       var buttons=line.querySelectorAll('.artist-name');
       buttons.forEach(function(button){button.style.fontSize='';});
       if(mobile){
         buttons.forEach(function(button){
-          if(button.scrollWidth>available)button.style.fontSize=Math.floor(size*available/button.scrollWidth)+'px';
+          if(button.scrollWidth>available){
+            var fontSize=parseFloat(getComputedStyle(button).fontSize);
+            button.style.fontSize=Math.floor(fontSize*available/button.scrollWidth)+'px';
+          }
         });
         return;
       }
@@ -144,8 +145,6 @@
       });
       line.hidden=!hasVisibleArtist;
     });
-    var more=$('more-artists');
-    if(selectedDay!=='all')more.open=true;
     $('lineup').classList.toggle('is-filtered',selectedDay!=='all');
     $('wish-count').textContent=Object.keys(wishlist).length;
   }
@@ -288,6 +287,9 @@
   function localizeArtist(a){
     $('artist-name').textContent=displayName(a);$('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a);
     $('schedule-note').textContent=t(a.previewDay?'previewNote':'pending');
+    $('listening-note').textContent=a.listeningNote?a.listeningNote[language]:'';
+    $('listening-note').hidden=!a.listeningNote;
+    $('album-hint').hidden=!a.albums.length;
     $('album-list').querySelectorAll('.album-sleeve').forEach(function(button,i){var album=a.albums[i];button.setAttribute('aria-label',a.name+' — '+album.title+': '+t('hoverOpen'));button.querySelector('img').alt=album.title+t('cover');button.querySelector('.album-art').dataset.imageFallback=t('imageUnavailable');});
   }
   function fillArtist(a){
@@ -295,7 +297,15 @@
     $('artist-photo').src=a.avatar;$('artist-name').classList.toggle('long-name',a.name.length>22);
     $('artist-want').hidden=!!a.previewDay;
     $('artist-dialog').querySelector('.artist-pager').hidden=!!a.previewDay;
-    $('album-section').hidden=!a.albums.length;$('album-list').textContent='';
+    $('album-section').hidden=!(a.albums.length||a.listening||a.listeningNote);
+    $('album-list').textContent='';
+    var links=$('listening-links');links.textContent='';links.hidden=!a.listening||!window.CF_PLATFORM.openListening;
+    (a.listening||[]).forEach(function(item){
+      var button=document.createElement('button');button.type='button';
+      button.textContent=item.title;button.setAttribute('aria-label',item.title);
+      button.addEventListener('click',function(){window.CF_PLATFORM.openListening(item.url);});
+      links.appendChild(button);
+    });
     a.albums.forEach(function(album,index){
       var button=document.createElement('button');button.type='button';button.className='album-sleeve';
       var frame=document.createElement('span');frame.className='album-art';
@@ -506,10 +516,8 @@
   }
   function updateHistory(method,state,url){if(window.CF_PLATFORM.target==='xhs')return;try{history[method](state,'',url);}catch(e){}}
   function fromLocation(){var match=location.hash.match(/^#artist-([a-z0-9]+)$/);if(match&&byId[match[1]])openArtist(match[1],true);else closeArtist(true);}
-  $('more-artists').addEventListener('toggle',function(){if(this.open)requestAnimationFrame(fitPoster);});
   document.querySelectorAll('[data-day]').forEach(function(button){button.addEventListener('click',function(){
     hideHover();selectedDay=button.dataset.day;
-    if(selectedDay==='all')$('more-artists').open=false;
     document.querySelectorAll('[data-day]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});
     updatePoster();fitPoster();
   });});

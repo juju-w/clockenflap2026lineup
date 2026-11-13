@@ -1,5 +1,6 @@
 window.LINEUP_LOCALES = {
   en: {
+    fullLineup:'View full lineup', collapseLineup:'Collapse lineup',
     planLineup:'Pick artists & share', planMode:'Choose list view', pickArtists:'Pick artists', selectedArtists:'My picks',
     emptyPicks:'Open Pick artists to start your list.',
     exportDays:'Days to include in the image', createLineupImage:'Create share image', shareLineupImage:'Share image',
@@ -20,6 +21,7 @@ window.LINEUP_LOCALES = {
     remove:'Remove ', artistAction:'Explore biography and music', cover:' cover', photo:' press photo'
   },
   zh: {
+    fullLineup:'展开完整阵容', collapseLineup:'收起阵容',
     planLineup:'选艺人 · 生成分享图', planMode:'切换名单', pickArtists:'选艺人', selectedArtists:'我的想看',
     emptyPicks:'点「选艺人」，把想看的加进来。',
     exportDays:'分享图包含哪几天', createLineupImage:'生成分享图', shareLineupImage:'分享图片',

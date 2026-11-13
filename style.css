@@ -219,7 +219,22 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .export-day-options input{margin:0 5px 0 0;accent-color:var(--forest)}
 .export-day-options input:disabled+span{opacity:.45}
 .share-lineup-image{margin-left:8px;padding:11px 14px;border:1px solid var(--paper);color:var(--paper);font-weight:800}
+.lineup{padding-top:26px;gap:9px}
+.lineup-row{line-height:1.14;row-gap:8px}
+.lineup-row.headliner-row+.lineup-row:not(.headliner-row){margin-top:10px}
+.poster-ground{margin-top:20px}
+.more-artists{width:100%;text-align:center;margin-top:13px}
+.more-artists summary{display:inline-block;padding:9px 13px;color:var(--paper);cursor:pointer;font-size:13px;font-weight:700;list-style:none}
+.more-artists summary::-webkit-details-marker{display:none}
+.more-artists summary::after{content:'↓';display:inline-block;margin-left:8px;color:var(--mint)}
+.more-artists[open] summary::after{transform:rotate(180deg)}
+.more-close,.more-artists[open] .more-open,.lineup.is-filtered summary,.lineup.is-filtered .separator{display:none}
+.more-artists[open] .more-close{display:inline}
+#more-artist-names{margin-top:13px;border-top:1px solid rgba(250,234,212,.2);padding-top:17px}
+#more-artist-names .lineup-row+.lineup-row{margin-top:7px}
 @media(max-width:600px){
+ .lineup{padding-top:20px}
+ .lineup-row{gap:7px 14px}
  .wishlist-summary{margin:8px 0}
  .wishlist-modes{margin-bottom:8px}
  .wishlist-modes button{padding:7px 11px;font-size:12px}

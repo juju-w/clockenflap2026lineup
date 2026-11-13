@@ -35,7 +35,12 @@
         <p class="touch-hint" data-i18n="touchHint">Hold a name to preview · Tap to explore</p>
         <button id="plan-lineup" class="plan-lineup" type="button" aria-haspopup="dialog" data-i18n="planLineup">Pick artists & share</button>
       </header>
-      <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music"></div>
+      <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music">
+        <details id="more-artists" class="more-artists">
+          <summary><span class="more-open" data-i18n="fullLineup">View full lineup</span><span class="more-close" data-i18n="collapseLineup">Collapse lineup</span></summary>
+          <div id="more-artist-names"></div>
+        </details>
+      </div>
       <img class="poster-ground" src="./assets/poster/harbour.svg" width="1080" height="190" alt="">
     </div>
   </main>

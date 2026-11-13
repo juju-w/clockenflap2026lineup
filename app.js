@@ -18,8 +18,8 @@
     [['wutiaoren','cream'],['janeremover','mint']],
     [['fazer','cream'],['chanpan','mint'],['brekkyboy','coral'],['nono','cream']]
   ];
-  var desktopSizes=[106,126,88,60,60,64,60,60,60,60,54,60];
-  var mobileSizes=[36,49,34,23,23,26,23,23,23,23,22,23];
+  var desktopSizes=[69,66,57,46,46,49,46,46,46,44,41,44];
+  var mobileSizes=[40,34,26,21,21,24,21,21,21,21,20,21];
   var wishlist={},language='en',locales=window.LINEUP_LOCALES;
   try{if(localStorage.getItem('cf2026-poster-language')==='zh')language='zh';}catch(e){}
   var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -109,31 +109,30 @@
     });updatePoster();fitPoster();
   }
   function fitPoster(){
-    var mobile=window.innerWidth<=600,noGap=document.documentElement.classList.contains('no-flex-gap'),available=$('lineup').clientWidth-(mobile&&noGap?16:0);
-    document.querySelectorAll('.lineup-row').forEach(function(line,index){
+    var lineup=$('lineup'),layout=getComputedStyle(lineup),mobile=window.innerWidth<=600;
+    var noGap=document.documentElement.classList.contains('no-flex-gap');
+    var available=lineup.clientWidth-parseFloat(layout.paddingLeft)-parseFloat(layout.paddingRight);
+    if(mobile&&noGap)available-=16;
+    var scale=Math.min(1.08,available/990);
+    lineup.querySelectorAll('.lineup-row').forEach(function(line,index){
+      var size=mobile?mobileSizes[index]:Math.floor(desktopSizes[index]*scale);
+      line.style.fontSize=size+'px';
+      var buttons=line.querySelectorAll('.artist-name');
+      buttons.forEach(function(button){button.style.fontSize='';});
       if(mobile){
-        var size=mobileSizes[index];line.style.fontSize=size+'px';
-        line.querySelectorAll('.artist-name').forEach(function(button){button.style.fontSize='';if(button.scrollWidth>available){button.style.fontSize=Math.floor(size*available/button.scrollWidth)+'px';}});
-      }else{
-        line.querySelectorAll('.artist-name').forEach(function(button){button.style.fontSize='';});
-        var scale=Math.min(1.06,window.innerWidth/1440),heightScale=Math.min(1,Math.max(.68,(window.innerHeight-245)/735));
-        var size=desktopSizes[index]*Math.min(scale,heightScale);line.style.fontSize=size+'px';
-        var measured=0,children=Array.from(line.children);children.forEach(function(node){measured+=node.getBoundingClientRect().width;});
-        if(noGap)children.forEach(function(node){measured+=(parseFloat(getComputedStyle(node).marginLeft)||0)+(parseFloat(getComputedStyle(node).marginRight)||0);});else measured+=Math.max(0,children.length-1)*(parseFloat(getComputedStyle(line).columnGap)||0);
-        if(measured>available)line.style.fontSize=Math.floor(size*available/measured*.994)+'px';
+        buttons.forEach(function(button){
+          if(button.scrollWidth>available)button.style.fontSize=Math.floor(size*available/button.scrollWidth)+'px';
+        });
+        return;
       }
+      var children=Array.from(line.children);
+      var measured=children.reduce(function(width,node){
+        var style=getComputedStyle(node);
+        return width+node.getBoundingClientRect().width+(noGap?(parseFloat(style.marginLeft)||0)+(parseFloat(style.marginRight)||0):0);
+      },0);
+      if(!noGap)measured+=Math.max(0,children.length-1)*(parseFloat(getComputedStyle(line).columnGap)||0);
+      if(measured>available)line.style.fontSize=Math.floor(size*available/measured*.994)+'px';
     });
-    if(!mobile){
-      var poster=document.querySelector('.poster'),heading=document.querySelector('.poster-heading'),ending=document.querySelector('.poster-ending'),ps=getComputedStyle(poster);
-      var key=$('lineup-previews'),keyStyle=getComputedStyle(key);
-      var availableHeight=window.innerHeight-document.querySelector('.top-rail').offsetHeight-document.querySelector('.bottom-rail').offsetHeight-heading.offsetHeight-parseFloat(getComputedStyle(heading).marginBottom)-ending.offsetHeight-parseFloat(getComputedStyle(ending).marginTop)-parseFloat(ps.paddingTop)-parseFloat(ps.paddingBottom)-4;
-      availableHeight-=key.offsetHeight+parseFloat(keyStyle.marginTop)+parseFloat(keyStyle.marginBottom);
-      var actual=$('lineup').getBoundingClientRect().height;
-      if(actual>Math.max(280,availableHeight)){
-        var ratio=Math.max(280,availableHeight)/actual;
-        document.querySelectorAll('.lineup-row').forEach(function(line){line.style.fontSize=parseFloat(line.style.fontSize)*ratio*.995+'px';});
-      }
-    }
   }
   function updatePoster(){
     $('lineup').querySelectorAll('[data-artist]').forEach(function(button){

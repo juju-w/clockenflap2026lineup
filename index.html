@@ -11,8 +11,6 @@
 </head>
 <body>
   <header class="top-rail">
-    <a class="wordmark" href="./">clockenflap2026lineup</a>
-    <span class="festival-date">4—6 DEC 2026 · HONG KONG</span>
     <nav class="day-nav" data-i18n-aria="dayNav" aria-label="Filter by day">
       <button type="button" data-day="all" data-i18n="all" aria-pressed="true">ALL</button>
       <button type="button" data-day="4" data-i18n="fri" aria-pressed="false">FRI</button>
@@ -25,14 +23,20 @@
   </header>
 
   <main class="poster" data-i18n-aria="posterLabel" aria-label="Clockenflap 2026 interactive lineup poster">
-    <h1 class="poster-heading" data-i18n="heading">2026 MUSIC LINEUP</h1>
-    <p class="touch-hint" data-i18n="touchHint">Hold a name to preview · Tap to explore</p>
-    <p id="lineup-previews" class="lineup-key" data-i18n="lineupKey">* Unconfirmed</p>
-    <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music"></div>
-    <footer class="poster-ending">
-      <p>AND MANY MORE TO COME</p>
-      <span data-i18n="moreNote">Full lineup still to come</span>
-    </footer>
+    <div class="poster-sheet">
+      <header class="masthead">
+        <h1 class="poster-title">Clockenflap · 4–6 Dec 2026</h1>
+        <img class="masthead-art" src="./assets/poster/masthead.webp" width="1080" height="267" alt="" fetchpriority="high">
+        <p class="poster-heading" data-i18n="heading">2026 MUSIC LINEUP</p>
+        <p class="touch-hint" data-i18n="touchHint">Hold a name to preview · Tap to explore</p>
+        <p id="lineup-previews" class="lineup-key" data-i18n="lineupKey">* Unconfirmed</p>
+      </header>
+      <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music"></div>
+      <footer class="poster-ending">
+        <p class="ending-box"><strong data-i18n="more">AND MANY MORE TO COME</strong><span data-i18n="moreNote">Full lineup still to come</span></p>
+      </footer>
+      <img class="poster-ground" src="./assets/poster/ground.webp" width="1080" height="279" alt="">
+    </div>
   </main>
 
   <footer class="bottom-rail">

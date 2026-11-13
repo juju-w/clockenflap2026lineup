@@ -8,6 +8,7 @@ Hover a name to meet the artist. Click to open a record-sleeve-style profile wit
 
 - English by default, with Chinese throughout the interface and artist biographies.
 - Day filters, real photographs and album covers, full artist names.
+- Festival masthead and footer illustrations from the reference poster, with interactive artist names and a reflowed mobile layout.
 - Wishlist grouped by day, with removal/undo and a direct return from artist profiles.
 - Canvas PNG export: one selected day or all saved days, without cutting names off.
 - Keyboard navigation, reduced-motion support and mobile layouts.

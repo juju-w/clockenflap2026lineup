@@ -2,6 +2,8 @@
 
 Original code and documentation are MIT licensed. Artist photographs and album artwork are third-party materials and are **not** relicensed under MIT. Artists, photographers, labels and other respective rights holders retain their rights. These images are included to identify the performers and recommended releases in a fan-made guide. The source links below are provenance, not evidence of an open-content license.
 
+The masthead and footer illustrations are cropped from the Clockenflap first-round poster supplied as the visual reference. Clockenflap artwork is excluded from the repository’s MIT license.
+
 Official lineup/day source: [Clockenflap 2026 lineup](https://www.clockenflap.com/2026-lineup-1).
 
 The website's enlarged images use the same photograph/artwork sources at higher resolution and lighter compression. Exact source URLs and native/output dimensions are recorded in [web-assets/manifest.json](web-assets/manifest.json). Large files are packaged locally for the website only and loaded when an image is enlarged; they are excluded from the offline mini-tool. Sources smaller than the target size are not upscaled.

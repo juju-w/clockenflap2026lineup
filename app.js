@@ -4,14 +4,14 @@
   var previews=data.previews||[];
   var $=function(id){return document.getElementById(id);};
   var days={'4':{en:'FRI',zh:'周五',date:'12.4'},'5':{en:'SAT',zh:'周六',date:'12.5'},'6':{en:'SUN',zh:'周日',date:'12.6'}};
-  var rowLengths=[2,2,2,3,4,4,3,4,4,4,4,4,5];
-  var rowSizes=[62,49,46,43,39,35,35,32,31,30,30,29,29];
-  var rows=[],offset=0,posterColors=['mint','coral','cream'];
-  rowLengths.forEach(function(length,index){
-    rows.push(artists.slice(offset,offset+length).map(function(artist,column){
-      return [artist.id,posterColors[(index+column)%posterColors.length]];
+  var billingRows=['pcm','mpc','pcm','cmpm','cpmc','pmc','mcp','pm','cpmcp','mcpm','cp','mpcm','pmcmp'];
+  var rowSizes=[61,46,43,36,35,35,34,34,32,31,29,29,28];
+  var rows=[],offset=0,posterColors={m:'mint',c:'coral',p:'cream'};
+  billingRows.forEach(function(colors){
+    rows.push(artists.slice(offset,offset+colors.length).map(function(artist,column){
+      return [artist.id,posterColors[colors.charAt(column)]];
     }));
-    offset+=length;
+    offset+=colors.length;
   });
   var wishlist={},language='en',locales=window.LINEUP_LOCALES;
   try{if(localStorage.getItem('cf2026-poster-language')==='zh')language='zh';}catch(e){}
@@ -112,7 +112,7 @@
       var rowStyle=getComputedStyle(line);
       var available=line.clientWidth-parseFloat(rowStyle.paddingLeft)-parseFloat(rowStyle.paddingRight);
       if(mobile&&noGap)available-=16;
-      var size=mobile?(index===0?31:index<4?23:index<8?19:17):Math.max(20,Math.floor(rowSizes[index]*scale));
+      var size=mobile?(index===0?30:index<3?22:index<8?19:17):Math.max(20,Math.floor(rowSizes[index]*scale));
       line.style.fontSize=size+'px';
       var buttons=line.querySelectorAll('.artist-name');
       buttons.forEach(function(button){button.style.fontSize='';});

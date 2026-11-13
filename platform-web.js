@@ -7,6 +7,13 @@ window.CF_PLATFORM = {
     }
     input.focus(); input.select(); return 'fallback';
   },
+  canShareFile: function(blob, filename) {
+    if (typeof navigator.share !== 'function' || typeof navigator.canShare !== 'function' || typeof File !== 'function') return false;
+    return navigator.canShare({files: [new File([blob], filename, {type: 'image/png'})]});
+  },
+  shareFile: function(blob, filename) {
+    return navigator.share({files: [new File([blob], filename, {type: 'image/png'})], title: 'My Clockenflap 2026'});
+  },
   saveImage: async function(blob, filename) {
     var url = URL.createObjectURL(blob), link = document.createElement('a');
     link.href = url; link.download = filename;

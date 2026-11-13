@@ -203,3 +203,27 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
  .poster-ending{margin-top:24px}
  .poster-ending .ending-box{padding:7px 11px}
 }
+
+.plan-lineup{display:inline-block;margin:14px 0 9px;padding:10px 17px;border:1px solid var(--mint);color:var(--mint);font-size:13px;font-weight:800}
+.plan-lineup:hover,.plan-lineup:focus-visible{background:var(--mint);color:var(--forest)}
+.wishlist-modes{display:flex;flex-shrink:0;margin-bottom:12px}
+.wishlist-modes button{padding:9px 15px;border-bottom:2px solid rgba(0,44,36,.2);font-size:14px;font-weight:700}
+.wishlist-modes button[aria-pressed=true]{border-color:var(--forest);color:var(--forest)}
+.pick-artist{display:grid;place-items:center;width:44px;height:44px;flex-shrink:0;border:1px solid rgba(0,44,36,.35);border-radius:50%;color:var(--forest)}
+.pick-artist svg{width:20px;height:20px}
+.pick-artist[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:var(--mint)}
+.export-days{display:block;margin:0 0 12px;padding:0;border:0}
+.export-days legend{margin-bottom:6px;font-size:11px;font-weight:700}
+.export-day-options{display:flex;flex-wrap:wrap}
+.export-day-options label{display:inline-flex;align-items:center;margin-right:16px;min-height:28px;font-size:12px;font-weight:700;cursor:pointer}
+.export-day-options input{margin:0 5px 0 0;accent-color:var(--forest)}
+.export-day-options input:disabled+span{opacity:.45}
+.share-lineup-image{margin-left:8px;padding:11px 14px;border:1px solid var(--paper);color:var(--paper);font-weight:800}
+@media(max-width:600px){
+ .wishlist-summary{margin:8px 0}
+ .wishlist-modes{margin-bottom:8px}
+ .wishlist-modes button{padding:7px 11px;font-size:12px}
+ .wishlist-days{padding-bottom:10px}
+ .wishlist-footer{margin-top:10px;padding-top:10px}
+ .export-days{margin-bottom:7px}
+}

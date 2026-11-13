@@ -9,12 +9,12 @@ Hover a name to meet the artist. Click to open a record-sleeve-style profile wit
 - English by default, with Chinese throughout the interface and artist biographies.
 - Day filters, real photographs and album covers, full artist names.
 - Live poster typography and original SVG illustrations, with interactive artist names and a reflowed mobile layout.
-- Wishlist grouped by day, with removal/undo and a direct return from artist profiles.
-- Canvas PNG export: one selected day or all saved days, without cutting names off.
+- One-tap picks grouped by day, with removal, undo and a direct return from artist profiles.
+- One shareable Canvas PNG for any combination of one, two or three days. Download it or share it directly where the browser supports PNG sharing.
 - Keyboard navigation, reduced-motion support and mobile layouts.
 - No accounts, analytics or backend. Picks are stored on the current device.
 
-The fan-made poster shows 19 announced artists alongside unconfirmed names marked with an asterisk.
+The poster and picker show 45 acts with published days from the 2026 lineup. Nono and Summertime Sadness share one entry for their joint set. Stage assignments and set times are still to come.
 
 ## Run locally
 

@@ -4,27 +4,21 @@
   var previews=data.previews||[];
   var $=function(id){return document.getElementById(id);};
   var days={'4':{en:'FRI',zh:'周五',date:'12.4'},'5':{en:'SAT',zh:'周六',date:'12.5'},'6':{en:'SUN',zh:'周日',date:'12.6'}};
-  var rows=[
-    [['hayleywilliams','mint'],['keshi','coral']],
-    [['slowdive','cream']],
-    [['turnstile','mint']],
-    [['malcolmtodd','mint'],['qotsa','coral']],
-    [['hyukoh','cream'],['jamc','mint']],
-    [['sofitukker','coral'],['cheerchen','cream']],
-    [['kimgordon','coral'],['digableplanets','cream']],
-    [['domi','mint'],['sleafordmods','coral']],
-    [['marceldettmann','cream'],['hersoundsystem','mint']],
-    [['danielaandrade','coral'],['six60','cream'],['pami','mint']],
-    [['wutiaoren','cream'],['janeremover','mint']],
-    [['fazer','cream'],['chanpan','mint'],['brekkyboy','coral'],['nono','cream']]
-  ];
-  var desktopSizes=[69,66,57,46,46,49,46,46,46,44,41,44];
-  var mobileSizes=[40,34,26,21,21,24,21,21,21,21,20,21];
+  var rowLengths=[3,3,3,4,4,3,3,2,5,4,2,4,5];
+  var rowSizes=[65,48,45,42,38,40,39,39,37,36,33,36,35];
+  var mobileSizes=[38,24,22,21,21,21,21,20,19,19,18,18,18];
+  var rows=[],offset=0,posterColors=['mint','coral','cream'];
+  rowLengths.forEach(function(length,index){
+    rows.push(artists.slice(offset,offset+length).map(function(artist,column){
+      return [artist.id,posterColors[(index+column)%posterColors.length]];
+    }));
+    offset+=length;
+  });
   var wishlist={},language='en',locales=window.LINEUP_LOCALES;
   try{if(localStorage.getItem('cf2026-poster-language')==='zh')language='zh';}catch(e){}
   var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   var hoverRequested=null,hoverGeneration=0,hoverFrame=0,hoverAnimation=null,hoverSide=1,hoverSize={width:280,height:360},hoverCurrent=null,hoverTarget=null,hoverTime=0;
-  var wishDay='all',removedWish=null,exportURL=null,exportImage=null,exporting=false,exportGeneration=0;
+  var wishDay='all',wishMode='browse',shareDays={'4':true,'5':true,'6':true},removedWish=null,exportURL=null,exportImage=null,exporting=false,exportGeneration=0;
   var artworkRequests=new WeakMap(),artworkPreloads={};
   var layerMotions=new WeakMap(),artistSwitch=0,displayedId=null,contentMotion=null,copyState='';
   var touchPress=null,touchTimer=null,blockedTouchClick=null,blockedTouchUntil=0;
@@ -115,7 +109,7 @@
     if(mobile&&noGap)available-=16;
     var scale=Math.min(1.08,available/990);
     lineup.querySelectorAll('.lineup-row').forEach(function(line,index){
-      var size=mobile?mobileSizes[index]:Math.floor(desktopSizes[index]*scale);
+      var size=mobile?mobileSizes[index]:Math.floor(rowSizes[index]*scale);
       line.style.fontSize=size+'px';
       var buttons=line.querySelectorAll('.artist-name');
       buttons.forEach(function(button){button.style.fontSize='';});
@@ -357,37 +351,63 @@
   }
   var toastTimer;
   function showToast(message){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').classList.add('show');toastTimer=setTimeout(function(){$('toast').classList.remove('show');},3000);}
-  function openWishlist(){hideHover();wishlist=readWishlist();wishFocus=document.activeElement;renderWishlist();revealLayer($('wishlist-layer'));$('close-wishlist').focus({preventScroll:true});}
+  function openWishlist(mode){hideHover();wishlist=readWishlist();wishMode=mode;wishDay='all';removedWish=null;wishFocus=document.activeElement;renderWishlist();revealLayer($('wishlist-layer'));$('close-wishlist').focus({preventScroll:true});}
   function closeWishlist(){++exportGeneration;dismissLayer($('wishlist-layer'),function(){if(wishFocus&&document.contains(wishFocus)&&!activeId)wishFocus.focus({preventScroll:true});});}
-  function wishSelection(){return artists.filter(function(a){return wishlist[a.id]&&(wishDay==='all'||a.officialDay===wishDay);});}
+  function wishSelection(){return artists.filter(function(a){return wishlist[a.id]&&shareDays[a.officialDay];});}
   function countLabel(count){return language==='en'?count+' '+(count===1?'artist':'artists'):count+' 组';}
+  function updateShareDays(counts){
+    $('export-days').hidden=!Object.keys(wishlist).length;
+    $('export-days').querySelectorAll('input').forEach(function(input){
+      input.disabled=!counts[input.value];input.checked=!!counts[input.value]&&shareDays[input.value];
+    });
+    $('export-wishlist').disabled=!wishSelection().length||exporting;
+  }
   function renderWishlist(){
-    var total=Object.keys(wishlist).length,selection=wishSelection(),dayCount=new Set(artists.filter(function(a){return wishlist[a.id];}).map(function(a){return a.officialDay;})).size;
-    $('wishlist-summary').textContent=language==='en'?countLabel(total)+' · '+dayCount+' '+(dayCount===1?'day':'days'):total+' 组艺人 · '+dayCount+' 天';
+    var total=Object.keys(wishlist).length,counts={'4':0,'5':0,'6':0};
+    artists.forEach(function(a){if(wishlist[a.id])counts[a.officialDay]++;});
+    var dayCount=Object.keys(counts).filter(function(day){return counts[day]>0;}).length;
+    $('wishlist-summary').textContent=language==='en'?countLabel(total)+' picked · '+dayCount+' '+(dayCount===1?'day':'days'):total+' 组想看 · '+dayCount+' 天';
+    document.querySelectorAll('[data-wish-mode]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.wishMode===wishMode));});
     var nav=$('wishlist-days');nav.textContent='';
     ['all','4','5','6'].forEach(function(day){
       var button=document.createElement('button');button.type='button';button.dataset.wishDay=day;button.setAttribute('aria-pressed',String(wishDay===day));
       var label=document.createElement('span');label.textContent=day==='all'?t('all'):dayLabel(day);
-      var count=document.createElement('small');count.textContent=day==='all'?total:artists.filter(function(a){return wishlist[a.id]&&a.officialDay===day;}).length;
-      button.appendChild(label);button.appendChild(count);button.addEventListener('click',function(){wishDay=day;renderWishlist();$('wishlist-days').querySelector('[data-wish-day="'+day+'"]').focus({preventScroll:true});});nav.appendChild(button);
+      var count=document.createElement('small');count.textContent=day==='all'?total:counts[day];
+      button.appendChild(label);button.appendChild(count);button.addEventListener('click',function(){wishDay=day;renderWishlist();$('wishlist-content').scrollTop=0;nav.querySelector('[data-wish-day="'+day+'"]').focus({preventScroll:true});});nav.appendChild(button);
     });
-    $('export-wishlist').textContent=t(wishDay==='all'?'saveLineup':'saveDay');$('export-wishlist').disabled=!selection.length||exporting;
+    updateShareDays(counts);
     var container=$('wishlist-content');container.textContent='';
+    var selection=artists.filter(function(a){return (wishMode==='browse'||wishlist[a.id])&&(wishDay==='all'||a.officialDay===wishDay);});
     if(!selection.length){
-      var empty=document.createElement('div');empty.className='wishlist-empty';empty.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg>';
-      var message=document.createElement('p');message.textContent=t(total?'noDay':'empty');empty.appendChild(message);container.appendChild(empty);
+      var empty=document.createElement('p');empty.className='wishlist-empty';empty.textContent=t(total?'noDay':'emptyPicks');container.appendChild(empty);
     }
     ['4','5','6'].forEach(function(day){
       var selected=selection.filter(function(a){return a.officialDay===day;});if(!selected.length)return;
-      var section=document.createElement('section');section.className='wish-day wish-day-'+day;var heading=document.createElement('h3');heading.textContent=dayLabel(day);
+      var section=document.createElement('section');section.className='wish-day wish-day-'+day;
+      var heading=document.createElement('h3');heading.textContent=dayLabel(day);
       var count=document.createElement('span');count.textContent=countLabel(selected.length);heading.appendChild(count);section.appendChild(heading);
       selected.forEach(function(a){
-        var row=document.createElement('div');row.className='wish-row';var name=document.createElement('button');name.type='button';name.className='wish-artist';name.dataset.wishArtist=a.id;name.setAttribute('aria-haspopup','dialog');
-        var image=document.createElement('img');image.src=a.avatar;image.alt='';image.width=88;image.height=66;
-        var info=document.createElement('span'),title=document.createElement('strong'),styles=document.createElement('small');title.textContent=a.name;styles.textContent=genres(a);info.appendChild(title);info.appendChild(styles);name.appendChild(image);name.appendChild(info);
+        var row=document.createElement('div');row.className='wish-row';
+        var name=document.createElement('button');name.type='button';name.className='wish-artist';name.dataset.wishArtist=a.id;name.setAttribute('aria-haspopup','dialog');
+        var photo=document.createElement('img');photo.src=a.avatar;photo.alt='';photo.width=88;photo.height=66;photo.loading='lazy';
+        var info=document.createElement('span'),title=document.createElement('strong'),styles=document.createElement('small');
+        title.textContent=language==='zh'&&a.nameZh?a.nameZh:a.name;
+        styles.textContent=genres(a);styles.hidden=!styles.textContent;
+        info.appendChild(title);info.appendChild(styles);name.appendChild(photo);name.appendChild(info);
         name.addEventListener('click',function(){openArtist(a.id);});
-        var remove=document.createElement('button');remove.type='button';remove.className='remove-wish';remove.dataset.removeWish=a.id;remove.setAttribute('aria-label',t('remove')+a.name);remove.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg>';
-        remove.addEventListener('click',function(){var index=selection.indexOf(a);removedWish=a.id;toggleWant(a.id);var buttons=container.querySelectorAll('[data-remove-wish]');(buttons[Math.min(index,buttons.length-1)]||$('undo-wish')).focus({preventScroll:true});});row.appendChild(name);row.appendChild(remove);section.appendChild(row);
+        var pick=document.createElement('button');pick.type='button';pick.className='pick-artist';pick.dataset.pickArtist=a.id;
+        pick.setAttribute('aria-pressed',String(!!wishlist[a.id]));pick.setAttribute('aria-label',t(wishlist[a.id]?'unpickArtist':'pickArtist')+title.textContent);
+        pick.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7v14"/></svg>';
+        if(wishlist[a.id])pick.querySelector('path').setAttribute('d','m5 12 4 4 10-10');
+        pick.addEventListener('click',function(){
+          if(wishMode==='saved')removedWish=a.id;
+          var scroll=container.scrollTop,index=selection.indexOf(a);
+          toggleWant(a.id);container.scrollTop=scroll;
+          var buttons=container.querySelectorAll('[data-pick-artist]');
+          var focus=container.querySelector('[data-pick-artist="'+a.id+'"]')||buttons[Math.min(index,buttons.length-1)]||$('undo-wish');
+          focus.focus({preventScroll:true});
+        });
+        row.appendChild(name);row.appendChild(pick);section.appendChild(row);
       });container.appendChild(section);
     });
     if(removedWish&&wishlist[removedWish])removedWish=null;
@@ -395,38 +415,67 @@
     if(removedWish)$('wish-undo-message').textContent=language==='en'?byId[removedWish].name+t('removed'):t('removed')+' '+byId[removedWish].name;
   }
   function undoWish(){
-    if(!removedWish)return;var id=removedWish;removedWish=null;wishlist=readWishlist();wishlist[id]=true;
-    try{localStorage.setItem('cf2026-poster-wishlist',JSON.stringify(Object.keys(wishlist)));}catch(e){}
-    updatePoster();if(activeId)refreshWant();renderWishlist();var button=document.querySelector('[data-wish-artist="'+id+'"]');(button||$('close-wishlist')).focus({preventScroll:true});
-  }
-  function exploreLineup(){
-    selectedDay=wishDay;document.querySelectorAll('[data-day]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.day===selectedDay));});updatePoster();closeWishlist();
+    if(!removedWish)return;var id=removedWish;removedWish=null;
+    if(!readWishlist()[id])toggleWant(id);var button=document.querySelector('[data-pick-artist="'+id+'"]');(button||$('close-wishlist')).focus({preventScroll:true});
   }
   async function exportWishlist(){
     var selected=wishSelection();if(!selected.length||exporting)return;
     exporting=true;var token=++exportGeneration;$('export-wishlist').disabled=true;$('export-wishlist').setAttribute('aria-busy','true');
     try{
       if(document.fonts&&document.fonts.ready)await document.fonts.ready;
-      var canvas=document.createElement('canvas'),ctx=canvas.getContext('2d'),width=1080,padding=64,fontSize=selected.length<=3?86:selected.length<=6?72:62,lineHeight=Math.ceil(fontSize*1.18),font='900 '+fontSize+'px "Arial Black", Arial, sans-serif';
-      ctx.font=font;
-      function wrap(text){var words=text.split(' '),lines=[],line='';words.forEach(function(word){var next=line?line+' '+word:word;if(line&&ctx.measureText(next).width>width-padding*2){lines.push(line);line=word;}else line=next;});if(line)lines.push(line);return lines;}
-      var groups=['4','5','6'].map(function(day){return {day:day,items:selected.filter(function(a){return a.officialDay===day;}).map(function(a){return {artist:a,lines:wrap(displayName(a))};})};}).filter(function(g){return g.items.length;});
-      var contentHeight=groups.reduce(function(h,g){return h+108+g.items.reduce(function(sum,item){return sum+item.lines.length*lineHeight+14;},0)+42;},0);
-      canvas.width=width;canvas.height=Math.max(1440,360+contentHeight+140);ctx.fillStyle='#002c24';ctx.fillRect(0,0,width,canvas.height);ctx.textBaseline='top';
-      ctx.fillStyle='#faead4';ctx.font='700 25px Arial, sans-serif';ctx.fillText('4—6 DEC 2026 · HONG KONG',padding,55);
-      ctx.font='900 90px "Arial Black", Arial, sans-serif';ctx.fillText(language==='en'?'MY CLOCKENFLAP':'我的雞飛',padding,115);ctx.fillStyle='#00d9b4';ctx.font='900 114px "Arial Black", Arial, sans-serif';ctx.fillText('2026',padding,215);
-      var y=360,extra=(canvas.height-360-contentHeight-140)/(groups.length+1);y+=extra;
+      var canvas=document.createElement('canvas'),ctx=canvas.getContext('2d'),width=1080,padding=62;
+      var columns=selected.length>9?2:1,contentWidth=width-padding*2,cardWidth=(contentWidth-(columns-1)*20)/columns;
+      var rowHeight=columns===2?73:selected.length<=5?112:84,dayGap=30,dayHeader=72;
+      var groups=['4','5','6'].map(function(day){
+        var items=selected.filter(function(a){return a.officialDay===day;});
+        return {day:day,items:items,rows:Math.ceil(items.length/columns)};
+      }).filter(function(g){return g.items.length;});
+      var height=groups.reduce(function(h,g){return h+dayHeader+g.rows*rowHeight+dayGap;},0);
+      canvas.width=width;canvas.height=Math.max(1440,272+height+124);
+      ctx.fillStyle='#002c24';ctx.fillRect(0,0,width,canvas.height);
+      ctx.textBaseline='middle';
+      ctx.fillStyle='#00d9b4';ctx.font='800 26px Arial, sans-serif';ctx.fillText('CLOCKENFLAP 2026  /  HONG KONG',padding,66);
+      ctx.fillStyle='#faead4';ctx.font='900 90px "Arial Black", Arial, "PingFang SC", sans-serif';
+      ctx.fillText(language==='en'?'MY CLOCKENFLAP':'我的鸡飞',padding,152,contentWidth);
+      ctx.fillStyle='#ffa3ad';ctx.font='700 26px Arial, sans-serif';
+      ctx.fillText(groups.map(function(g){return dayLabel(g.day);}).join('  /  '),padding,224,contentWidth);
+      var spare=canvas.height-272-height-124;
+      var y=272+Math.floor(spare*.18);
       groups.forEach(function(g){
-        var color=g.day==='4'?'#ffa3ad':g.day==='5'?'#00d9b4':'#faead4';ctx.fillStyle=color;ctx.fillRect(padding,y,8,51);ctx.font='900 44px "Arial Black", Arial, sans-serif';ctx.fillText(dayLabel(g.day),padding+27,y+3);y+=82;
-        g.items.forEach(function(item,i){ctx.fillStyle=i%3===0?color:i%3===1?'#faead4':'#00d9b4';ctx.font=font;item.lines.forEach(function(line){ctx.fillText(line,padding,y);y+=lineHeight;});y+=14;});
-        y+=68+extra;
+        var color=g.day==='4'?'#ffa3ad':g.day==='5'?'#00d9b4':'#fff0ad';
+        ctx.fillStyle=color;ctx.fillRect(padding,y,contentWidth,50);
+        ctx.fillStyle='#002c24';ctx.font='900 28px Arial, "PingFang SC", sans-serif';ctx.fillText(dayLabel(g.day),padding+18,y+27);
+        ctx.textAlign='right';ctx.font='700 22px Arial, sans-serif';ctx.fillText(countLabel(g.items.length),width-padding-18,y+27);ctx.textAlign='left';
+        y+=dayHeader;
+        g.items.forEach(function(artist,index){
+          var x=padding+index%columns*(cardWidth+20),top=y+Math.floor(index/columns)*rowHeight;
+          ctx.fillStyle='#0a4035';ctx.fillRect(x,top,cardWidth,rowHeight-8);
+          ctx.fillStyle=color;ctx.fillRect(x,top,5,rowHeight-8);
+          ctx.fillStyle='#faead4';ctx.font='900 '+(columns===2?34:selected.length<=5?54:44)+'px "Arial Black", Arial, "PingFang SC", sans-serif';
+          var name=language==='zh'&&artist.nameZh?artist.nameZh:artist.name;
+          ctx.fillText(name,x+19,top+(rowHeight-8)/2,cardWidth-36);
+        });
+        y+=g.rows*rowHeight+dayGap;
       });
-      ctx.strokeStyle='rgba(250,234,212,.4)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(padding,canvas.height-100);ctx.lineTo(width-padding,canvas.height-100);ctx.stroke();ctx.fillStyle='#faead4';ctx.font='700 23px Arial, sans-serif';ctx.fillText('juju-w · '+countLabel(selected.length),padding,canvas.height-76);ctx.font='20px Arial, sans-serif';ctx.fillText(language==='en'?'FAN-MADE · SET TIMES TO FOLLOW':'樂迷製作 · 演出時間待公布',padding,canvas.height-42);
+      var harbour=document.querySelector('.poster-ground');
+      if(spare>=230&&harbour.complete&&harbour.naturalWidth)ctx.drawImage(harbour,0,canvas.height-318,width,190);
+      ctx.fillStyle='#367367';ctx.fillRect(padding,canvas.height-102,contentWidth,1);
+      ctx.fillStyle='#faead4';ctx.font='700 23px Arial, sans-serif';ctx.fillText('juju-w · '+countLabel(selected.length),padding,canvas.height-68);
+      ctx.font='20px Arial, sans-serif';ctx.fillText(language==='en'?'FAN-MADE · SET TIMES TO FOLLOW':'乐迷制作 · 演出时间待公布',padding,canvas.height-35);
       var blob=await new Promise(function(resolve,reject){canvas.toBlob(function(result){result?resolve(result):reject(new Error('Empty image'));},'image/png');});
       if(token!==exportGeneration||$('wishlist-layer').hidden||$('wishlist-layer').inert)return;
-      var url=URL.createObjectURL(blob);openMedia(url,t('myLineup'),false,$('export-wishlist'));exportURL=url;exportImage={blob:blob,filename:'my-clockenflap-2026-'+(wishDay==='all'?'all':wishDay)+'.png'};$('export-controls').hidden=false;
-    }catch(e){$('wish-undo-message').textContent=t('exportError');$('wish-undo').hidden=false;$('undo-wish').hidden=true;}
+      var url=URL.createObjectURL(blob);
+      openMedia(url,t('myLineup'),false,$('export-wishlist'));
+      exportURL=url;exportImage={blob:blob,filename:'my-clockenflap-2026-'+groups.map(function(g){return g.day;}).join('-')+'.png'};
+      $('export-controls').hidden=false;
+      $('share-lineup-image').hidden=!(window.CF_PLATFORM.canShareFile&&window.CF_PLATFORM.canShareFile(blob,exportImage.filename));
+    }catch(e){showToast(t('exportError'));}
     finally{exporting=false;$('export-wishlist').disabled=!wishSelection().length;$('export-wishlist').removeAttribute('aria-busy');}
+  }
+  async function shareLineupImage(){
+    if(!exportImage||!window.CF_PLATFORM.shareFile)return;
+    try{await window.CF_PLATFORM.shareFile(exportImage.blob,exportImage.filename);}
+    catch(e){if(e.name!=='AbortError')showToast(t('shareLineupError'));}
   }
   function activeDialog(){if(!$('media-layer').hidden&&!$('media-layer').inert)return $('media-dialog');if(!$('artist-layer').hidden&&!$('artist-layer').inert)return $('artist-dialog');if(!$('wishlist-layer').hidden&&!$('wishlist-layer').inert)return $('wishlist-dialog');return null;}
   function handleKeys(event){
@@ -449,8 +498,19 @@
   $('artist-want').addEventListener('click',function(){if(activeId)toggleWant(activeId);});$('previous-artist').addEventListener('click',function(){stepArtist(-1);});$('next-artist').addEventListener('click',function(){stepArtist(1);});
   $('enlarge-portrait').addEventListener('click',function(){if(activeId)openMedia(byId[activeId].avatarLarge||byId[activeId].avatar,byId[activeId].name,false,this);});
   $('close-media').addEventListener('click',closeMedia);document.querySelector('.media-scrim').addEventListener('click',closeMedia);$('copy-album').addEventListener('click',copyAlbum);
-  $('download-wishlist').addEventListener('click',saveExportImage);$('back-to-wishlist').addEventListener('click',function(){closeArtist();});$('undo-wish').addEventListener('click',undoWish);$('add-wishlist').addEventListener('click',exploreLineup);$('export-wishlist').addEventListener('click',exportWishlist);
-  $('open-wishlist').addEventListener('click',openWishlist);$('close-wishlist').addEventListener('click',closeWishlist);document.querySelector('.wishlist-scrim').addEventListener('click',closeWishlist);
+  $('download-wishlist').addEventListener('click',saveExportImage);$('back-to-wishlist').addEventListener('click',function(){closeArtist();});$('undo-wish').addEventListener('click',undoWish);$('export-wishlist').addEventListener('click',exportWishlist);
+  $('plan-lineup').addEventListener('click',function(){openWishlist('browse');});
+  $('open-wishlist').addEventListener('click',function(){openWishlist('saved');});
+  $('share-lineup-image').addEventListener('click',shareLineupImage);
+  document.querySelectorAll('[data-wish-mode]').forEach(function(button){
+    button.addEventListener('click',function(){wishMode=button.dataset.wishMode;removedWish=null;renderWishlist();$('wishlist-content').scrollTop=0;});
+  });
+  $('export-days').addEventListener('change',function(event){
+    shareDays[event.target.value]=event.target.checked;
+    ++exportGeneration;
+    $('export-wishlist').disabled=!wishSelection().length||exporting;
+  });
+  $('close-wishlist').addEventListener('click',closeWishlist);document.querySelector('.wishlist-scrim').addEventListener('click',closeWishlist);
   document.addEventListener('pointermove',moveTouchPreview,{passive:true});
   document.addEventListener('pointerup',function(event){finishTouchPreview(false,event);});
   document.addEventListener('pointercancel',function(event){finishTouchPreview(true,event);});

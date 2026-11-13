@@ -33,12 +33,9 @@
         <h1 class="poster-title">Clockenflap</h1>
         <p class="poster-heading" data-i18n="heading">2026 MUSIC LINEUP</p>
         <p class="touch-hint" data-i18n="touchHint">Hold a name to preview · Tap to explore</p>
-        <p id="lineup-previews" class="lineup-key" data-i18n="lineupKey">* Unconfirmed</p>
+        <button id="plan-lineup" class="plan-lineup" type="button" aria-haspopup="dialog" data-i18n="planLineup">Pick artists & share</button>
       </header>
       <div id="lineup" class="lineup" data-i18n-aria="lineupLabel" aria-label="Choose an artist to explore their music"></div>
-      <footer class="poster-ending">
-        <p class="ending-box"><strong data-i18n="more">AND MANY MORE TO COME</strong><span data-i18n="moreNote">Full lineup still to come</span></p>
-      </footer>
       <img class="poster-ground" src="./assets/poster/harbour.svg" width="1080" height="190" alt="">
     </div>
   </main>
@@ -88,7 +85,7 @@
       <button id="close-media" class="close-button" type="button" data-i18n-aria="closeMedia" aria-label="Close image"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button>
       <div id="media-art" class="media-art"><div class="media-art-inner"><img id="media-image" alt=""></div></div>
       <h2 id="media-name"></h2>
-      <div id="export-controls" class="export-controls" hidden><button id="download-wishlist" type="button" class="download-wishlist" data-i18n="download">Download PNG</button><p data-i18n="saveHint">Hold the image to save it, or download the PNG.</p></div>
+      <div id="export-controls" class="export-controls" hidden><button id="download-wishlist" type="button" class="download-wishlist" data-i18n="download">Download PNG</button><button id="share-lineup-image" class="share-lineup-image" type="button" data-i18n="shareLineupImage" hidden>Share image</button><p data-i18n="saveHint">Hold the image to save it, or download the PNG.</p></div>
       <div id="copy-controls" class="copy-controls"><input id="copy-text" data-i18n-aria="copyLabel" aria-label="Artist and release title" readonly><button id="copy-album" type="button" data-i18n="copy">Copy title</button><p id="copy-message" aria-live="polite"></p></div>
     </section>
   </div>
@@ -98,10 +95,25 @@
     <section id="wishlist-dialog" class="wishlist-dialog" role="dialog" aria-modal="true" aria-labelledby="wishlist-title" tabindex="-1">
       <header><div><span class="wish-eyebrow">CLOCKENFLAP 2026</span><h2 id="wishlist-title" data-i18n="wishlist">My wishlist</h2></div><div class="dialog-actions"><nav class="language-nav" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language="zh" aria-pressed="false" lang="zh-CN">中文</button></nav><button id="close-wishlist" class="close-button" type="button" data-i18n-aria="closeWishlist" aria-label="Close wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button></div></header>
       <p id="wishlist-summary" class="wishlist-summary"></p>
+      <div class="wishlist-modes" role="group" data-i18n-aria="planMode" aria-label="Choose list view">
+        <button type="button" data-wish-mode="browse" aria-pressed="true" data-i18n="pickArtists">Pick artists</button>
+        <button type="button" data-wish-mode="saved" aria-pressed="false" data-i18n="selectedArtists">My picks</button>
+      </div>
       <nav id="wishlist-days" class="wishlist-days" data-i18n-aria="dayNav" aria-label="Filter by day"></nav>
       <div id="wishlist-content"></div>
       <div id="wish-undo" class="wish-undo" hidden><span id="wish-undo-message" role="status" aria-live="polite"></span><button id="undo-wish" type="button" data-i18n="undo">Undo</button></div>
-      <footer class="wishlist-footer"><div class="wishlist-actions"><button id="add-wishlist" class="add-wishlist" type="button" data-i18n="addMore">Explore lineup</button><button id="export-wishlist" class="export-wishlist" type="button" data-i18n="saveLineup">Save my lineup</button></div><p class="wishlist-note" data-i18n="saved">Saved on this device. Change your picks anytime.</p></footer>
+      <footer class="wishlist-footer">
+        <fieldset id="export-days" class="export-days" hidden>
+          <legend data-i18n="exportDays">Days to include in the image</legend>
+          <div class="export-day-options">
+            <label><input type="checkbox" value="4" checked><span data-i18n="fri">FRI</span></label>
+            <label><input type="checkbox" value="5" checked><span data-i18n="sat">SAT</span></label>
+            <label><input type="checkbox" value="6" checked><span data-i18n="sun">SUN</span></label>
+          </div>
+        </fieldset>
+        <div class="wishlist-actions"><button id="export-wishlist" class="export-wishlist" type="button" data-i18n="createLineupImage">Create share image</button></div>
+        <p class="wishlist-note" data-i18n="pending">Stages and set times to be announced</p>
+      </footer>
     </section>
   </div>
   <div id="toast" role="status" aria-live="polite"></div>

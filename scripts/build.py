@@ -67,7 +67,7 @@ def main():
             if not ref.startswith('assets/') or '..' in ref or not (output / ref).is_file():
                 raise ValueError('Invalid image reference: ' + ref)
     files = sorted(p for p in output.rglob('*') if p.is_file())
-    if len(files) > 200: raise ValueError('More than 200 runtime files')
+    if args.target == 'xhs' and len(files) > 200: raise ValueError('More than 200 runtime files')
     for path in files:
         if path.suffix not in {'.html','.css','.js','.json','.svg','.webp','.jpg','.jpeg','.png','.gif','.woff','.woff2'}:
             raise ValueError('Unsupported runtime file: ' + str(path))

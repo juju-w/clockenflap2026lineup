@@ -1,5 +1,9 @@
 window.LINEUP_LOCALES = {
   en: {
+    planLineup:'Pick artists & share', planMode:'Choose list view', pickArtists:'Pick artists', selectedArtists:'My picks',
+    emptyPicks:'Open Pick artists to start your list.',
+    exportDays:'Days to include in the image', createLineupImage:'Create share image', shareLineupImage:'Share image',
+    shareLineupError:'Could not share the image. You can still download it.', pickArtist:'Add ', unpickArtist:'Remove ',
     touchHint:'Hold a name to preview · Tap to explore', touchRelease:'Release to close · Tap for more',
     imageUnavailable:'Image unavailable', saveToAlbum:'Save to photos', saveAlbumHint:'Tap the button to save this image to your photos.', imageSaved:'Saved to photos.', downloadStarted:'Download started.', imageSaveError:'Could not save the image. Please try again.', backWishlist:'Back to wishlist', addMore:'Explore lineup', saveLineup:'Save my lineup', saveDay:'Save this day', undo:'Undo', removed:' removed', download:'Download PNG', saveHint:'Hold the image to save it, or download the PNG.', myLineup:'My Clockenflap 2026', noDay:'Nothing saved for this day yet.', exportError:'Could not create the image. Please try again.',
     all:'ALL', fri:'FRI', sat:'SAT', sun:'SUN', dayNav:'Filter by day',
@@ -16,6 +20,10 @@ window.LINEUP_LOCALES = {
     remove:'Remove ', artistAction:'Explore biography and music', cover:' cover', photo:' press photo'
   },
   zh: {
+    planLineup:'选艺人 · 生成分享图', planMode:'切换名单', pickArtists:'选艺人', selectedArtists:'我的想看',
+    emptyPicks:'点「选艺人」，把想看的加进来。',
+    exportDays:'分享图包含哪几天', createLineupImage:'生成分享图', shareLineupImage:'分享图片',
+    shareLineupError:'分享没成功，可以先下载图片。', pickArtist:'想看 ', unpickArtist:'取消想看 ',
     touchHint:'长按名字预览 · 轻点看详情', touchRelease:'松开收起 · 轻点看详情',
     imageUnavailable:'图片暂时无法显示', saveToAlbum:'保存到相册', saveAlbumHint:'点击按钮，把这张图保存到相册。', imageSaved:'已保存到相册。', downloadStarted:'已开始下载。', imageSaveError:'图片保存失败，请再试一次。', backWishlist:'返回想看', addMore:'继续挑选', saveLineup:'保存我的阵容', saveDay:'保存这一天', undo:'撤销', removed:'已移除', download:'下载图片', saveHint:'长按图片保存，也可以点击下载。', myLineup:'我的鸡飞 2026', noDay:'这一天还没选，去海报上挑几组吧。', exportError:'图片生成失败，请再试一次。',
     all:'全部', fri:'周五', sat:'周六', sun:'周日', dayNav:'按演出日期查看',
@@ -40,7 +48,28 @@ window.LINEUP_LOCALES = {
     '独立摇滚':'Indie rock', '卧室摇滚':'Bedroom rock'
   },
   intros: {
-    nono:'Nono is the solo project of Zhang Xingchan, a singer-songwriter and producer who started recording in Wuhan. She writes, arranges and mixes her own records, from the bedroom rock of No，no！ to the more layered guitars and bass on 手接我的回旋镖. She also makes music with the band Trigger under the name 抓子.',
+    nypd:"A Hong Kong post-punk band.",
+    hush:"A Taiwanese Mandopop singer-songwriter.",
+    cathwong:"A Hong Kong singer-songwriter working in acoustic pop.",
+    gordonflanders:"An R&B singer-songwriter from Hong Kong.",
+    goodnightlillie:"A local indie band influenced by Japanese rock.",
+    huunhuurtu:"An ensemble from Tuva known for traditional throat singing and string instruments.",
+    lucigang:"A genre-crossing rapper on the Hong Kong lineup.",
+    kollin:"A DJ whose sets focus on bass music.",
+    room307:"A dream-pop project on the Hong Kong lineup.",
+    karenylosremedios:"A Mexican trio blending cumbia with downtempo electronics.",
+    kalai:"A Hong Kong rapper.",
+    kowloonk:"A band working across jazz, funk and pop.",
+    copak:"A synth-pop trio.",
+    tomii:"A singer-songwriter bringing blues into indie folk.",
+    midnightcowboy:"An indie rock band known for poetic songwriting.",
+    loiseygillmok:"A joint appearance by Loisey and Gill Mok.",
+    rohann:"A Saturday act at Clockenflap 2026.",
+    ruje:"A Saturday act at Clockenflap 2026.",
+    flare:"A dream-soul artist.",
+    yrock:"A youth music showcase.",
+
+    nono:'Nono is the solo project of Zhang Xingchan, a singer-songwriter and producer who started recording in Wuhan. She writes, arranges and mixes her own records, from the bedroom rock of No，no！ to the more layered guitars and bass on 手接我的回旋镖. She also makes music with the band Trigger under the name 抓子. Nono plays a joint set with Summertime Sadness.',
     turnstile:'A Baltimore hardcore punk band fronted by Brendan Yates. The tight riffs and breakdowns of Time & Space opened up into bright melodies, synths and percussion on GLOW ON. Their 2025 album NEVER ENOUGH won Best Rock Album at the 2026 Grammys.',
     sofitukker:'Sophie Hawley-Weld and Tucker Halpern met at Brown University and formed an electronic duo. Their breakout track Drinkee sets Portuguese verse to a guitar loop and house beat. It earned a Grammy nomination, as did their debut album Treehouse. BREAD leans further into Brazilian rhythms.',
     wutiaoren:'A folk-rock band from Haifeng, Guangdong, founded by Ren Ke and Mao Tao. They sing in Haifeng dialect, Mandarin and Cantonese, drawing stories from county towns, migrant neighbourhoods and street life. The band played Clockenflap in 2018 and reached a wider audience on The Big Band in 2020.',

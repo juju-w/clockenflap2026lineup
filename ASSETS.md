@@ -4,7 +4,7 @@ Original code and documentation are MIT licensed. Artist photographs and album a
 
 The record and harbour illustrations in `assets/poster/` are original SVG artwork for this fan-made site.
 
-Official lineup/day source: [Clockenflap 2026 lineup](https://www.clockenflap.com/2026-lineup-1).
+The [official full lineup](https://www.clockenflap.com/2026-lineup) supplies artist days, billing order and the added press photos. The [full-lineup announcement](https://www.clockenflap.com/2026-press-release-full-lineup) bills Nono and Summertime Sadness as a collaboration. Checked on 13 November 2026.
 
 The website's enlarged images use the same photograph/artwork sources at higher resolution and lighter compression. Exact source URLs and native/output dimensions are recorded in [web-assets/manifest.json](web-assets/manifest.json). Large files are packaged locally for the website only and loaded when an image is enlarged; they are excluded from the offline mini-tool. Sources smaller than the target size are not upscaled.
 

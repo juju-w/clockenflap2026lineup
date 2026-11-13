@@ -166,8 +166,9 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .lineup-mark{margin-left:.14em;color:var(--coral);font-size:.39em;line-height:0;vertical-align:1.05em}
 
 /* The artwork and live artist names share the same poster width. */
-.top-rail{position:sticky;top:0;z-index:20;flex-wrap:wrap;min-height:0;padding:14px 28px;background:var(--forest);border-bottom:1px solid rgba(0,217,180,.16)}
+.top-rail{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;gap:12px;min-height:0;padding:14px 28px;background:var(--forest);border-bottom:1px solid rgba(0,217,180,.16)}
 .top-rail .day-nav{margin-left:0}
+.top-rail .rail-actions{justify-self:end}
 .poster{justify-content:flex-start;padding:0 24px 0}
 .poster-sheet{width:100%;max-width:1080px;margin:0 auto}
 .masthead{padding:18px 3.4% 0;text-align:center}
@@ -185,10 +186,14 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .poster-ending .ending-box{display:inline-block;margin:0;padding:9px 17px;background:var(--coral);color:var(--forest);text-align:center}
 .ending-box strong{display:block;font-family:var(--display-font);font-weight:900;font-size:clamp(14px,2.05vw,27px);letter-spacing:-.015em;line-height:1.15}
 .ending-box span{display:block;margin-top:4px;font-size:clamp(10px,1.22vw,15px);font-weight:700;letter-spacing:.025em}
+@media(max-width:720px){
+ .top-rail{grid-template-columns:1fr auto;gap:9px 10px;padding:10px 16px 12px}
+ .top-rail .wordmark{font-size:12px}
+ .top-rail .rail-actions{grid-column:2;grid-row:1}
+ .top-rail .day-nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;gap:23px}
+ .no-flex-gap .top-rail .day-nav>*+*{margin-left:23px}
+}
 @media(max-width:600px){
- .top-rail{display:flex;gap:8px 12px;padding:12px 16px}
- .top-rail .day-nav{gap:16px}
- .no-flex-gap .top-rail .day-nav>*+*{margin-left:16px}
  .poster{padding:0}
  .masthead{padding:10px 4% 0}
  .poster-title{font-size:14vw;font-size:clamp(42px,14vw,80px)}

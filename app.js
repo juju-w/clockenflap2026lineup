@@ -2,6 +2,7 @@
   'use strict';
   var data=window.LINEUP_DATA,artists=data.artists,byId={},selectedDay='all',activeId=null,hoverTimer=null,hovered=null,hoverPoint=null,lastFocus=null,mediaFocus=null,wishFocus=null;
   var previews=data.previews||[];
+  var posterProgrammes=data.posterProgrammes||[];
   var $=function(id){return document.getElementById(id);};
   var days={'4':{en:'FRI',zh:'周五',date:'12.4'},'5':{en:'SAT',zh:'周六',date:'12.5'},'6':{en:'SUN',zh:'周日',date:'12.6'}};
   var billingRows=['pcm','mpc','pcm','cmpm','cpmc','pmc','mcp','pm','cpmcp','mcpm','cp','mpcm','pmcmp'];
@@ -12,6 +13,15 @@
       return [artist.id,posterColors[colors.charAt(column)]];
     }));
     offset+=colors.length;
+  });
+  var programmeIds=[];
+  posterProgrammes.forEach(function(group){
+    group.forEach(function(row){
+      rows.push(row.map(function(id,column){
+        programmeIds.push(id);
+        return [id,posterColors['mcp'.charAt(column%3)]];
+      }));
+    });
   });
   var wishlist={},language='en',locales=window.LINEUP_LOCALES;
   try{if(localStorage.getItem('cf2026-poster-language')==='zh')language='zh';}catch(e){}
@@ -74,16 +84,19 @@
       layer.hidden=true;layer.inert=false;animations.forEach(function(a){a.cancel();});syncScroll();if(done)done();
     },function(){});
   }
-  artists.concat(previews).forEach(function(a){byId[a.id]=a;});
+  artists.concat(previews,data.posterEntries||[]).forEach(function(a){byId[a.id]=a;});
   function readWishlist(){var next={};try{var stored=JSON.parse(localStorage.getItem('cf2026-poster-wishlist')||'[]');if(Array.isArray(stored))stored.forEach(function(id){if(byId[id]&&byId[id].officialDay)next[id]=true;});return next;}catch(e){return Object.assign({},wishlist);}}
   wishlist=readWishlist();
   function displayName(a){if(language==='zh'&&a.nameZh)return a.nameZh;if(a.id==='domi')return 'DOMi & JD BECK';if(a.id==='jamc')return 'THE JESUS & MARY CHAIN';return a.name.toUpperCase();}
-  function dayText(a){return a.previewDay?dayLabel(a.previewDay)+' · '+t('unconfirmed'):dayLabel(a.officialDay);}
+  function dayText(a){return a.previewDay?dayLabel(a.previewDay)+' · '+t('unconfirmed'):a.officialDay?dayLabel(a.officialDay):t('datePending');}
 
   function renderPoster(){
     var lineup=$('lineup');
+    var mainRows=billingRows.length,otherRows=posterProgrammes.length?posterProgrammes[0].length:0;
     rows.forEach(function(row,index){
       var line=document.createElement('div');line.className='lineup-row';line.dataset.row=index;
+      if(index>=mainRows)line.classList.add('programme-row');
+      if(index===mainRows||index===mainRows+otherRows)line.classList.add('programme-start');
       row.forEach(function(spec,i){
         var a=byId[spec[0]],button=document.createElement('button');button.type='button';button.className='artist-name '+spec[1];button.dataset.artist=a.id;
         button.appendChild(document.createTextNode(displayName(a)));button.setAttribute('aria-haspopup','dialog');
@@ -112,7 +125,8 @@
       var rowStyle=getComputedStyle(line);
       var available=line.clientWidth-parseFloat(rowStyle.paddingLeft)-parseFloat(rowStyle.paddingRight);
       if(mobile&&noGap)available-=16;
-      var size=mobile?(index===0?30:index<3?22:index<8?19:17):Math.max(20,Math.floor(rowSizes[index]*scale));
+      var size=line.classList.contains('programme-row')?(mobile?14:Math.max(16,Math.floor(20*scale))):
+        mobile?(index===0?30:index<3?22:index<8?19:17):Math.max(20,Math.floor(rowSizes[index]*scale));
       line.style.fontSize=size+'px';
       var buttons=line.querySelectorAll('.artist-name');
       buttons.forEach(function(button){button.style.fontSize='';});
@@ -151,7 +165,7 @@
   function fillHover(a){
     $('hover-photo').alt=a.name;$('hover-name').textContent=displayName(a);$('hover-day').textContent=dayText(a);
     $('hover-genres').textContent=genres(a);
-    var text=intro(a),firstSentence=text.match(/^.*?[.!?](?:\s|$)/),sentence=language==='en'?(firstSentence?firstSentence[0].trim():text):text.split('。')[0]+'。';
+    var text=intro(a)||t('posterEntry'),firstSentence=text.match(/^.*?[.!?](?:\s|$)/),sentence=language==='en'?(firstSentence?firstSentence[0].trim():text):text.split('。')[0]+'。';
     $('hover-intro').textContent=sentence;
     $('hover-card').querySelector('.hover-open>span').textContent=t($('hover-card').classList.contains('is-touch-preview')?'touchRelease':'hoverOpen');
   }
@@ -218,8 +232,12 @@
         ready=true;show();
       });
     }
-    photo.onload=function(){loaded(true);};photo.onerror=function(){loaded(false);};
-    photo.src=a.avatar;if(photo.complete)loaded(photo.naturalWidth>0);
+    if(a.avatar){
+      photo.onload=function(){loaded(true);};photo.onerror=function(){loaded(false);};
+      photo.src=a.avatar;if(photo.complete)loaded(photo.naturalWidth>0);
+    }else{
+      photo.hidden=true;ready=true;
+    }
     hoverTimer=setTimeout(function(){hoverTimer=null;elapsed=true;show();},switching?0:65);
   }
   function positionHover(x,y,snap){
@@ -278,14 +296,16 @@
     if(image.complete)finish(image.naturalWidth>0);
   }
   function warmArtistArtwork(a){
-    [a.avatar].concat(a.albums.map(function(album){return album.cover;})).forEach(function(src){
+    [a.avatar].concat(a.albums.map(function(album){return album.cover;})).filter(Boolean).forEach(function(src){
       if(artworkPreloads[src])return;
       var image=new Image();artworkPreloads[src]=true;image.decoding='async';image.src=src;
       if(image.decode)image.decode().catch(function(){});
     });
   }
   function localizeArtist(a){
-    $('artist-name').textContent=displayName(a);$('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a);
+    $('artist-name').textContent=displayName(a);$('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a)||t('posterEntry');
+    $('artist-genres').hidden=!a.genres.length;
+    $('schedule-note').hidden=!a.officialDay&&!a.previewDay;
     $('schedule-note').textContent=t(a.previewDay?'previewNote':'pending');
     $('listening-note').textContent=a.listeningNote?a.listeningNote[language]:'';
     $('listening-note').hidden=!a.listeningNote;
@@ -294,8 +314,10 @@
   }
   function fillArtist(a){
     displayedId=a.id;
-    $('artist-photo').src=a.avatar;$('artist-name').classList.toggle('long-name',a.name.length>22);
-    $('artist-want').hidden=!!a.previewDay;
+    $('enlarge-portrait').hidden=!a.avatar;
+    if(a.avatar)$('artist-photo').src=a.avatar;else $('artist-photo').removeAttribute('src');
+    $('artist-name').classList.toggle('long-name',a.name.length>22);
+    $('artist-want').hidden=!a.officialDay;
     $('artist-dialog').querySelector('.artist-pager').hidden=!!a.previewDay;
     $('album-section').hidden=!(a.albums.length||a.listening||a.listeningNote);
     $('album-list').textContent='';
@@ -355,7 +377,7 @@
     try{localStorage.setItem('cf2026-poster-wishlist',JSON.stringify(Object.keys(wishlist)));}catch(e){}
     updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();
   }
-  function stepArtist(direction){if(!byId[activeId].officialDay)return;var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
+  function stepArtist(direction){if(byId[activeId].previewDay)return;var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});if(selectedDay==='all')pool=pool.concat(programmeIds.map(function(id){return byId[id];}));var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
   function openMedia(src,name,isAlbum,origin){
     if(exportURL){URL.revokeObjectURL(exportURL);exportURL=null;}exportImage=null;$('export-controls').hidden=true;
     mediaFocus=origin||document.activeElement;$('media-image').alt=name;$('media-name').textContent=name;$('media-dialog').classList.toggle('is-album',isAlbum);revealArtwork($('media-image'),src,$('media-art'));

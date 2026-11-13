@@ -225,6 +225,8 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .lineup-row [data-artist="qotsa"],.lineup-row [data-artist="slowdive"]{font-size:1.07em}
 .lineup-row [data-artist="nono"]{font-size:.93em}
 .lineup-row .separator{opacity:.86}
+.lineup-row.programme-start{margin-top:16px}
+.lineup-row.programme-row{letter-spacing:-.026em;padding-top:3px;padding-bottom:3px}
 .poster-ground{margin-top:30px}
 .lineup.is-filtered .separator{display:none}
 .listening-links{display:grid;gap:8px}
@@ -235,6 +237,7 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 @media(max-width:600px){
  .lineup{padding-top:20px;padding-left:5%;padding-right:5%}
  .lineup-row{gap:5px 13px;padding:4px 0}
+ .lineup-row.programme-row{gap:5px 10px;line-height:1.2}
  .poster-ground{margin-top:23px}
  .wishlist-summary{margin:8px 0}
  .wishlist-modes{margin-bottom:8px}

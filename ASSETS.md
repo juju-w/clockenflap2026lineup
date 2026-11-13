@@ -6,6 +6,8 @@ The record and harbour illustrations in `assets/poster/` are original SVG artwor
 
 The [official full lineup](https://www.clockenflap.com/2026-lineup) supplies artist days, billing order and the added press photos. The [full-lineup announcement](https://www.clockenflap.com/2026-press-release-full-lineup) bills Nono and Summertime Sadness as a collaboration. Checked on 13 November 2026.
 
+The two smaller sections follow the [official festival poster](https://images.squarespace-cdn.com/content/v1/6874a80a8aaa4562bb04c247/8949b7f1-547e-4d79-803a-65c118fd0336/CF26+FULL+LINEUP_IG+LINEUP+1.png). Their dates are left unset. Programme profiles link to the relevant artist, venue, project or release where the billing could be verified.
+
 The website's enlarged images use the same photograph/artwork sources at higher resolution and lighter compression. Exact source URLs and native/output dimensions are recorded in [web-assets/manifest.json](web-assets/manifest.json). Large files are packaged locally for the website only and loaded when an image is enlarged; they are excluded from the offline mini-tool. Sources smaller than the target size are not upscaled.
 
 | Artist | Photograph source record | Release artwork/source pages |

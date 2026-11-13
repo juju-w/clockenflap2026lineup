@@ -15,6 +15,15 @@ for(const artist of profiles){
   assert(fs.existsSync(path.join(root,ref)),'Missing image: '+ref);
  }
 }
+const posterEntries=data.posterEntries||[];
+const programmeIds=new Set((data.posterProgrammes||[]).flat(2));
+assert.equal(programmeIds.size,posterEntries.length,'Every extra programme must have exactly one poster entry');
+for(const entry of posterEntries){
+ assert(!ids.has(entry.id)&&programmeIds.delete(entry.id),'Invalid or duplicate poster entry');
+ assert(!entry.officialDay&&!entry.previewDay,'Poster-only entries must not have an inferred day');
+ assert(entry.intro?Boolean(locales.intros[entry.id]):!locales.intros[entry.id],'Both programme biography languages are required');
+ ids.add(entry.id);
+}
 assert.deepStrictEqual(Object.keys(locales.en).sort(),Object.keys(locales.zh).sort(),'UI translations differ');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const largeImages=JSON.parse(fs.readFileSync(path.join(root,'web-assets/manifest.json'),'utf8'));
@@ -37,7 +46,7 @@ assert(html.includes('juju-w')&&locales.en.creator.includes('juju-w')&&locales.z
  await ctx.window.CF_PLATFORM.saveImage({},'test.png');
  assert(calls[0].data.startsWith('data:image/png;base64,'));assert.equal(calls[1].filePath,'/temp/test.png');
  let selected=false;assert.equal(await ctx.window.CF_PLATFORM.copyText({focus(){},select(){selected=true;}}),'fallback');assert(selected);
- console.log(`OK: ${ids.size} artists, bilingual strings, local image references and native save adapter contract.`);
+ console.log(`OK: ${profiles.length} artist profiles, ${posterEntries.length} additional poster entries, bilingual strings, images and native save adapter contract.`);
 })().catch(e=>{console.error(e);process.exitCode=1;});
 
 require("./check-hover.js");

@@ -168,6 +168,7 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 /* The artwork and live artist names share the same poster width. */
 .top-rail{position:sticky;top:0;z-index:20;display:grid;grid-template-columns:1fr auto 1fr;gap:12px;min-height:0;padding:14px 28px;background:var(--forest);border-bottom:1px solid rgba(0,217,180,.16)}
 .top-rail .day-nav{margin-left:0}
+.top-rail .day-nav button[aria-pressed=true]{color:var(--mint)}
 .top-rail .rail-actions{justify-self:end}
 .poster{justify-content:flex-start;padding:0 24px 0}
 .poster-sheet{width:100%;max-width:1240px;margin:0 auto}
@@ -228,7 +229,8 @@ button:focus,a:focus,input:focus{outline:2px solid currentColor;outline-offset:4
 .lineup-row.programme-start{margin-top:16px}
 .lineup-row.programme-row{letter-spacing:-.026em;padding-top:3px;padding-bottom:3px}
 .poster-ground{margin-top:30px}
-.lineup.is-filtered .separator{display:none}
+.lineup.is-filtered .separator{opacity:.22}
+.lineup .artist-name.is-dimmed.is-hovered{opacity:1}
 .listening-links{display:grid;gap:8px}
 .listening-links button{padding:10px 12px;border:1px solid rgba(0,44,36,.25);font-size:14px;text-align:left}
 .listening-links button::after{content:'↗';float:right;margin-left:8px}

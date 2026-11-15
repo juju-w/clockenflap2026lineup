@@ -149,15 +149,10 @@
     });
   }
   function updatePoster(){
-    $('lineup').querySelectorAll('.lineup-row').forEach(function(line){
-      var hasVisibleArtist=false;
-      line.querySelectorAll('[data-artist]').forEach(function(button){
-        var a=byId[button.dataset.artist],day=a.officialDay||a.previewDay;
-        button.classList.toggle('is-wanted',!!wishlist[a.id]);
-        button.hidden=selectedDay!=='all'&&day!==selectedDay;
-        if(!button.hidden)hasVisibleArtist=true;
-      });
-      line.hidden=!hasVisibleArtist;
+    $('lineup').querySelectorAll('[data-artist]').forEach(function(button){
+      var a=byId[button.dataset.artist],day=a.officialDay||a.previewDay;
+      button.classList.toggle('is-wanted',!!wishlist[a.id]);
+      button.classList.toggle('is-dimmed',selectedDay!=='all'&&day!==selectedDay);
     });
     $('lineup').classList.toggle('is-filtered',selectedDay!=='all');
     $('wish-count').textContent=Object.keys(wishlist).length;
@@ -541,7 +536,7 @@
   document.querySelectorAll('[data-day]').forEach(function(button){button.addEventListener('click',function(){
     hideHover();selectedDay=button.dataset.day;
     document.querySelectorAll('[data-day]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});
-    updatePoster();fitPoster();
+    updatePoster();
   });});
   $('close-artist').addEventListener('click',function(){closeArtist();});document.querySelector('#artist-layer>.scrim').addEventListener('click',function(){closeArtist();});
   $('artist-want').addEventListener('click',function(){if(activeId)toggleWant(activeId);});$('previous-artist').addEventListener('click',function(){stepArtist(-1);});$('next-artist').addEventListener('click',function(){stepArtist(1);});

@@ -46,18 +46,21 @@
     node.style.setProperty('--stage-color',stages[set.stageId].color);
     var open=button('', 'set-open',function(){app.openArtist(set.artistId);});
     open.setAttribute('aria-haspopup','dialog');open.appendChild(el('strong','',name(set)));
-    open.appendChild(el('span','set-time',time(set)));
-    if(list)open.appendChild(el('small','set-stage',stages[set.stageId].name.en));
+    var details=el('span','set-details');
+    details.appendChild(el('span','set-time',time(set)));
+    if(list)details.appendChild(el('small','set-stage',stages[set.stageId].name.en));
+    if(conflictIds[set.id])details.appendChild(el('span','set-conflict',text('Overlap','撞场')));
+    open.appendChild(details);
     var pick=button(picked?'♥':'♡','set-pick',notifySet(set));pick.dataset.setPick=set.id;
     pick.setAttribute('aria-pressed',String(picked));pick.setAttribute('aria-label',text(picked?'Remove ':'Want to see ',picked?'取消想看 ':'想看 ')+name(set));
     node.appendChild(open);node.appendChild(pick);
-    if(conflictIds[set.id])node.appendChild(el('span','set-conflict',text('Overlap','撞场')));
     return node;
   }
   function renderGrid(container,daySets,conflictIds){
-    var start=day==='4'?1020:780,end=1380,scale=2.4;
+    var start=day==='4'?1020:780,end=1380,hourHeight=96,scale=hourHeight/60;
     var scroller=el('div','schedule-scroll');scroller.tabIndex=0;scroller.setAttribute('role','region');scroller.setAttribute('aria-label',text('Stage timetable. Scroll horizontally to see all six stages.','舞台时间表，横向滑动查看六个舞台。'));
     var grid=el('div','schedule-grid'),axis=el('div','schedule-axis');
+    grid.style.setProperty('--half-hour',(hourHeight/2)+'px');
     axis.appendChild(el('div','schedule-stage-name',text('HKT','香港时间')));
     var ticks=el('div','schedule-ticks');ticks.style.height=(end-start)*scale+'px';
     for(var m=start;m<=end;m+=60){var tick=el('span','schedule-tick',String(Math.floor(m/60)).padStart(2,'0')+':00');tick.style.top=(m-start)*scale+'px';ticks.appendChild(tick);}

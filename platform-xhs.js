@@ -11,5 +11,21 @@ window.CF_PLATFORM = {
     });
     var result = await bridge.writeTempFile({data: uri});
     await bridge.saveImageToPhotosAlbum({filePath: result.filePath});
+  },
+  /* share: client 9.53+, full-screen container only. Method presence is checked here;
+     the caller gates on client version via CF_CAP and hides the entry when unsupported. */
+  canShare: function() {
+    var bridge = window.xhs && window.xhs.miniTool;
+    return !!(bridge && typeof bridge.share === 'function');
+  },
+  shareCard: async function() {
+    var bridge = window.xhs && window.xhs.miniTool;
+    if (!bridge || typeof bridge.share !== 'function') throw new Error('Share is unavailable in this container.');
+    await bridge.share({type: 'card'});
+  },
+  shareImage: async function(dataUrl) {
+    var bridge = window.xhs && window.xhs.miniTool;
+    if (!bridge || typeof bridge.share !== 'function') throw new Error('Share is unavailable in this container.');
+    await bridge.share({type: 'image', image_resource: dataUrl});
   }
 };

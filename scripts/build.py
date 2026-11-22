@@ -5,7 +5,7 @@ import argparse, shutil, re, zipfile, hashlib, json
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
-RUNTIME = ['index.html', 'style.css', 'app.js', 'data.js', 'locales.js', 'compat.js', 'icon.svg']
+RUNTIME = ['index.html', 'style.css', 'app.js', 'data.js', 'schedule-data.js', 'schedule.js', 'locales.js', 'compat.js', 'icon.svg']
 
 class References(HTMLParser):
     def handle_starttag(self, tag, attrs):

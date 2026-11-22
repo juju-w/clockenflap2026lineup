@@ -14,7 +14,7 @@ Hover a name to meet the artist. Click to open a record-sleeve-style profile wit
 - Keyboard navigation, reduced-motion support and mobile layouts.
 - No accounts, analytics or backend. Picks are stored on the current device.
 
-The poster and picker show 45 acts with published days from the 2026 lineup. Nono and Summertime Sadness share one entry for their joint set. Stage assignments and set times are still to come.
+The poster retains the official billing. The Schedule tab has 83 performances across six music stages on 4–6 December, verified against the official timetable on 22 November 2026. Nono and Summertime Sadness share a joint set; Luci Gang is billed with Rujé and Rohann. Previously saved artists carry into the timetable.
 
 ## Run locally
 
@@ -44,6 +44,9 @@ The two outputs share their UI, artist IDs, data, styles, wishlist storage and C
 | Save PNG | Browser download / image preview | Official native album-save bridge |
 | Runtime images | Local thumbnails plus large images loaded on enlargement | Local compressed images |
 | Routing | Shareable artist hash | In-page dialogs |
+| Share | Web Share API when available | Native share panel (client 9.53+, full-screen only): tool card + exported lineup PNG |
+| Picks storage | localStorage | Storage JS API (client 9.46+) with localStorage mirror/fallback |
+| Haptics | — | `vibrateShort` on saving a pick (client 9.50+) |
 
 See [compatibility notes](docs/COMPATIBILITY.md) for test coverage and the container baseline.
 
@@ -59,14 +62,18 @@ See [compatibility notes](docs/COMPATIBILITY.md) for test coverage and the conta
 
 The older prediction workspace is not part of this repository. This public project is the maintained interactive guide.
 
-## When the official timetable arrives
+## Official timetable
 
-A **Schedule** subtab will reuse the artists and wishlist. It will show the official timetable by day/stage, flag overlapping picks, and export a personal timetable PNG. No provisional stage names or invented set times are shown now. The data contract and planned flow are in [the schedule roadmap](docs/SCHEDULE.md).
+The **Schedule** tab reuses the artist profiles and wishlist. Browse the six-stage grid or chronological list, select individual performances, see exact overlaps and tight stage changes, and export one PNG containing any selected combination of days. Tap **Official timetable** to read the packaged source image. A separate button opens the official family programme.
+
+`schedule-data.js` records the official sources, explicit Hong Kong timestamps, stable performance IDs and shared artist IDs. `schedule.js` renders the timetable and uses the same platform image-save adapter as the poster. `scripts/check-schedule.js` validates references and checks overlap boundaries, cross-day comparisons and joint sets.
+
+Several labels are cropped in the official Sunday source image. Their times were transcribed from the labelled grid boundaries and carry `timeBasis: official-grid-boundaries`. No walking-time estimates are supplied without a verified map. Stage times may change. The data contract is documented in [the schedule notes](docs/SCHEDULE.md).
 
 ## 中文
 
 这是 `juju-w` 做的鸡飞阵容互动大字报。点名字可以看艺人背景、推荐专辑；想看清单按日整理，也可以保存成个人阵容海报。默认英文，支持中文切换。
 
-网页和小红书小工具共用一套代码。后续正式时间表公布后再加排程子页，支持冲突提示、舞台信息和图片导出。现在只使用已公布的分日，不猜时间和舞台。
+网页和小红书小工具共用一套代码。「时间表」已接入 11 月 22 日核对的官方六舞台、83 场演出，支持分日舞台表、时间线、按场勾选、撞场及提前换舞台提示，选一天、两天或三天导出同一张图片。原先收藏的艺人会带入排程。周日原图少数时间文字被遮挡，对应场次已按官方时间网格核读。
 
 代码采用 MIT 协议；艺人照片、专辑封面和品牌名称不在 MIT 授权范围内。来源说明见 [ASSETS.md](ASSETS.md)。

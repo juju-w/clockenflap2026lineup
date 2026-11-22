@@ -20,6 +20,19 @@ window.CF_PLATFORM = {
     link.href = url; link.download = filename;
     document.body.appendChild(link); link.click(); link.parentNode.removeChild(link);
     setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+  },
+  /* Browser sharing via the Web Share API; hidden when the browser lacks it. */
+  canShare: function() { return typeof navigator.share === 'function'; },
+  shareCard: async function() {
+    if (typeof navigator.share !== 'function') throw new Error('Share is unavailable in this browser.');
+    await navigator.share({title: document.title, text: 'Clockenflap 2026 lineup', url: location.href});
+  },
+  shareImage: async function(dataUrl) {
+    if (typeof navigator.share !== 'function') throw new Error('Share is unavailable in this browser.');
+    var blob = await (await fetch(dataUrl)).blob();
+    var file = new File([blob], 'my-clockenflap-2026.png', {type: blob.type || 'image/png'});
+    if (navigator.canShare && navigator.canShare({files: [file]})) await navigator.share({files: [file], title: document.title});
+    else await navigator.share({title: document.title, text: 'My Clockenflap 2026 lineup', url: location.href});
   }
 };
 

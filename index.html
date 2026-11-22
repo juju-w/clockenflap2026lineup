@@ -19,11 +19,16 @@
       <button type="button" data-day="6" data-i18n="sun" aria-pressed="false">SUN</button>
     </nav>
     <div class="rail-actions">
+    <button id="share-card" type="button" class="share-card" data-i18n="shareCard" hidden>Share</button>
     <nav class="language-nav" aria-label="Language / 语言"><button type="button" data-language="en" aria-pressed="true" lang="en">EN</button><span aria-hidden="true">/</span><button type="button" data-language="zh" aria-pressed="false" lang="zh-CN">中文</button></nav>
     </div>
   </header>
 
-  <main class="poster" data-i18n-aria="posterLabel" aria-label="Clockenflap 2026 interactive lineup poster">
+  <nav class="view-tabs" aria-label="Lineup or schedule">
+    <button type="button" data-view="lineup" aria-pressed="true" data-i18n="lineupTab">Lineup</button>
+    <button type="button" data-view="schedule" aria-pressed="false" data-i18n="scheduleTab">Schedule</button>
+  </nav>
+  <main id="lineup-panel" class="poster" data-i18n-aria="posterLabel" aria-label="Clockenflap 2026 interactive lineup poster">
     <div class="poster-sheet">
       <header class="masthead">
         <div class="masthead-meta">
@@ -39,6 +44,26 @@
       <img class="poster-ground" src="./assets/poster/harbour.svg" width="1080" height="190" alt="">
     </div>
   </main>
+
+  <section id="schedule-panel" class="schedule-panel" aria-labelledby="schedule-heading" hidden>
+    <header class="schedule-header"><p id="schedule-meta"></p><h1 id="schedule-heading"></h1><p id="schedule-hint"></p></header>
+    <nav id="schedule-days" class="schedule-days" aria-label="Schedule day"></nav>
+    <div class="schedule-toolbar">
+      <div class="schedule-segment" role="group" aria-label="Select performances"><button id="schedule-all" type="button" aria-pressed="true"></button><button id="schedule-picked" type="button" aria-pressed="false"></button></div>
+      <div class="schedule-segment" role="group" aria-label="Schedule layout"><button id="schedule-grid-mode" type="button" aria-pressed="true"></button><button id="schedule-list-mode" type="button" aria-pressed="false"></button></div>
+      <button id="schedule-original" type="button" class="schedule-source"></button>
+    </div>
+    <p id="schedule-count" class="schedule-count" aria-live="polite"></p>
+    <div id="schedule-warnings" class="schedule-warnings" aria-live="polite" hidden></div>
+    <p id="schedule-grid-hint" class="schedule-grid-hint"></p>
+    <div id="schedule-content"></div>
+    <section class="schedule-export-box" aria-labelledby="schedule-export-title">
+      <div><h2 id="schedule-export-title"></h2><p id="schedule-export-hint"></p></div>
+      <div id="schedule-export-days" class="schedule-export-days"></div>
+      <button id="schedule-export" type="button" class="export-wishlist"></button>
+    </section>
+    <footer class="schedule-footnotes"><p id="schedule-status"></p><button id="schedule-family" type="button" class="schedule-source"></button></footer>
+  </section>
 
   <footer class="bottom-rail">
     <span data-i18n="creator">juju-w · Fan-made</span>
@@ -123,6 +148,6 @@
     </section>
   </div>
   <div id="toast" role="status" aria-live="polite"></div>
-  <script src="./data.js"></script><script src="./locales.js"></script><script src="./compat.js"></script><script src="./platform-web.js"></script><script src="./app.js"></script>
+  <script src="./data.js"></script><script src="./schedule-data.js"></script><script src="./schedule.js"></script><script src="./locales.js"></script><script src="./compat.js"></script><script src="./platform-web.js"></script><script src="./app.js"></script>
 </body>
 </html>

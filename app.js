@@ -24,6 +24,8 @@
     });
   });
   var wishlist={},language='en',locales=window.LINEUP_LOCALES;
+  var schedule=window.CF_SCHEDULE,setOverrides=readSetOverrides();
+  var wishVersion=0,setVersion=0,wishWrite=Promise.resolve(),setWrite=Promise.resolve();
   try{if(localStorage.getItem('cf2026-poster-language')==='zh')language='zh';}catch(e){}
   var reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   var hoverRequested=null,hoverGeneration=0,hoverFrame=0,hoverAnimation=null,hoverSide=1,hoverSize={width:280,height:360},hoverCurrent=null,hoverTarget=null,hoverTime=0;
@@ -53,6 +55,7 @@
     $('copy-album').textContent=t(copyState==='success'?'copied':'copy');
     $('copy-message').textContent=copyState?t(copyState==='success'?'copySuccess':'copyFallback'):'';
     requestAnimationFrame(fitPoster);
+    if(schedule)schedule.refresh();
   }
   // Only transform/opacity are animated. Cancelled exits cannot hide a reopened layer.
   function animate(node,frames,duration,easing){
@@ -85,8 +88,39 @@
     },function(){});
   }
   artists.concat(previews,data.posterEntries||[]).forEach(function(a){byId[a.id]=a;});
+  if(schedule){
+    schedule.data.artists.forEach(function(a){byId[a.id]=a;locales.intros[a.id]=a.introEn;});
+    Object.keys(schedule.artistSets).forEach(function(id){
+      var a=byId[id];if(!a)return;
+      var dates=schedule.artistSets[id].map(function(s){return s.day;});
+      if(dates.every(function(d){return d===dates[0];}))a.officialDay=dates[0];
+      if(artists.indexOf(a)<0)artists.push(a);
+    });
+  }
   function readWishlist(){var next={};try{var stored=JSON.parse(localStorage.getItem('cf2026-poster-wishlist')||'[]');if(Array.isArray(stored))stored.forEach(function(id){if(byId[id]&&byId[id].officialDay)next[id]=true;});return next;}catch(e){return Object.assign({},wishlist);}}
   wishlist=readWishlist();
+  /* Persist to Storage JS API (9.46+) with a localStorage mirror for sync reads/fallback. */
+  function persistWishlist(){
+    var ids=Object.keys(wishlist);++wishVersion;
+    try{localStorage.setItem('cf2026-poster-wishlist',JSON.stringify(ids));}catch(e){}
+    if(window.CF_CAP)wishWrite=wishWrite.catch(function(){}).then(function(){return window.CF_CAP.storageSet('cf2026-poster-wishlist',ids);});
+  }
+  function hydrateWishlist(){
+    if(!window.CF_CAP)return;
+    var wishAtStart=wishVersion,setsAtStart=setVersion;
+    Promise.all([window.CF_CAP.storageGet('cf2026-poster-wishlist'),window.CF_CAP.storageGet('cf2026-schedule-picks')]).then(function(stored){
+      if(Array.isArray(stored[0])&&wishVersion===wishAtStart){
+        var next={};stored[0].forEach(function(id){if(byId[id]&&byId[id].officialDay)next[id]=true;});wishlist=next;
+        try{localStorage.setItem('cf2026-poster-wishlist',JSON.stringify(Object.keys(wishlist)));}catch(e){}
+      }
+      if(schedule&&stored[1]&&typeof stored[1]==='object'&&!Array.isArray(stored[1])&&setVersion===setsAtStart){
+        setOverrides=validSetOverrides(stored[1]);try{localStorage.setItem('cf2026-schedule-picks',JSON.stringify(setOverrides));}catch(e){}
+      }
+      updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();if(schedule)schedule.refresh();
+    });
+  }
+  var shareReady=false;
+  function refreshShareVisibility(){var ok=!!(window.CF_PLATFORM.canShare&&window.CF_PLATFORM.canShare())&&(window.CF_PLATFORM.target==='web'||shareReady);$('share-card').hidden=!ok;if(exportImage&&window.CF_PLATFORM.target==='xhs')$('share-lineup-image').hidden=!ok;}
   function displayName(a){if(language==='zh'&&a.nameZh)return a.nameZh;if(a.id==='domi')return 'DOMi & JD BECK';if(a.id==='jamc')return 'THE JESUS & MARY CHAIN';return a.name.toUpperCase();}
   function dayText(a){return a.previewDay?dayLabel(a.previewDay)+' · '+t('unconfirmed'):a.officialDay?dayLabel(a.officialDay):t('datePending');}
 
@@ -300,8 +334,9 @@
   function localizeArtist(a){
     $('artist-name').textContent=displayName(a);$('artist-photo').alt=a.name+t('photo');$('artist-day').textContent=dayText(a);$('artist-genres').textContent=genres(a);$('artist-intro').textContent=intro(a)||t('posterEntry');
     $('artist-genres').hidden=!a.genres.length;
-    $('schedule-note').hidden=!a.officialDay&&!a.previewDay;
-    $('schedule-note').textContent=t(a.previewDay?'previewNote':'pending');
+    var appearances=schedule?schedule.artistSets[a.id]||[]:[];
+    $('schedule-note').hidden=!appearances.length&&!a.previewDay;
+    $('schedule-note').textContent=appearances.length?appearances.map(function(set){return dayLabel(set.day)+' · '+schedule.stages[set.stageId].name.en+' · '+schedule.time(set);}).join(' / '):t(a.previewDay?'previewNote':'pending');
     $('listening-note').textContent=a.listeningNote?a.listeningNote[language]:'';
     $('listening-note').hidden=!a.listeningNote;
     $('album-hint').hidden=!a.albums.length;
@@ -314,10 +349,11 @@
     $('artist-name').classList.toggle('long-name',a.name.length>22);
     $('artist-want').hidden=!a.officialDay;
     $('artist-dialog').querySelector('.artist-pager').hidden=!!a.previewDay;
-    $('album-section').hidden=!(a.albums.length||a.listening||a.listeningNote);
+    var listening=window.CF_PLATFORM.openListening?a.listening||[]:[];
+    $('album-section').hidden=!(a.albums.length||listening.length||a.listeningNote);
     $('album-list').textContent='';
-    var links=$('listening-links');links.textContent='';links.hidden=!a.listening||!window.CF_PLATFORM.openListening;
-    (a.listening||[]).forEach(function(item){
+    var links=$('listening-links');links.textContent='';links.hidden=!listening.length;
+    listening.forEach(function(item){
       var button=document.createElement('button');button.type='button';
       button.textContent=item.title;button.setAttribute('aria-label',item.title);
       button.addEventListener('click',function(){window.CF_PLATFORM.openListening(item.url);});
@@ -368,11 +404,13 @@
   function toggleWant(id){
     if(!byId[id].officialDay)return;
     wishlist=readWishlist();
-    if(wishlist[id])delete wishlist[id];else wishlist[id]=true;
-    try{localStorage.setItem('cf2026-poster-wishlist',JSON.stringify(Object.keys(wishlist)));}catch(e){}
+    if(schedule&&schedule.artistSets[id]){applyPerformancePicks(schedule.artistSets[id],!wishlist[id]);return;}
+    if(wishlist[id])delete wishlist[id];else{wishlist[id]=true;if(window.CF_CAP)window.CF_CAP.vibrate('light');}
+    persistWishlist();
     updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();
+    if(schedule)schedule.refresh();
   }
-  function stepArtist(direction){if(byId[activeId].previewDay)return;var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});if(selectedDay==='all')pool=pool.concat(programmeIds.map(function(id){return byId[id];}));var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
+  function stepArtist(direction){if(byId[activeId].previewDay)return;var pool=artists.filter(function(a){return selectedDay==='all'||a.officialDay===selectedDay;});if(selectedDay==='all')pool=pool.concat(programmeIds.map(function(id){return byId[id];}).filter(function(a){return pool.indexOf(a)<0;}));var index=pool.findIndex(function(a){return a.id===activeId;});var next=pool[index<0?(direction>0?0:pool.length-1):(index+direction+pool.length)%pool.length];if(!next)return;updateHistory('replaceState',{artist:next.id},'#artist-'+next.id);openArtist(next.id,true);}
   function openMedia(src,name,isAlbum,origin){
     if(exportURL){URL.revokeObjectURL(exportURL);exportURL=null;}exportImage=null;$('export-controls').hidden=true;
     mediaFocus=origin||document.activeElement;$('media-image').alt=name;$('media-name').textContent=name;$('media-dialog').classList.toggle('is-album',isAlbum);revealArtwork($('media-image'),src,$('media-art'));
@@ -388,6 +426,18 @@
     if(!exportImage)return;var button=$('download-wishlist');button.disabled=true;
     try{await window.CF_PLATFORM.saveImage(exportImage.blob,exportImage.filename);showToast(t(window.CF_PLATFORM.target==='xhs'?'imageSaved':'downloadStarted'));}
     catch(e){showToast(t('imageSaveError'));}finally{button.disabled=false;}
+  }
+  async function shareExportImage(){
+    if(!exportImage||!window.CF_PLATFORM.shareImage)return;var button=$('share-lineup-image');button.disabled=true;
+    try{
+      var uri=await new Promise(function(resolve,reject){var r=new FileReader();r.onload=function(){resolve(r.result);};r.onerror=function(){reject(r.error);};r.readAsDataURL(exportImage.blob);});
+      await window.CF_PLATFORM.shareImage(uri);showToast(t('shareStarted'));
+    }catch(e){showToast(t('shareError'));}finally{button.disabled=false;}
+  }
+  async function shareCard(){
+    if(!window.CF_PLATFORM.shareCard)return;var button=$('share-card');button.disabled=true;
+    try{await window.CF_PLATFORM.shareCard();showToast(t('shareStarted'));}
+    catch(e){showToast(t('shareError'));}finally{button.disabled=false;}
   }
   var toastTimer;
   function showToast(message){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').classList.add('show');toastTimer=setTimeout(function(){$('toast').classList.remove('show');},3000);}
@@ -429,10 +479,11 @@
       selected.forEach(function(a){
         var row=document.createElement('div');row.className='wish-row';
         var name=document.createElement('button');name.type='button';name.className='wish-artist';name.dataset.wishArtist=a.id;name.setAttribute('aria-haspopup','dialog');
-        var photo=document.createElement('img');photo.src=a.avatar;photo.alt='';photo.width=88;photo.height=66;photo.loading='lazy';
+        var photo=document.createElement('img');if(a.avatar)photo.src=a.avatar;photo.hidden=!a.avatar;photo.alt='';photo.width=88;photo.height=66;photo.loading='lazy';
         var info=document.createElement('span'),title=document.createElement('strong'),styles=document.createElement('small');
         title.textContent=language==='zh'&&a.nameZh?a.nameZh:a.name;
-        styles.textContent=genres(a);styles.hidden=!styles.textContent;
+        var appearances=schedule?schedule.artistSets[a.id]||[]:[];
+        styles.textContent=appearances.length?appearances.map(function(set){return schedule.time(set)+' · '+schedule.stages[set.stageId].name.en;}).join(' / '):genres(a);styles.hidden=!styles.textContent;
         info.appendChild(title);info.appendChild(styles);name.appendChild(photo);name.appendChild(info);
         name.addEventListener('click',function(){openArtist(a.id);});
         var pick=document.createElement('button');pick.type='button';pick.className='pick-artist';pick.dataset.pickArtist=a.id;
@@ -501,22 +552,71 @@
       if(spare>=230&&harbour.complete&&harbour.naturalWidth)ctx.drawImage(harbour,0,canvas.height-318,width,190);
       ctx.fillStyle='#367367';ctx.fillRect(padding,canvas.height-102,contentWidth,1);
       ctx.fillStyle='#faead4';ctx.font='700 23px Arial, sans-serif';ctx.fillText('juju-w · '+countLabel(selected.length),padding,canvas.height-68);
-      ctx.font='20px Arial, sans-serif';ctx.fillText(language==='en'?'FAN-MADE · SET TIMES TO FOLLOW':'乐迷制作 · 演出时间待公布',padding,canvas.height-35);
+      ctx.font='20px Arial, sans-serif';ctx.fillText('juju-w.github.io/clockenflap2026lineup',padding,canvas.height-35);
       var blob=await new Promise(function(resolve,reject){canvas.toBlob(function(result){result?resolve(result):reject(new Error('Empty image'));},'image/png');});
       if(token!==exportGeneration||$('wishlist-layer').hidden||$('wishlist-layer').inert)return;
       var url=URL.createObjectURL(blob);
       openMedia(url,t('myLineup'),false,$('export-wishlist'));
       exportURL=url;exportImage={blob:blob,filename:'my-clockenflap-2026-'+groups.map(function(g){return g.day;}).join('-')+'.png'};
       $('export-controls').hidden=false;
-      $('share-lineup-image').hidden=!(window.CF_PLATFORM.canShareFile&&window.CF_PLATFORM.canShareFile(blob,exportImage.filename));
+      if(window.CF_PLATFORM.target==='xhs')refreshShareVisibility();
+      else $('share-lineup-image').hidden=!(window.CF_PLATFORM.canShareFile&&window.CF_PLATFORM.canShareFile(blob,exportImage.filename));
     }catch(e){showToast(t('exportError'));}
     finally{exporting=false;$('export-wishlist').disabled=!wishSelection().length;$('export-wishlist').removeAttribute('aria-busy');}
   }
   async function shareLineupImage(){
+    if(window.CF_PLATFORM.target==='xhs')return shareExportImage();
     if(!exportImage||!window.CF_PLATFORM.shareFile)return;
     try{await window.CF_PLATFORM.shareFile(exportImage.blob,exportImage.filename);}
     catch(e){if(e.name!=='AbortError')showToast(t('shareLineupError'));}
   }
+  function validSetOverrides(stored){
+    var result={};if(!stored||typeof stored!=='object'||Array.isArray(stored))return result;
+    Object.keys(stored).forEach(function(id){if(schedule&&schedule.sets[id]&&typeof stored[id]==='boolean')result[id]=stored[id];});return result;
+  }
+  function readSetOverrides(){try{return validSetOverrides(JSON.parse(localStorage.getItem('cf2026-schedule-picks')||'{}'));}catch(e){return {};}}
+  function persistSetOverrides(){
+    var snapshot=Object.assign({},setOverrides);++setVersion;
+    try{localStorage.setItem('cf2026-schedule-picks',JSON.stringify(snapshot));}catch(e){}
+    if(window.CF_CAP)setWrite=setWrite.catch(function(){}).then(function(){return window.CF_CAP.storageSet('cf2026-schedule-picks',snapshot);});
+  }
+  function setPicked(id){
+    if(Object.prototype.hasOwnProperty.call(setOverrides,id))return setOverrides[id]===true;
+    var set=schedule.sets[id];return !!set&&set.artistIds.some(function(aid){return !!wishlist[aid];});
+  }
+  function applyPerformancePicks(performances,picked){
+    var related={};
+    performances.forEach(function(set){setOverrides[set.id]=picked;set.artistIds.forEach(function(id){related[id]=true;});});
+    Object.keys(related).forEach(function(id){
+      if((schedule.artistSets[id]||[]).some(function(s){return setPicked(s.id);}))wishlist[id]=true;
+      else delete wishlist[id];
+    });
+    persistSetOverrides();persistWishlist();updatePoster();
+    if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();schedule.refresh();
+    if(picked&&window.CF_CAP)window.CF_CAP.vibrate('light');
+  }
+  function toggleSet(id){
+    var set=schedule.sets[id];if(!set)return;
+    wishlist=readWishlist();applyPerformancePicks([set],!setPicked(id));
+  }
+  function setDay(day){
+    hideHover();selectedDay=day;
+    document.querySelectorAll('[data-day]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.day===day));});
+    updatePoster();if(schedule)schedule.refresh(day);
+  }
+  function setView(view){
+    hideHover();$('lineup-panel').hidden=view!=='lineup';$('schedule-panel').hidden=view!=='schedule';
+    document.querySelectorAll('[data-view]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.view===view));});
+    if(view==='schedule'){if(selectedDay==='all')setDay('4');else schedule.refresh(selectedDay);}
+    else requestAnimationFrame(fitPoster);
+  }
+  async function presentCanvas(canvas,title,filename,focus){
+    var blob=await new Promise(function(resolve,reject){canvas.toBlob(function(result){result?resolve(result):reject(new Error('Empty image'));},'image/png');});
+    var url=URL.createObjectURL(blob);openMedia(url,title,false,focus);exportURL=url;exportImage={blob:blob,filename:filename};$('export-controls').hidden=false;
+    if(window.CF_PLATFORM.target==='xhs')refreshShareVisibility();
+    else $('share-lineup-image').hidden=!(window.CF_PLATFORM.canShareFile&&window.CF_PLATFORM.canShareFile(blob,filename));
+  }
+  document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){setView(b.dataset.view);});});
   function activeDialog(){if(!$('media-layer').hidden&&!$('media-layer').inert)return $('media-dialog');if(!$('artist-layer').hidden&&!$('artist-layer').inert)return $('artist-dialog');if(!$('wishlist-layer').hidden&&!$('wishlist-layer').inert)return $('wishlist-dialog');return null;}
   function handleKeys(event){
     var dialog=activeDialog();if(!dialog){if(event.key==='Escape')hideHover();return;}
@@ -534,9 +634,7 @@
   function updateHistory(method,state,url){if(window.CF_PLATFORM.target==='xhs')return;try{history[method](state,'',url);}catch(e){}}
   function fromLocation(){var match=location.hash.match(/^#artist-([a-z0-9]+)$/);if(match&&byId[match[1]])openArtist(match[1],true);else closeArtist(true);}
   document.querySelectorAll('[data-day]').forEach(function(button){button.addEventListener('click',function(){
-    hideHover();selectedDay=button.dataset.day;
-    document.querySelectorAll('[data-day]').forEach(function(b){b.setAttribute('aria-pressed',String(b===button));});
-    updatePoster();
+    setDay(button.dataset.day);
   });});
   $('close-artist').addEventListener('click',function(){closeArtist();});document.querySelector('#artist-layer>.scrim').addEventListener('click',function(){closeArtist();});
   $('artist-want').addEventListener('click',function(){if(activeId)toggleWant(activeId);});$('previous-artist').addEventListener('click',function(){stepArtist(-1);});$('next-artist').addEventListener('click',function(){stepArtist(1);});
@@ -545,6 +643,7 @@
   $('download-wishlist').addEventListener('click',saveExportImage);$('back-to-wishlist').addEventListener('click',function(){closeArtist();});$('undo-wish').addEventListener('click',undoWish);$('export-wishlist').addEventListener('click',exportWishlist);
   $('plan-lineup').addEventListener('click',function(){openWishlist('browse');});
   $('open-wishlist').addEventListener('click',function(){openWishlist('saved');});
+  $('share-card').addEventListener('click',shareCard);
   $('share-lineup-image').addEventListener('click',shareLineupImage);
   document.querySelectorAll('[data-wish-mode]').forEach(function(button){
     button.addEventListener('click',function(){wishMode=button.dataset.wishMode;removedWish=null;renderWishlist();$('wishlist-content').scrollTop=0;});
@@ -562,10 +661,16 @@
   window.addEventListener('blur',function(){finishTouchPreview(true);hideHover();});
   document.addEventListener('visibilitychange',function(){if(document.hidden){finishTouchPreview(true);hideHover();}});
   document.addEventListener('keydown',handleKeys);window.addEventListener('popstate',fromLocation);window.addEventListener('hashchange',fromLocation);window.addEventListener('resize',function(){finishTouchPreview(true);hideHover();requestAnimationFrame(fitPoster);});window.addEventListener('scroll',function(){finishTouchPreview(true);hideHover();},{passive:true});
-  window.addEventListener('storage',function(event){if(event.key==='cf2026-poster-wishlist'||event.key===null){wishlist=readWishlist();updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();}});
+  window.addEventListener('storage',function(event){if(event.key==='cf2026-poster-wishlist'||event.key==='cf2026-schedule-picks'||event.key===null){++wishVersion;++setVersion;wishlist=readWishlist();setOverrides=readSetOverrides();updatePoster();if(activeId)refreshWant();if(!$('wishlist-layer').hidden)renderWishlist();if(schedule)schedule.refresh();}});
   document.querySelectorAll('[data-language]').forEach(function(button){button.addEventListener('click',function(){language=button.dataset.language;try{localStorage.setItem('cf2026-poster-language',language);}catch(e){}applyLanguage();});});
+  if(schedule)schedule.init({
+    language:function(){return language;},artist:function(id){return byId[id];},setPicked:setPicked,toggleSet:toggleSet,setDay:setDay,
+    openArtist:openArtist,presentCanvas:presentCanvas,showImage:function(src,title,focus){openMedia(src,title,false,focus);},toast:showToast
+  });
   renderPoster();applyLanguage();fromLocation();
-  var warmPortraits=function(){artists.forEach(function(a){var image=new Image();image.decoding='async';image.src=a.avatar;if(image.decode)image.decode().catch(function(){});});};
+  hydrateWishlist();
+  if(window.CF_CAP){window.CF_CAP.getBuildVersion().then(function(v){shareReady=window.CF_CAP.atLeast(v,9530);refreshShareVisibility();});}else{refreshShareVisibility();}
+  var warmPortraits=function(){artists.filter(function(a){return !!a.avatar;}).forEach(function(a){var image=new Image();image.decoding='async';image.src=a.avatar;if(image.decode)image.decode().catch(function(){});});};
   if(window.requestIdleCallback)window.requestIdleCallback(warmPortraits,{timeout:2000});else setTimeout(warmPortraits,500);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitPoster);
 }());

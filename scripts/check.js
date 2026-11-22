@@ -50,3 +50,5 @@ assert(html.includes('juju-w')&&locales.en.creator.includes('juju-w')&&locales.z
 })().catch(e=>{console.error(e);process.exitCode=1;});
 
 require("./check-hover.js");
+
+require("./check-schedule.js");

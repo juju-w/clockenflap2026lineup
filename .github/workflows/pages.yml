@@ -20,7 +20,7 @@ jobs:
       - name: Check runtime and offline adapter
         run: |
           node scripts/check.js
-          for file in app.js compat.js platform-web.js platform-xhs.js data.js locales.js; do node --check "$file"; done
+          for file in app.js schedule.js schedule-data.js compat.js platform-web.js platform-xhs.js data.js locales.js; do node --check "$file"; done
       - name: Build website and offline package
         run: |
           python3 scripts/build.py web

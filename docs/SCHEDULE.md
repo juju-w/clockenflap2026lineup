@@ -1,4 +1,12 @@
-# Schedule subtab after the official timetable is published
+# Official schedule module
+
+Implemented 22 November 2026. `schedule-data.js` holds 83 music performances across the six official stages. `schedule.js` provides the stage grid, timeline, selected-set view, overlap and change-stage notices, and combined Canvas export. Source images are local WebP assets. Family programmes are available as a separately viewable official sheet.
+
+Selections use the existing `cf2026-poster-wishlist` and per-performance overrides in `cf2026-schedule-picks`. An explicit performance selection takes precedence over artist interest. This also distinguishes Loisey’s solo set from Loisey × Gill Mok, while Luci Gang, Rujé and Rohann refer to a shared performance.
+
+A few Sunday labels in the official source are cropped. Their start/end positions were read from the official labelled grid and tagged in the source data. Recheck those records if the organiser replaces the image.
+
+## Original scope and data contract
 
 The main surface remains the interactive poster. Add a sibling `Lineup / Schedule` view only when a functioning schedule renderer and verified official stage/set-time data are available; do not display a dead placeholder tab.
 
